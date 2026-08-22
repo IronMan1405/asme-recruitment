@@ -7,8 +7,10 @@ import { TaskNav } from '../components/composite/TaskNav'
 import { TaskSection } from '../components/composite/TaskSection'
 import { ResourceList } from '../components/composite/ResourceList'
 import { SubmissionPanel } from '../components/composite/SubmissionPanel'
+import { ThemeEmblem } from '../components/composite/ThemeEmblem'
 import { getTaskById, getVerticalById, getTasksForVertical } from '../lib/data'
 import { accentColors } from '../theme/tokens'
+import { taskThemes } from '../theme/taskThemes'
 import type { CSSProperties } from 'react'
 
 export function TaskDetailPage() {
@@ -31,10 +33,11 @@ export function TaskDetailPage() {
 
   const verticalTasks = getTasksForVertical(vertical.id)
   const taskIndex = verticalTasks.findIndex((verticalTask) => verticalTask.id === task.id)
+  const theme = taskThemes[vertical.id]
 
   return (
     <article
-      className="task-detail-page"
+      className={theme ? `task-detail-page ${theme.className}` : 'task-detail-page'}
       style={{ '--vertical-accent': accentColors[vertical.accentColor] } as CSSProperties}
     >
       <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -48,9 +51,16 @@ export function TaskDetailPage() {
       </nav>
 
       <header className="task-detail-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.65rem' }}>
+        {theme && <ThemeEmblem variant={theme.variant} />}
+        <div className="task-detail-badges" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.65rem', flexWrap: 'wrap' }}>
           <span className="track-pill">{vertical.name}</span>
           <span className="section-tag-badge">{task.id.toUpperCase()}</span>
+          {theme && (
+            <span className="theme-tagline-pill">
+              <span aria-hidden="true">{theme.icon}</span>
+              {theme.tagline}
+            </span>
+          )}
         </div>
         <h1>{task.title}</h1>
         <p>{task.shortDescription}</p>

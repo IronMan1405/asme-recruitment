@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
+import asmeLogo from '../../assets/asme-logo.png'
 
 export function Footer() {
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
         <div className="footer-brand">
-          <span className="footer-logo-badge">ASME</span>
+          <img className="footer-logo-mark" src={asmeLogo} alt="ASME BITS Pilani Student Section" />
           <p>
             Built by students who like making things real. Join our engineering teams and build something that actually moves.
           </p>

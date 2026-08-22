@@ -37,7 +37,6 @@ export function Hero() {
       <div className="hero-top-header">
         <div>
           <div className="hero-eyebrow-pill">
-            <span className="live-status-dot" aria-hidden="true" />
             <span>ADMISSIONS OPEN 2026</span>
           </div>
           <h1 id="hero-title" className="hero-title-main">

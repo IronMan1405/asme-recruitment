@@ -1,6 +1,7 @@
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import { Menu, X, Sparkles } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import asmeLogo from '../../assets/asme-logo.png'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,7 +49,7 @@ export function Navbar() {
         </nav>
 
         <Link className="capsule-brand" to="/" onClick={closeMenu}>
-          <span className="brand-glow-dot" aria-hidden="true" />
+          <img className="capsule-brand-mark" src={asmeLogo} alt="" aria-hidden="true" />
           <span>ASME</span>
           <span className="brand-badge-year">2026</span>
         </Link>
