@@ -1,5 +1,6 @@
 import { ArrowLeft, Clock3 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { Link, useParams } from 'react-router-dom'
 import { ExpandableSection } from '../components/primitives/ExpandableSection'
 import { DifficultyBadge } from '../components/primitives/DifficultyBadge'
@@ -86,7 +87,7 @@ export function TaskDetailPage() {
 
       <div className="task-detail-content">
         <TaskSection label="PROBLEM STATEMENT">
-          <ReactMarkdown>{task.instructions}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: (props) => <a href={props.href} title={props.title} target="_blank" rel="noreferrer">{props.children}</a> }}>{task.instructions}</ReactMarkdown>
         </TaskSection>
 
         {task.prerequisites.length > 0 && (
