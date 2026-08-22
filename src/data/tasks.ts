@@ -1,9 +1,39 @@
 import type { Task } from './types'
 import { softwareTaskOneInstructions } from './softwareTaskOneInstructions'
+import { electricalTaskOneInstructions } from './electricalTaskOneInstructions'
 
 export const tasks: Task[] = [
-  { id: 'mech-01', verticalId: 'mechanical', title: 'Demo Task - Drive Chassis Sketch', shortDescription: 'A temporary CAD exercise for exploring dimensions and manufacturability.', difficulty: 'beginner', estimatedTime: '2-3 hrs', prerequisites: ['No experience needed'], instructions: '## Problem statement\nCreate a rough chassis concept for a small mobile robot.\n\nStart with a sketch, then turn one important dimension into a constrained CAD model.\n\n```text\nCONSTRAINT: keep the footprint under 200 mm x 150 mm\n```\n\nDocument one design choice in your submission notes.', resources: { required: [{ type: 'tutorial', title: 'Demo CAD constraint guide', url: 'https://example.com/asme-demo/cad-constraints', note: 'Use this placeholder guide to review how dimensions can control a sketch.' }], optional: [{ type: 'other', title: 'Demo chassis reference', url: 'https://example.com/asme-demo/chassis-reference', note: 'Browse this placeholder reference when you want another way to frame the layout.' }] }, evaluationCriteria: ['Clear dimensions', 'Thoughtful component placement'], submissionUrl: 'https://example.com/asme-demo/submit/mech-01', tags: ['CAD', 'demo'] },
-  { id: 'elec-01', verticalId: 'electronics', title: 'Demo Task - Motor Driver Simulation', shortDescription: 'A temporary circuit exercise for exploring direction control and protection.', difficulty: 'beginner', estimatedTime: '2-3 hrs', prerequisites: ['Basic circuit theory'], instructions: '## Problem statement\nBuild a simulated motor driver and document how direction control works.\n\nUse a simple schematic to show the main current paths. See [the placeholder reference](https://example.com/asme-demo/motor-driver) only as an example of an external resource.', resources: { required: [{ type: 'documentation', title: 'Demo H-bridge notes', url: 'https://example.com/asme-demo/h-bridge-notes', note: 'Read this placeholder documentation before drawing the switching paths.' }], optional: [{ type: 'datasheet', title: 'Demo motor driver datasheet', url: 'https://example.com/asme-demo/motor-driver-datasheet', note: 'Use this placeholder datasheet to practice finding electrical limits.' }] }, evaluationCriteria: ['Correct direction control', 'Basic protection included'], submissionUrl: 'https://example.com/asme-demo/submit/elec-01', tags: ['circuits', 'demo'] },
+  { id: 'mech-01', verticalId: 'mechanical', 
+    title: 'Demo Task - Drive Chassis Sketch', 
+    shortDescription: 'A temporary CAD exercise for exploring dimensions and manufacturability.', 
+    difficulty: 'beginner', 
+    estimatedTime: '2-3 hrs', 
+    prerequisites: ['No experience needed'], 
+    instructions: 'mech task', 
+    resources: { required: [
+        { type: 'tutorial', title: 'Demo CAD constraint guide', url: 'https://example.com/asme-demo/cad-constraints', note: 'Use this placeholder guide to review how dimensions can control a sketch.' }
+    ], optional: [{ type: 'other', title: 'Demo chassis reference', url: 'https://example.com/asme-demo/chassis-reference', note: 'Browse this placeholder reference when you want another way to frame the layout.' }] }, 
+    evaluationCriteria: ['Clear dimensions', 'Thoughtful component placement'], 
+    submissionUrl: 'https://example.com/asme-demo/submit/mech-01', 
+    tags: ['CAD', 'demo'] },
+
+  { id: 'elec-01', verticalId: 'electronics', 
+    title: 'Batman\'s Countermeasures Await!', 
+    shortDescription: 'A temporary circuit exercise for exploring direction control and protection.', 
+    difficulty: 'beginner', 
+    estimatedTime: '2-3 hrs', 
+    prerequisites: ['Basic circuit theory', 'Tinkercad', 'Arduino'], 
+    instructions: electricalTaskOneInstructions, 
+    resources: { required: [
+        { type: 'video', title: 'Arduino Basics 101: Hardware Overview, Fundamental Code Commands', url: 'https://www.youtube.com/watch?v=BtLwoNJ6klE', note: 'Revision of workshop theory, although its much less detailed, great explanation nonetheless' },
+        { type: 'video', title: 'How to use Potentiometer with Arduino | analogRead | Arduino Tutorial 5', url: 'https://www.youtube.com/watch?v=lg-QUBLm9eU', note: 'Use of potentiometer with arduino' },
+        { type: 'video', title: 'How To Control a DC Motor with an Arduino(Simulation using tinkercad)', url: 'https://www.youtube.com/watch?v=4qpFQPPJ21U', note: 'Use this video to learn how to control a DC motor with an Arduino' },
+        { type: 'video', title: 'How to use Potentiometer with Arduino | analogRead | Arduino Tutorial 5', url: 'https://youtu.be/xo4oLCyfUtY?si=UDhyAWTIbXxJCivi', note: 'Use this video to learn how to use a potentiometer with an Arduino' },
+    ], optional: [] }, 
+    evaluationCriteria: ['Completed projects', 'You get what you f**** deserve! (Joker, 2019)'], 
+    submissionUrl: 'https://example.com/asme-demo/submit/elec-01', 
+    tags: ['circuits', 'demo'] },
+
   { id: 'soft-01', 
     verticalId: 'software', 
     title: 'Stark\' Workstation', 
