@@ -22,6 +22,7 @@ export function TaskCard({ task }: TaskCardProps) {
               <Clock3 size={14} aria-hidden="true" />
               ~{task.estimatedTime}
             </span>
+            <span className="task-deadline">Due: {task.deadline}</span>
           </div>
         </div>
 

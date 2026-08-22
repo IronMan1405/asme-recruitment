@@ -88,15 +88,9 @@ export function VerticalOverviewPage() {
         </div>
       </header>
 
-      <section className="deliverables-section" aria-labelledby="deliverables-heading">
-        <span id="deliverables-heading" className="section-tag-badge">
-          WHAT YOU COULD BUILD IN THIS TRACK
-        </span>
-        <ul>
-          {vertical.exampleDeliverables.map((deliverable) => (
-            <li key={deliverable}>{deliverable}</li>
-          ))}
-        </ul>
+      <section className="vertical-contact-section" aria-label={`${vertical.name} contact`}>
+        <span className="section-tag-badge">CONTACT</span>
+        <span>{vertical.contact}</span>
       </section>
 
       <div className="task-list-heading">

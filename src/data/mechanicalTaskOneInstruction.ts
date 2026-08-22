@@ -2,6 +2,8 @@ import screwdriverImage from '../assets/mech-screwdriver.jpeg'
 import screwdriverTechnicalImage from '../assets/mech-screwdriver-ts.jpeg'
 import screwdriverSideImage from '../assets/mech-screwdriver-side.jpeg'
 import screwdriverCrossSectionImage from '../assets/mech-screwdriver-cs.jpeg'
+import GimbalOne from '../assets/Gimbal-1.PNG'
+import GimbalTwo from '../assets/Gimbal-2.PNG'
 
 export const mechanicalTaskOneInstructions = `
 # Q1. Peter Parker's Camera Gimbal
@@ -14,6 +16,11 @@ Your task is to **design a 2-axis camera gimbal assembly in Fusion 360** that ca
 
 ### Objective:
 Create a functional CAD assembly that demonstrates how a 2-axis gimbal can stabilize a camera by allowing controlled rotation about two perpendicular axes.
+
+
+![Gimbal 1](${GimbalOne})
+
+![Gimbal 2](${GimbalTwo})
 
 ---
 

@@ -28,7 +28,7 @@ You need to use at least **3 LEDs**.
 
 ### Story
 
-Batman’s Batmobile cooling system must be adaptive and intelligent.
+Batman\’s Batmobile cooling system must be adaptive and intelligent.
 
 The fan (DC motor), powered by a 9V battery through a motor driver, should react to both engine temperature and ambient light.
 
@@ -38,7 +38,7 @@ If the engine overheats, the fan overrides all other conditions and runs at maxi
 
 ### Goal
 
-Develop an Arduino-based system that integrates a DC motor with temperature and light sensors, ensuring the Batmobile’s cooling fans operate differently under normal, stealth, and overheat conditions.
+Develop an Arduino-based system that integrates a DC motor with temperature and light sensors, ensuring the Batmobile\’s cooling fans operate differently under normal, stealth, and overheat conditions.
 
 ### Platform
 
@@ -46,5 +46,5 @@ Develop an Arduino-based system that integrates a DC motor with temperature and 
 
 ### Bonus Task
 
-Allow manual mode switching via the Serial Monitor.
+Allow manual mode switching via the Serial Monitor, so typing \"normal\", \"stealth\", or \"overheat\" instantly overrides the fan behavior, while any other input defaults back to sensor-based control.
 `;

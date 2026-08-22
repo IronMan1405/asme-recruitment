@@ -16,6 +16,7 @@ export interface Task {
   shortDescription: string
   difficulty: Difficulty
   estimatedTime: string
+  deadline: string
   prerequisites: string[]
   instructions: string
   resources: { required: Resource[]; optional: Resource[] }
@@ -33,4 +34,5 @@ export interface Vertical {
   icon: 'gear' | 'chip' | 'terminal' | 'robot'
   exampleDeliverables: string[]
   taskIds: string[]
+  contact: string
 }

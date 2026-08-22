@@ -44,17 +44,6 @@ export function VerticalCard({ vertical, compact = false }: VerticalCardProps) {
 
         <p>{vertical.shortDescription}</p>
 
-        {!compact && (
-          <div className="card-deliverables">
-            <span className="mono-label">WHAT YOU COULD BUILD</span>
-            <ul>
-              {vertical.exampleDeliverables.map((deliverable) => (
-                <li key={deliverable}>{deliverable}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         <div className="vertical-card-meta">
           <span className="background-badge">{backgroundLabel}</span>
           <span className="card-action-btn">

@@ -5,10 +5,11 @@ import { mechanicalTaskOneInstructions } from './mechanicalTaskOneInstruction'
 
 export const tasks: Task[] = [
   { id: 'mech-01', verticalId: 'mechanical', 
-    title: 'Demo Task - Drive Chassis Sketch', 
+    title: 'Spider-Man\'s Multi-Purpose Toolkit', 
     shortDescription: 'Design a two-axis camera gimbal and a compact screwdriver assembly in Fusion 360 from the supplied requirements and drawings.', 
     difficulty: 'beginner', 
     estimatedTime: '2-3 hrs', 
+    deadline: '31 August 2026, Monday EOD',
     prerequisites: ['No experience needed'], 
     instructions: mechanicalTaskOneInstructions, 
     resources: { required: [
@@ -23,6 +24,7 @@ export const tasks: Task[] = [
     shortDescription: 'Build an Arduino and Tinkercad countermeasure console with selectable LED patterns, sensor input, and adaptive DC motor control.', 
     difficulty: 'beginner', 
     estimatedTime: '2-3 hrs', 
+    deadline: '31 August 2026, Monday EOD',
     prerequisites: ['Basic circuit theory', 'Tinkercad', 'Arduino'], 
     instructions: electricalTaskOneInstructions, 
     resources: { required: [
@@ -42,6 +44,7 @@ export const tasks: Task[] = [
     shortDescription: 'Build a computer-vision-based human-computer interaction system that understands hand gestures and controls a computer.', 
     difficulty: 'intermediate', 
     estimatedTime: '4-6 hrs', 
+    deadline: '31 August 2026, Monday EOD',
     prerequisites: ['Python', 'OpenCV', 'MediaPipe', 'PyAutoGUI (or an equivalent library)', 'Laptop webcam'], 
     instructions: softwareTaskOneInstructions, 
     resources: { required: [

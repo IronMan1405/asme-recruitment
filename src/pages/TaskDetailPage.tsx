@@ -63,6 +63,7 @@ export function TaskDetailPage() {
             </span>
           )}
         </div>
+        <span className="task-deadline">Due: {task.deadline}</span>
         <h1>{task.title}</h1>
         <p>{task.shortDescription}</p>
 
