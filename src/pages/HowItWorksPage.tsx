@@ -124,6 +124,7 @@ export function HowItWorksPage() {
       </section>
 
       <div
+        className="how-it-works-cta"
         style={{
           border: '1px solid var(--color-border)',
           borderRadius: 'var(--radius-xl)',

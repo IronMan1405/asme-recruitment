@@ -1,6 +1,6 @@
 import type { AccentColor } from '../theme/tokens'
 
-export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
+export type Difficulty = 'beginner' | 'moderate' | 'intermediate' | 'advanced'
 
 export interface Resource {
   type: 'video' | 'article' | 'documentation' | 'datasheet' | 'textbook' | 'tutorial' | 'other'
@@ -21,6 +21,7 @@ export interface Task {
   instructions: string
   resources: { required: Resource[]; optional: Resource[] }
   evaluationCriteria: string[]
+  contactdetails: string[]
   submissionUrl?: string
   tags: string[]
 }

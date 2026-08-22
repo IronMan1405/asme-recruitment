@@ -37,7 +37,7 @@ export function Hero() {
       <div className="hero-top-header">
         <div>
           <div className="hero-eyebrow-pill">
-            <span>ADMISSIONS OPEN 2026</span>
+            <span>RECRUITMENTS OPEN</span>
           </div>
           <h1 id="hero-title" className="hero-title-main">
             ASME — 2026
@@ -85,9 +85,9 @@ export function Hero() {
           <div className="spec-icon-badge" aria-hidden="true">
             <Bot size={20} />
           </div>
-          <h3>Autonomous Control</h3>
+          <h3>BRING YOUR DREAM TO LIFE</h3>
           <p>
-            Seamless movement across rough and unpredictable environments. Build real mechanical, electronics, and software systems.
+            Build real mechanical, electronics, and software systems.
           </p>
         </div>
       </div>

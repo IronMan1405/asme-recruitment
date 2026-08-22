@@ -39,6 +39,8 @@
   /* Difficulty scale */
   --color-difficulty-beginner: #059669;
   --color-difficulty-beginner-bg: #ecfdf5;
+  --color-difficulty-moderate: #2563eb;
+  --color-difficulty-moderate-bg: #eff6ff;
   --color-difficulty-intermediate: #d97706;
   --color-difficulty-intermediate-bg: #fffbeb;
   --color-difficulty-advanced: #dc2626;

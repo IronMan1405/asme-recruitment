@@ -15,7 +15,8 @@ export const tasks: Task[] = [
     resources: { required: [
         { type: 'tutorial', title: 'Learn Autodesk Fusion 360 in 30 Days for Complete Beginners!', url: 'https://youtube.com/playlist?list=PLrZ2zKOtC_-C4rWfapgngoe9o2-ng8ZBr&si=G5858X2RlZSmw4xD', note: 'Use this playlist to learn Fusion 360 basics.' }
     ], optional: [] }, 
-    evaluationCriteria: ['Task 1: Functional working of the joints in the gimbal', 'Task 2: Accuracy of Dimensions of the screwdriver', 'Task 3: Complexity of the sketch and how well constrained it isda'], 
+    evaluationCriteria: ['Task 1: Functional working of the joints in the gimbal', 'Task 2: Accuracy of Dimensions of the screwdriver', 'Task 3: Complexity of the sketch and how well constrained it is'], 
+    contactdetails: ['For any queries regarding the task, please reach out to ', 'Shreyas (+91 9004795249)',' Samanyu (+91 9897328395)'],
     submissionUrl: 'https://example.com/asme-demo/submit/mech-01', 
     tags: ['CAD', 'Fusion 360'] },
 
@@ -35,6 +36,7 @@ export const tasks: Task[] = [
         { type: 'video', title: 'How to use tmp36 with arduino | temperature based speed control', url: 'https://youtu.be/xo4oLCyfUtY?si=UDhyAWTIbXxJCivi', note: 'Use this video to learn how to use a TMP36 with an Arduino' },
     ], optional: [] }, 
     evaluationCriteria: ['Completed projects', 'You get what you f**** deserve! (Joker, 2019)'], 
+    contactdetails: ['For any queries regarding the task, please reach out to ','Viinaayak (+91 8178547016) ',' Pranay (+91 7428630687)'],
     submissionUrl: 'https://example.com/asme-demo/submit/elec-01', 
     tags: ['Circuits', 'Tinkercad', 'Arduino'] },
 
@@ -42,7 +44,7 @@ export const tasks: Task[] = [
     verticalId: 'software', 
     title: 'Stark\'s Workstation', 
     shortDescription: 'Build a computer-vision-based human-computer interaction system that understands hand gestures and controls a computer.', 
-    difficulty: 'intermediate', 
+    difficulty: 'moderate', 
     estimatedTime: '4-6 hrs', 
     deadline: '31 August 2026, Monday EOD',
     prerequisites: ['Python', 'OpenCV', 'MediaPipe', 'PyAutoGUI (or an equivalent library)', 'Laptop webcam'], 
@@ -54,6 +56,7 @@ export const tasks: Task[] = [
         {type: 'other', title: 'Code demonstrated in the workshop', url: 'https://gists.github.com/vatsalbansal123/', note: 'Use this code to understand the basics of OpenCV and MediaPipe.'}
     ], optional: [] }, 
     evaluationCriteria: ['Functionality: 50%', 'Robustness & Usability: 20%', 'Code Quality: 20%', 'Innovation: 10%'], 
+    contactdetails: ['For any queries regarding the task, please reach out to ','Dakshesh (+91 9703537152)',' Vatsal (+91 7011367535)'],
     submissionUrl: 'https://example.com/asme-demo/submit/soft-01', 
     tags: ['Python', 'computer vision', 'MediaPipe', 'OpenCV', 'robotics'] },
 ]

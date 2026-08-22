@@ -654,6 +654,10 @@
 /* --------------------------------------------------------------------------
    Vertical Cards (Physical Hardware Cards)
    -------------------------------------------------------------------------- */
+.vertical-preview-section {
+  margin-bottom: 5.5rem;
+}
+
 .vertical-preview-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1354,12 +1358,14 @@
 }
 
 .task-section-content h2,
-.task-section-content h3 {
+.task-section-content h3,
+.task-section-content h1 {
   font-weight: 800;
   margin: 1.75rem 0 0.85rem;
   color: var(--color-text);
 }
 
+.task-section-content h1 { font-size: 1.7rem; }
 .task-section-content h2 { font-size: 1.45rem; }
 .task-section-content h3 { font-size: 1.22rem; }
 
@@ -1966,6 +1972,9 @@
 .task-detail-page.theme-gotham .task-section-content h2,
 .task-detail-page.theme-stark .task-section-content h2,
 .task-detail-page.theme-spiderman .task-section-content h2,
+.task-detail-page.theme-gotham .task-section-content h1,
+.task-detail-page.theme-stark .task-section-content h1,
+.task-detail-page.theme-spiderman .task-section-content h1,
 .task-detail-page.theme-gotham .task-section-content h3,
 .task-detail-page.theme-stark .task-section-content h3,
 .task-detail-page.theme-spiderman .task-section-content h3,
@@ -2514,6 +2523,10 @@
   line-height: 1.65;
   max-width: 48rem;
   margin: 0;
+}
+
+.how-it-works-cta {
+  margin-top: 3.5rem;
 }
 
 .faq-categories {

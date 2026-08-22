@@ -134,7 +134,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
               required
               value={link}
               onChange={(event) => setLink(event.target.value)}
-              placeholder="https://github.com/you/project"
+              placeholder="Link to your Tinkercad / Fusion 360 / GitHub / Google Drive / etc."
               disabled={state === 'submitting'}
             />
           </label>

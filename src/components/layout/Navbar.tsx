@@ -78,6 +78,15 @@ export function Navbar() {
             <MessageCircle size={13} aria-hidden="true" />
             <span>Join</span>
           </a>
+          <a
+            href="https://www.instagram.com/asme_bitspilani?igsi=MXRsemlwcTRhaGM3MQ=="
+            target="_blank"
+            rel="noreferrer"
+            className="capsule-link"
+            aria-label="Visit ASME BITS Pilani on Instagram"
+          >
+            <span>Instagram</span>
+          </a>
         </nav>
 
         <button
@@ -130,6 +139,16 @@ export function Navbar() {
             >
               <MessageCircle size={14} aria-hidden="true" />
               <span>Join WhatsApp</span>
+            </a>
+            <a
+              href="https://www.instagram.com/asme_bitspilani?igsi=MXRsemlwcTRhaGM3MQ=="
+              target="_blank"
+              rel="noreferrer"
+              className="capsule-link"
+              style={{ justifyContent: 'center', marginTop: '0.5rem' }}
+              aria-label="Visit ASME BITS Pilani on Instagram"
+            >
+              <span>Instagram</span>
             </a>
           </div>
         )}

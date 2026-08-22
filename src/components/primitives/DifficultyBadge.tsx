@@ -8,6 +8,7 @@ interface DifficultyBadgeProps {
 
 const labels: Record<Difficulty, string> = {
   beginner: 'Beginner',
+  moderate: 'Moderate',
   intermediate: 'Intermediate',
   advanced: 'Advanced',
 }

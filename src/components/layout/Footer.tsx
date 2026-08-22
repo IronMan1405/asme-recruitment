@@ -26,6 +26,9 @@ export function Footer() {
             <a href="https://chat.whatsapp.com/Jjs07RvjI4EBSqMlZkMgfU" target="_blank" rel="noreferrer">
               WhatsApp <ArrowUpRight size={13} aria-hidden="true" />
             </a>
+            <a href="https://www.instagram.com/asme_bitspilani?igsi=MXRsemlwcTRhaGM3MQ==" target="_blank" rel="noreferrer">
+              Instagram <ArrowUpRight size={13} aria-hidden="true" />
+            </a>
           </div>
         </div>
       </div>

@@ -126,6 +126,16 @@ export function TaskDetailPage() {
           </ExpandableSection>
         )}
 
+        {task.contactdetails.length > 0 && (
+          <TaskSection label="CONTACT DETAILS">
+            <ul>
+              {task.contactdetails.map((contactDetail) => (
+                <li key={contactDetail}>{contactDetail}</li>
+              ))}
+            </ul>
+          </TaskSection>
+        )}
+
         <SubmissionPanel task={task} verticalName={vertical.name} />
       </div>
 

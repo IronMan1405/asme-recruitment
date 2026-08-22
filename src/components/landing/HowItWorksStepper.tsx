@@ -1,8 +1,8 @@
 const steps = [
-  { number: '01', title: 'Pick a vertical', description: 'Find the kind of work that pulls you in.' },
-  { number: '02', title: 'Pick a task', description: 'Choose a small, defined problem to solve.' },
-  { number: '03', title: 'Complete & submit', description: 'Build, document, and send us what you made.' },
-  { number: '04', title: 'Hear back', description: 'We will be in touch with next steps.' },
+  { number: '01', title: 'Task 1', description: 'Beginner level task.' },
+  { number: '02', title: 'Task 2', description: 'Medium level task.' },
+  { number: '03', title: 'Personnel Interview', description: 'A small 1 on 1 interaction.' },
+  { number: '04', title: 'Probation', description: 'A learning phase before your recruitment is finalized.' },
 ]
 
 export function HowItWorksStepper() {

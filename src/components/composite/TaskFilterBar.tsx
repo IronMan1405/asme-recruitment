@@ -33,6 +33,7 @@ export function TaskFilterBar({
         >
           <option value="all">All levels</option>
           <option value="beginner">Beginner</option>
+          <option value="moderate">Moderate</option>
           <option value="intermediate">Intermediate</option>
           <option value="advanced">Advanced</option>
         </select>

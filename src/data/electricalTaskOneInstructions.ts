@@ -24,7 +24,9 @@ Use a potentiometer to select between four LED modes:
 
 You need to use at least **3 LEDs**.
 
-# Q2: Batmobile Smart Cooling System — DC Motor with Temperature + Light Sensors
+### BONUS TASK
+
+Instead of using a potentiometer, use Serial monitor to take input from user and switch modes accrodingly.
 
 ### Story
 

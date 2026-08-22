@@ -176,7 +176,7 @@ export function FaqPage() {
               Still have a question?
             </h3>
             <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--color-text-muted)' }}>
-              Join our recruitment WhatsApp group or email our team directly.
+              Join our recruitment WhatsApp group, follow us on Instagram, or email our team directly.
             </p>
           </div>
         </div>
@@ -188,6 +188,15 @@ export function FaqPage() {
           rel="noreferrer"
         >
           <span>Ask on WhatsApp</span>
+          <ArrowUpRight size={14} aria-hidden="true" />
+        </a>
+        <a
+          className="secondary-button"
+          href="https://www.instagram.com/asme_bitspilani?igsi=MXRsemlwcTRhaGM3MQ=="
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>Follow on Instagram</span>
           <ArrowUpRight size={14} aria-hidden="true" />
         </a>
       </div>
