@@ -2887,3 +2887,22 @@
 .task-section-content td {
   color: var(--color-text-secondary);
 }
+
+.task-section-content img {
+  display: block;
+  width: min(100%, 38rem);
+  height: auto;
+  max-height: 28rem;
+  margin: 1.25rem auto;
+  object-fit: contain;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 48rem) {
+  .task-section-content img {
+    width: 100%;
+    max-height: 22rem;
+    margin: 1rem auto;
+  }
+}

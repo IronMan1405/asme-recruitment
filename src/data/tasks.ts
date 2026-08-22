@@ -1,25 +1,26 @@
 import type { Task } from './types'
 import { softwareTaskOneInstructions } from './softwareTaskOneInstructions'
 import { electricalTaskOneInstructions } from './electricalTaskOneInstructions'
+import { mechanicalTaskOneInstructions } from './mechanicalTaskOneInstruction'
 
 export const tasks: Task[] = [
   { id: 'mech-01', verticalId: 'mechanical', 
     title: 'Demo Task - Drive Chassis Sketch', 
-    shortDescription: 'A temporary CAD exercise for exploring dimensions and manufacturability.', 
+    shortDescription: 'Design a two-axis camera gimbal and a compact screwdriver assembly in Fusion 360 from the supplied requirements and drawings.', 
     difficulty: 'beginner', 
     estimatedTime: '2-3 hrs', 
     prerequisites: ['No experience needed'], 
-    instructions: 'mech task', 
+    instructions: mechanicalTaskOneInstructions, 
     resources: { required: [
-        { type: 'tutorial', title: 'Demo CAD constraint guide', url: 'https://example.com/asme-demo/cad-constraints', note: 'Use this placeholder guide to review how dimensions can control a sketch.' }
-    ], optional: [{ type: 'other', title: 'Demo chassis reference', url: 'https://example.com/asme-demo/chassis-reference', note: 'Browse this placeholder reference when you want another way to frame the layout.' }] }, 
-    evaluationCriteria: ['Clear dimensions', 'Thoughtful component placement'], 
+        { type: 'tutorial', title: 'Learn Autodesk Fusion 360 in 30 Days for Complete Beginners!', url: 'https://youtube.com/playlist?list=PLrZ2zKOtC_-C4rWfapgngoe9o2-ng8ZBr&si=G5858X2RlZSmw4xD', note: 'Use this playlist to learn Fusion 360 basics.' }
+    ], optional: [] }, 
+    evaluationCriteria: ['Task 1: Functional working of the joints in the gimbal', 'Task 2: Accuracy of Dimensions of the screwdriver', 'Task 3: Complexity of the sketch and how well constrained it isda'], 
     submissionUrl: 'https://example.com/asme-demo/submit/mech-01', 
-    tags: ['CAD', 'demo'] },
+    tags: ['CAD', 'Fusion 360'] },
 
   { id: 'elec-01', verticalId: 'electronics', 
     title: 'Batman\'s Countermeasures Await!', 
-    shortDescription: 'A temporary circuit exercise for exploring direction control and protection.', 
+    shortDescription: 'Build an Arduino and Tinkercad countermeasure console with selectable LED patterns, sensor input, and adaptive DC motor control.', 
     difficulty: 'beginner', 
     estimatedTime: '2-3 hrs', 
     prerequisites: ['Basic circuit theory', 'Tinkercad', 'Arduino'], 
@@ -28,15 +29,16 @@ export const tasks: Task[] = [
         { type: 'video', title: 'Arduino Basics 101: Hardware Overview, Fundamental Code Commands', url: 'https://www.youtube.com/watch?v=BtLwoNJ6klE', note: 'Revision of workshop theory, although its much less detailed, great explanation nonetheless' },
         { type: 'video', title: 'How to use Potentiometer with Arduino | analogRead | Arduino Tutorial 5', url: 'https://www.youtube.com/watch?v=lg-QUBLm9eU', note: 'Use of potentiometer with arduino' },
         { type: 'video', title: 'How To Control a DC Motor with an Arduino(Simulation using tinkercad)', url: 'https://www.youtube.com/watch?v=4qpFQPPJ21U', note: 'Use this video to learn how to control a DC motor with an Arduino' },
-        { type: 'video', title: 'How to use Potentiometer with Arduino | analogRead | Arduino Tutorial 5', url: 'https://youtu.be/xo4oLCyfUtY?si=UDhyAWTIbXxJCivi', note: 'Use this video to learn how to use a potentiometer with an Arduino' },
+        { type: 'video', title: 'LDR Sensor & Arduino Using Tinkercad', url: 'https://youtu.be/L-BWfZEaeps?si=ggugLzamOPKP2S9x', note: 'Use this video to learn how to use an LDR with an Arduino' },
+        { type: 'video', title: 'How to use tmp36 with arduino | temperature based speed control', url: 'https://youtu.be/xo4oLCyfUtY?si=UDhyAWTIbXxJCivi', note: 'Use this video to learn how to use a TMP36 with an Arduino' },
     ], optional: [] }, 
     evaluationCriteria: ['Completed projects', 'You get what you f**** deserve! (Joker, 2019)'], 
     submissionUrl: 'https://example.com/asme-demo/submit/elec-01', 
-    tags: ['circuits', 'demo'] },
+    tags: ['Circuits', 'Tinkercad', 'Arduino'] },
 
   { id: 'soft-01', 
     verticalId: 'software', 
-    title: 'Stark\' Workstation', 
+    title: 'Stark\'s Workstation', 
     shortDescription: 'Build a computer-vision-based human-computer interaction system that understands hand gestures and controls a computer.', 
     difficulty: 'intermediate', 
     estimatedTime: '4-6 hrs', 
