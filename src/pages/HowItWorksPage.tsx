@@ -8,7 +8,7 @@ const detailedSteps = [
     tagline: 'Find the kind of work that pulls you in.',
     icon: Compass,
     details:
-      'Browse through our three primary tracks: Mechanical / CAD, Electronics, and Software. Select the area where you want to build hands-on skills or where you are most curious.',
+      'Browse through our three primary tracks: Mechanical, Electronics, and Software. Select the area where you want to build hands-on skills or where you are most curious.',
   },
   {
     number: '02',
