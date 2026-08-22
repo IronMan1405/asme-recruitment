@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import type { ReactNode } from 'react'
 import { ArrowUpRight, ChevronDown, HelpCircle, MessageSquare } from 'lucide-react'
 
 interface FaqItem {
   question: string
-  answer: string
+  answer: ReactNode
   category: 'general' | 'eligibility' | 'tasks' | 'submission'
 }
 
@@ -35,8 +36,15 @@ const faqs: FaqItem[] = [
   {
     category: 'tasks',
     question: 'What software or tools do I need for the challenges?',
-    answer:
-      'All tasks can be completed using free or student-accessible software (e.g. Onshape / Fusion 360 for CAD, Falstad / LTspice for Circuits, Python / VS Code for Software). Links and recommendations are included in each task description.',
+    answer: (
+      <>
+        The required tools are <strong>Fusion 360, Tinkercad, KiCad, and ROS2</strong>{' '}
+        <span aria-label="Unofficial tools joke">
+          <s>Claude and ChatGPT</s>
+        </span>
+        . Links and recommendations are included in each task description.
+      </>
+    ),
   },
   {
     category: 'submission',
@@ -48,7 +56,7 @@ const faqs: FaqItem[] = [
     category: 'submission',
     question: 'When is the deadline and when will results be announced?',
     answer:
-      'All submissions are due by 20 September 2026 at 23:59 IST. Results and interview invitations will be communicated via email and announced on our WhatsApp group shortly after the deadline.',
+      'All submissions are due by 31 August 2026 at 23:59 IST. Results and interview invitations will be communicated via email and announced on our WhatsApp group shortly after the deadline.',
   },
 ]
 
