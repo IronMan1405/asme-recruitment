@@ -15,7 +15,12 @@ export function ImportantInfoCallout() {
           </p>
         </div>
       </div>
-      <a className="text-link" href="mailto:asme@example.com">
+      <a
+        className="text-link"
+        href="https://chat.whatsapp.com/Jjs07RvjI4EBSqMlZkMgfU"
+        target="_blank"
+        rel="noreferrer"
+      >
         Ask a question <ArrowUpRight size={15} aria-hidden="true" />
       </a>
     </section>
