@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  /* Surface colors (Crisp Minimalist Light Theme) */
+  --color-background: #f8f9fb;
+  --color-background-pure: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f3f4f6;
+  --color-surface-subtle: #f1f3f7;
+  --color-surface-card: #ffffff;
+  --color-stage-bg: linear-gradient(180deg, #e7ebf1 0%, #d8dfea 100%);
+  
+  /* Text colors */
+  --color-text: #0a0a0a;
+  --color-text-secondary: #27272a;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #94a3b8;
+  
+  /* Structural borders */
+  --color-border: #e2e8f0;
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-hover: rgba(0, 0, 0, 0.18);
+  --color-border-strong: #0a0a0a;
+
+  /* Floating Nav Capsule */
+  --color-capsule-bg: #111111;
+  --color-capsule-text: #ffffff;
+  --color-capsule-hover: #222222;
+  --color-capsule-border: rgba(255, 255, 255, 0.12);
+  
+  /* Vertical accents (High restraint) */
+  --color-steel: #0284c7;
+  --color-steel-glow: rgba(2, 132, 199, 0.15);
+  --color-amber: #d97706;
+  --color-amber-glow: rgba(217, 119, 6, 0.15);
+  --color-green: #059669;
+  --color-green-glow: rgba(5, 150, 105, 0.15);
+  --color-violet: #7c3aed;
+  --color-violet-glow: rgba(124, 58, 237, 0.15);
+  
+  /* Difficulty scale */
+  --color-difficulty-beginner: #059669;
+  --color-difficulty-beginner-bg: #ecfdf5;
+  --color-difficulty-intermediate: #d97706;
+  --color-difficulty-intermediate-bg: #fffbeb;
+  --color-difficulty-advanced: #dc2626;
+  --color-difficulty-advanced-bg: #fef2f2;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --shadow-floating: 0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+  --shadow-nav: 0 10px 30px -5px rgba(0, 0, 0, 0.25);
+  
+  /* Typography */
+  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, Menlo, monospace;
+  
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+  
+  /* Motion */
+  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Global typography defaults */
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, a {
+  min-height: 44px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible, 
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin-top: 0;
+}
+
+code, pre, .mono-label {
+  font-family: var(--font-mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
