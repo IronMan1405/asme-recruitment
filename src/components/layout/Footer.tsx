@@ -23,8 +23,8 @@ export function Footer() {
 
           <div className="footer-col">
             <span className="mono-label">COMMUNITY</span>
-            <a href="https://discord.com" target="_blank" rel="noreferrer">
-              Discord <ArrowUpRight size={13} aria-hidden="true" />
+            <a href="https://chat.whatsapp.com/Jjs07RvjI4EBSqMlZkMgfU" target="_blank" rel="noreferrer">
+              WhatsApp <ArrowUpRight size={13} aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -32,7 +32,7 @@ export function Footer() {
 
       <div className="footer-bottom">
         <span>© 2026 ASME Student Chapter. All rights reserved.</span>
-        <span className="mono-label" style={{ color: '#0a0a0a' }}>
+        <span className="mono-label" style={{ color: 'var(--color-text)' }}>
           STATUS: ACTIVE RECRUITMENT
         </span>
       </div>

@@ -1,7 +1,8 @@
 import { NavLink, Link, useLocation } from 'react-router-dom'
-import { Menu, X, Sparkles } from 'lucide-react'
+import { Menu, X, MessageCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import asmeLogo from '../../assets/asme-logo.png'
+import { ThemeToggle } from '../composite/ThemeToggle'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -67,13 +68,14 @@ export function Navbar() {
           >
             FAQ
           </NavLink>
+          <ThemeToggle />
           <a
-            href="https://discord.com"
+            href="https://chat.whatsapp.com/Jjs07RvjI4EBSqMlZkMgfU"
             target="_blank"
             rel="noreferrer"
             className="capsule-cta-pill"
           >
-            <Sparkles size={13} aria-hidden="true" />
+            <MessageCircle size={13} aria-hidden="true" />
             <span>Join</span>
           </a>
         </nav>
@@ -118,15 +120,16 @@ export function Navbar() {
             >
               FAQ
             </NavLink>
+            <ThemeToggle showLabel />
             <a
-              href="https://discord.com"
+              href="https://chat.whatsapp.com/Jjs07RvjI4EBSqMlZkMgfU"
               target="_blank"
               rel="noreferrer"
               className="capsule-cta-pill"
               style={{ justifyContent: 'center', marginTop: '0.5rem' }}
             >
-              <Sparkles size={14} aria-hidden="true" />
-              <span>Join Discord</span>
+              <MessageCircle size={14} aria-hidden="true" />
+              <span>Join WhatsApp</span>
             </a>
           </div>
         )}

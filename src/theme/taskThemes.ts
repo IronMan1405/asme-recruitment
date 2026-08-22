@@ -2,7 +2,7 @@ export interface TaskTheme {
   /** CSS class applied to .task-detail-page to activate the reskin */
   className: string
   /** Which 3D emblem to render in the header — see ThemeEmblem.tsx */
-  variant: 'gotham' | 'stark' | 'cyborg'
+  variant: 'gotham' | 'stark' | 'spiderman'
   /** Small pill shown next to the vertical/task badges in the header */
   tagline: string
   /** Decorative glyphs for the tagline pill (kept small, so emoji render cleanly) */
@@ -27,9 +27,9 @@ export const taskThemes: Record<string, TaskTheme> = {
     icon: '⚡',
   },
   mechanical: {
-    className: 'theme-cyborg',
-    variant: 'cyborg',
-    tagline: 'Cybernetic Core Unit',
-    icon: '🦾',
+    className: 'theme-spiderman',
+    variant: 'spiderman',
+    tagline: 'Web-Slinger Ops Division',
+    icon: '🕸️',
   },
 }

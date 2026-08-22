@@ -77,7 +77,7 @@ export function VerticalOverviewPage() {
           <p>{vertical.shortDescription}</p>
           <div className="vertical-banner-meta">
             <span className="background-badge">{backgroundLabel}</span>
-            <span className="section-tag-badge" style={{ color: '#0a0a0a' }}>
+            <span className="section-tag-badge">
               {vertical.taskIds.length} TASK{vertical.taskIds.length === 1 ? '' : 'S'} AVAILABLE
             </span>
           </div>

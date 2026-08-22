@@ -124,7 +124,7 @@ export function TaskDetailPage() {
           </ExpandableSection>
         )}
 
-        <SubmissionPanel submissionUrl={task.submissionUrl} />
+        <SubmissionPanel task={task} verticalName={vertical.name} />
       </div>
 
       <TaskNav

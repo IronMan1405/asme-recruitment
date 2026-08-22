@@ -77,11 +77,11 @@ export function HowItWorksPage() {
               <div className="step" key={step.number}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div className="step-number">{step.number}</div>
-                  <Icon size={18} color="#0a0a0a" aria-hidden="true" />
+                  <Icon size={18} color="var(--color-text)" aria-hidden="true" />
                 </div>
                 <h3>{step.title}</h3>
-                <p style={{ fontWeight: 600, color: '#0a0a0a' }}>{step.tagline}</p>
-                <p style={{ fontSize: '0.86rem', color: '#64748b' }}>{step.details}</p>
+                <p style={{ fontWeight: 600, color: 'var(--color-text)' }}>{step.tagline}</p>
+                <p style={{ fontSize: '0.86rem', color: 'var(--color-text-muted)' }}>{step.details}</p>
               </div>
             )
           })}
@@ -107,15 +107,15 @@ export function HowItWorksPage() {
               style={{
                 border: '1px solid var(--color-border)',
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'var(--color-surface)',
                 padding: '1.75rem',
                 boxShadow: 'var(--shadow-sm)',
               }}
             >
-              <h3 style={{ fontSize: '1.18rem', color: '#0a0a0a', margin: '0 0 0.5rem', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.18rem', color: 'var(--color-text)', margin: '0 0 0.5rem', fontWeight: 700 }}>
                 {item.title}
               </h3>
-              <p style={{ color: '#475467', fontSize: '0.92rem', lineHeight: 1.55, margin: 0 }}>
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.92rem', lineHeight: 1.55, margin: 0 }}>
                 {item.desc}
               </p>
             </div>
@@ -127,7 +127,7 @@ export function HowItWorksPage() {
         style={{
           border: '1px solid var(--color-border)',
           borderRadius: 'var(--radius-xl)',
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--color-surface)',
           padding: '3rem',
           textAlign: 'center',
           display: 'flex',

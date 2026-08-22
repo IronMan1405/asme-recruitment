@@ -48,7 +48,7 @@ const faqs: FaqItem[] = [
     category: 'submission',
     question: 'When is the deadline and when will results be announced?',
     answer:
-      'All submissions are due by 20 September 2026 at 23:59 IST. Results and interview invitations will be communicated via email and announced on our Discord server shortly after the deadline.',
+      'All submissions are due by 20 September 2026 at 23:59 IST. Results and interview invitations will be communicated via email and announced on our WhatsApp group shortly after the deadline.',
   },
 ]
 
@@ -129,10 +129,10 @@ export function FaqPage() {
           <details className="faq-item" key={faq.question}>
             <summary className="faq-summary">
               <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <HelpCircle size={18} color="#0a0a0a" aria-hidden="true" />
+                <HelpCircle size={18} color="var(--color-text)" aria-hidden="true" />
                 {faq.question}
               </span>
-              <ChevronDown size={18} color="#64748b" aria-hidden="true" />
+              <ChevronDown size={18} color="var(--color-text-muted)" aria-hidden="true" />
             </summary>
             <div className="faq-content">
               <p>{faq.answer}</p>
@@ -147,7 +147,7 @@ export function FaqPage() {
           marginTop: '3.5rem',
           border: '1px solid var(--color-border)',
           borderRadius: 'var(--radius-xl)',
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--color-surface)',
           padding: '2.5rem',
           display: 'flex',
           alignItems: 'center',
@@ -163,31 +163,31 @@ export function FaqPage() {
               width: '44px',
               height: '44px',
               borderRadius: '50%',
-              backgroundColor: '#0a0a0a',
+              backgroundColor: 'var(--color-text)',
               display: 'grid',
               placeItems: 'center',
-              color: '#ffffff',
+              color: 'var(--color-background)',
             }}
           >
             <MessageSquare size={20} aria-hidden="true" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.2rem', margin: '0 0 0.25rem', color: '#0a0a0a', fontWeight: 700 }}>
+            <h3 style={{ fontSize: '1.2rem', margin: '0 0 0.25rem', color: 'var(--color-text)', fontWeight: 700 }}>
               Still have a question?
             </h3>
-            <p style={{ margin: 0, fontSize: '0.92rem', color: '#64748b' }}>
-              Join our recruitment Discord server or email our team directly.
+            <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--color-text-muted)' }}>
+              Join our recruitment WhatsApp group or email our team directly.
             </p>
           </div>
         </div>
 
         <a
           className="secondary-button"
-          href="https://discord.com"
+          href="https://chat.whatsapp.com/Jjs07RvjI4EBSqMlZkMgfU"
           target="_blank"
           rel="noreferrer"
         >
-          <span>Ask on Discord</span>
+          <span>Ask on WhatsApp</span>
           <ArrowUpRight size={14} aria-hidden="true" />
         </a>
       </div>
