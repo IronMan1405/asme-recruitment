@@ -1,8 +1,8 @@
 const stats = [
-  { index: '01', label: 'DURATION', value: '2 weeks', sub: 'Dedicated runway' },
-  { index: '02', label: 'TRACKS', value: '03', sub: 'Mechanical · Elec · Software' },
+  { index: '01', label: 'DURATION', value: '1 week', sub: 'Dedicated runway' },
+  { index: '02', label: 'TRACKS', value: '03', sub: 'Mechanical · Electronics · Software' },
   { index: '03', label: 'EXPERIENCE', value: 'None required', sub: 'Beginner friendly' },
-  { index: '04', label: 'DEADLINE', value: '20 SEP 2026', sub: '23:59 IST' },
+  { index: '04', label: 'DEADLINE', value: '31 AUG 2026', sub: '23:59 IST' },
 ]
 
 export function RecruitmentStats() {
