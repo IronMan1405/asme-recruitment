@@ -1654,6 +1654,28 @@
   transform: none;
 }
 
+.submission-guidelines-card {
+  padding: 2.5rem;
+}
+
+.submission-guidelines-card .task-section-header {
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.submission-guidelines-card .task-section-content ul,
+.submission-guidelines-card .task-section-content ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #334155;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.submission-guidelines-card .task-section-content li + li {
+  margin-top: 0.35rem;
+}
+
 .submission-form {
   display: flex;
   flex-direction: column;

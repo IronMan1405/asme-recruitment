@@ -7,6 +7,7 @@ import { DifficultyBadge } from '../components/primitives/DifficultyBadge'
 import { TaskNav } from '../components/composite/TaskNav'
 import { TaskSection } from '../components/composite/TaskSection'
 import { ResourceList } from '../components/composite/ResourceList'
+import { SubmissionGuidelinesCard } from '../components/composite/SubmissionGuidelinesCard'
 import { SubmissionPanel } from '../components/composite/SubmissionPanel'
 import { ThemeEmblem } from '../components/composite/ThemeEmblem'
 import { getTaskById, getVerticalById, getTasksForVertical } from '../lib/data'
@@ -136,6 +137,7 @@ export function TaskDetailPage() {
           </TaskSection>
         )}
 
+        <SubmissionGuidelinesCard verticalId={vertical.id} />
         <SubmissionPanel task={task} verticalName={vertical.name} />
       </div>
 
