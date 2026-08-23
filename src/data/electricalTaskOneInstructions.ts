@@ -28,6 +28,8 @@ You need to use at least **3 LEDs**.
 
 Instead of using a potentiometer, use Serial monitor to take input from user and switch modes accrodingly.
 
+# Q2: Batmobile Smart Cooling System — DC Motor with Temperature + Light Sensors
+
 ### Story
 
 Batman’s Batmobile cooling system must be adaptive and intelligent.
