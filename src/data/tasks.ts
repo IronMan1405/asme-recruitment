@@ -13,7 +13,8 @@ export const tasks: Task[] = [
     prerequisites: ['No experience needed'], 
     instructions: mechanicalTaskOneInstructions, 
     resources: { required: [
-        { type: 'tutorial', title: 'Learn Autodesk Fusion 360 in 30 Days for Complete Beginners!', url: 'https://youtube.com/playlist?list=PLrZ2zKOtC_-C4rWfapgngoe9o2-ng8ZBr&si=G5858X2RlZSmw4xD', note: 'Use this playlist to learn Fusion 360 basics.' }
+        { type: 'tutorial', title: 'Learn Autodesk Fusion 360 in 30 Days for Complete Beginners!', url: 'https://youtube.com/playlist?list=PLrZ2zKOtC_-C4rWfapgngoe9o2-ng8ZBr&si=G5858X2RlZSmw4xD', note: 'Use this playlist to learn Fusion 360 basics.' },
+        { type: 'video', title: 'Autodesk Fusion 360 Workshop 2', url: 'https://drive.google.com/file/d/1NGI40qE1Z_tl5eTfGca2ODm4ygynG66O/view', note: 'Part-2 of the Fusion 360 workshop conducted previously by ASME.' }
     ], optional: [] }, 
     evaluationCriteria: ['Q1: Functional working of the joints in the gimbal', 'Q2: Accuracy of Dimensions of the screwdriver', 'Q3 (Brownie Task): Complexity of the sketch and how well constrained it is'], 
     contactdetails: ['For any queries regarding the task, please reach out to ', 'Shreyas (+91 9004795249)',' Samanyu (+91 9897328395)'],
