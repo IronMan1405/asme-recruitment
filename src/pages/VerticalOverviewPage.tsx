@@ -10,7 +10,7 @@ import { accentColors } from '../theme/tokens'
 
 const verticalImages: Record<string, string> = {
   mechanical: '/mechanical-card.jpg',
-  electronics: '/electronics-card.jpg',
+  electrical: '/electronics-card.jpg',
   software: '/software-card.jpg',
 }
 

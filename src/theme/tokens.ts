@@ -1,6 +1,6 @@
 export const accentColors = {
   mechanical: 'var(--color-steel)',
-  electronics: 'var(--color-amber)',
+  electrical: 'var(--color-amber)',
   software: 'var(--color-green)',
   robotics: 'var(--color-violet)',
 } as const

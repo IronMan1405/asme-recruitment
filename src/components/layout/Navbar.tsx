@@ -26,7 +26,11 @@ export function Navbar() {
 
   // Close mobile drawer on route change
   useEffect(() => {
-    setIsOpen(false)
+    const timer = window.setTimeout(() => {
+      setIsOpen(false)
+    }, 0)
+
+    return () => window.clearTimeout(timer)
   }, [location.pathname])
 
   return (

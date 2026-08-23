@@ -20,7 +20,7 @@ export const tasks: Task[] = [
     submissionUrl: 'https://example.com/asme-demo/submit/mech-01', 
     tags: ['CAD', 'Fusion 360'] },
 
-  { id: 'elec-01', verticalId: 'electronics', 
+  { id: 'elec-01', verticalId: 'electrical', 
     title: 'Batman\'s Countermeasures Await!', 
     shortDescription: 'Build an Arduino and Tinkercad countermeasure console with selectable LED patterns, sensor input, and adaptive DC motor control.', 
     difficulty: 'beginner', 

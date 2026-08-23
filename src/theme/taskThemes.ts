@@ -14,7 +14,7 @@ export interface TaskTheme {
  * Keyed by vertical id — see src/data/verticals.ts.
  */
 export const taskThemes: Record<string, TaskTheme> = {
-  electronics: {
+  electrical: {
     className: 'theme-gotham',
     variant: 'gotham',
     tagline: 'Gotham Night Division',

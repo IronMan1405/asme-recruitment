@@ -1,0 +1,132 @@
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
+import type { RecruitmentSettings, Task1Submission, Task1SubmissionStatus, Vertical } from '../types/submission'
+
+export const VALID_VERTICALS = ['software', 'electrical', 'mechanical'] as const
+export type Task1Vertical = (typeof VALID_VERTICALS)[number]
+
+export const isValidVertical = (value: string): value is Vertical =>
+  VALID_VERTICALS.includes(value as Vertical)
+
+export const normalizeVertical = (value: string): Vertical | null => {
+  const normalized = value.trim().toLowerCase()
+  if (normalized === 'electronics') return 'electrical'
+  return isValidVertical(normalized) ? normalized : null
+}
+
+export const validateRequiredString = (value: string, label: string) => {
+  if (!value || !value.trim()) {
+    throw new Error(`${label} is required.`)
+  }
+}
+
+export const validateEmail = (email: string) => {
+  const trimmed = email.trim()
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailPattern.test(trimmed)) {
+    throw new Error('Please enter a valid email address.')
+  }
+
+  return trimmed
+}
+
+export const validateSubmissionLink = (url: string) => {
+  try {
+    const parsed = new URL(url)
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
+      throw new Error('Submission link must use http or https.')
+    }
+    return parsed.toString()
+  } catch {
+    throw new Error('Please enter a valid submission URL.')
+  }
+}
+
+export const getTask1SubmissionStatus = async (): Promise<Task1SubmissionStatus> => {
+  if (!isSupabaseConfigured) {
+    return { task1_open: false, source: 'fallback' }
+  }
+
+  const { data, error } = await supabase
+    .from('recruitment_settings')
+    .select('task1_open')
+    .order('id', { ascending: true })
+    .limit(1)
+    .maybeSingle()
+
+  if (error) {
+    console.error('Failed to load recruitment setting:', error.message)
+    return { task1_open: false, source: 'fallback' }
+  }
+
+  return {
+    task1_open: Boolean(data?.task1_open ?? false),
+    source: 'database',
+  }
+}
+
+export const submitTask1 = async (payload: {
+  name: string
+  bitsId: string
+  email: string
+  vertical: string
+  submissionLink: string
+  notes?: string
+}) => {
+  const name = payload.name.trim()
+  const bitsId = payload.bitsId.trim()
+  const email = validateEmail(payload.email)
+  const vertical = normalizeVertical(payload.vertical)
+  const submissionLink = validateSubmissionLink(payload.submissionLink)
+
+  validateRequiredString(name, 'Name')
+  validateRequiredString(bitsId, 'BITS ID')
+
+  if (!vertical) {
+    throw new Error('Selected vertical is invalid.')
+  }
+
+  if (!isSupabaseConfigured) {
+    throw new Error('Task 1 submissions are currently unavailable.')
+  }
+
+  const response = await getTask1SubmissionStatus()
+  if (!response.task1_open) {
+    throw new Error('Task 1 submissions are currently closed.')
+  }
+
+  const submission: Task1Submission = {
+    name,
+    bits_id: bitsId,
+    email,
+    vertical,
+    submission_link: submissionLink,
+    notes: payload.notes?.trim() || null,
+  }
+
+  const { error } = await supabase.from('task1_submissions').insert(submission)
+
+  if (error) {
+    if (error.message.toLowerCase().includes('closed') || error.message.toLowerCase().includes('currently closed')) {
+      throw new Error('Task 1 submissions are currently closed.')
+    }
+
+    if (error.message.toLowerCase().includes('duplicate') || error.message.toLowerCase().includes('already')) {
+      throw new Error('This submission was already received.')
+    }
+
+    console.error('Task 1 submission insert failed:', error)
+    throw new Error('Unable to submit your work right now. Please try again later.')
+  }
+
+  return true
+}
+
+export const isTask1SubmissionOpen = async (): Promise<boolean> => {
+  const status = await getTask1SubmissionStatus()
+  return status.task1_open
+}
+
+export const makeTask1OpenState = (task1Open: boolean): RecruitmentSettings => ({
+  task1_open: task1Open,
+})
