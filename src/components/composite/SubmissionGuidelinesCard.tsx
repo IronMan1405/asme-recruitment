@@ -5,7 +5,7 @@ interface SubmissionGuidelinesCardProps {
 const submissionGuidelines: Record<string, string[]> = {
   mechanical: [
     'Export your CAD files in .f3d or .f3z format.',
-    'Name your file using the format: 2026XXPSXXXXP_Task1.f3d',
+    'Name your file using the format: <full_bits_id>_Task1_QX.f3d',
     'Create a Google Drive folder containing your task files and submit the folder link.',
     'Make sure the required access permissions are enabled so that the files can be viewed.',
   ],

@@ -15,7 +15,7 @@ export const tasks: Task[] = [
     resources: { required: [
         { type: 'tutorial', title: 'Learn Autodesk Fusion 360 in 30 Days for Complete Beginners!', url: 'https://youtube.com/playlist?list=PLrZ2zKOtC_-C4rWfapgngoe9o2-ng8ZBr&si=G5858X2RlZSmw4xD', note: 'Use this playlist to learn Fusion 360 basics.' }
     ], optional: [] }, 
-    evaluationCriteria: ['Task 1: Functional working of the joints in the gimbal', 'Task 2: Accuracy of Dimensions of the screwdriver', 'Task 3: Complexity of the sketch and how well constrained it is'], 
+    evaluationCriteria: ['Q1: Functional working of the joints in the gimbal', 'Q2: Accuracy of Dimensions of the screwdriver', 'Q3 (Brownie Task): Complexity of the sketch and how well constrained it is'], 
     contactdetails: ['For any queries regarding the task, please reach out to ', 'Shreyas (+91 9004795249)',' Samanyu (+91 9897328395)'],
     submissionUrl: 'https://example.com/asme-demo/submit/mech-01', 
     tags: ['CAD', 'Fusion 360'] },
