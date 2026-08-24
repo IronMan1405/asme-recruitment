@@ -10,8 +10,11 @@ create table if not exists public.task1_submissions (
   submission_link text not null,
   notes text,
   submitted_at timestamptz not null default now(),
-  unique (user_id)
+  unique (email, vertical)
 );
+
+alter table public.task1_submissions drop constraint if exists task1_submissions_user_id_key;
+alter table public.task1_submissions add constraint task1_submissions_email_vertical_key unique (email, vertical);
 
 create table if not exists public.recruitment_settings (
   id uuid primary key default gen_random_uuid(),

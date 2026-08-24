@@ -53,6 +53,29 @@ export const getAuthenticatedTask1User = async () => {
   }
 }
 
+export const hasSubmittedTask1ForVertical = async (email: string, vertical: string): Promise<boolean> => {
+  const normalizedEmail = email.trim().toLowerCase()
+  const normalizedVertical = normalizeVertical(vertical)
+
+  if (!normalizedVertical || !normalizedEmail) {
+    return false
+  }
+
+  const { data, error } = await supabase
+    .from('task1_submissions')
+    .select('id')
+    .eq('email', normalizedEmail)
+    .eq('vertical', normalizedVertical)
+    .limit(1)
+
+  if (error) {
+    console.error('Task 1 vertical duplicate check failed:', error)
+    return false
+  }
+
+  return (data?.length ?? 0) > 0
+}
+
 export const validateSubmissionLink = (url: string) => {
   try {
     const parsed = new URL(url)
@@ -122,7 +145,8 @@ export const submitTask1 = async (payload: {
   const { data: existingSubmission, error: duplicateCheckError } = await supabase
     .from('task1_submissions')
     .select('id')
-    .eq('user_id', authenticatedUser.user.id)
+    .eq('email', authenticatedUser.email)
+    .eq('vertical', vertical)
     .limit(1)
 
   if (duplicateCheckError) {
@@ -131,7 +155,7 @@ export const submitTask1 = async (payload: {
   }
 
   if ((existingSubmission?.length ?? 0) > 0) {
-    throw new Error('This submission was already received.')
+    throw new Error('You have already submitted Task 1 for this vertical.')
   }
 
   const email = authenticatedUser.email
@@ -150,12 +174,19 @@ export const submitTask1 = async (payload: {
   const { error } = await supabase.from('task1_submissions').insert(submission)
 
   if (error) {
-    if (error.message.toLowerCase().includes('closed') || error.message.toLowerCase().includes('currently closed')) {
+    const lowerMessage = error.message.toLowerCase()
+
+    if (lowerMessage.includes('closed') || lowerMessage.includes('currently closed')) {
       throw new Error('Task 1 submissions are currently closed.')
     }
 
-    if (error.message.toLowerCase().includes('duplicate') || error.message.toLowerCase().includes('already')) {
-      throw new Error('This submission was already received.')
+    if (
+      lowerMessage.includes('duplicate') ||
+      lowerMessage.includes('already') ||
+      lowerMessage.includes('unique constraint') ||
+      lowerMessage.includes('violates unique constraint')
+    ) {
+      throw new Error('You have already submitted Task 1 for this vertical.')
     }
 
     console.error('Task 1 submission insert failed:', error)

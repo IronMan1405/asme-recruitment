@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Task } from '../../data/types'
 import { supabase, isSupabaseConfigured } from '../../lib/supabase'
-import { getTask1SubmissionStatus, isBitsGoogleEmail, normalizeVertical, submitTask1 } from '../../services/submissions'
+import { getTask1SubmissionStatus, hasSubmittedTask1ForVertical, isBitsGoogleEmail, normalizeVertical, submitTask1 } from '../../services/submissions'
 
 interface SubmissionPanelProps {
   task: Task
@@ -22,6 +22,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
   const [isSubmissionOpen, setIsSubmissionOpen] = useState<boolean | null>(null)
   const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [hasSubmittedForVertical, setHasSubmittedForVertical] = useState(false)
 
   const taskVertical = normalizeVertical(task.verticalId || verticalName) ?? normalizeVertical(verticalName) ?? 'software'
 
@@ -56,6 +57,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
         if (isMounted) {
           setIsAuthenticated(false)
           setAuthenticatedEmail(null)
+          setHasSubmittedForVertical(false)
         }
         return
       }
@@ -77,6 +79,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
         if (isMounted) {
           setIsAuthenticated(false)
           setAuthenticatedEmail(null)
+          setHasSubmittedForVertical(false)
           setErrorMessage('Only @pilani.bits-pilani.ac.in Google accounts can submit.')
         }
       }
@@ -99,11 +102,13 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
         await supabase.auth.signOut()
         setIsAuthenticated(false)
         setAuthenticatedEmail(null)
+        setHasSubmittedForVertical(false)
         setErrorMessage('Only @pilani.bits-pilani.ac.in Google accounts can submit.')
       }
 
       if (!session?.user) {
         setErrorMessage('')
+        setHasSubmittedForVertical(false)
       }
     })
 
@@ -112,6 +117,36 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
       authSubscription.subscription.unsubscribe()
     }
   }, [])
+
+  useEffect(() => {
+    let isMounted = true
+
+    const checkExistingSubmission = async () => {
+      if (!isAuthenticated || !authenticatedEmail) {
+        if (isMounted) {
+          setHasSubmittedForVertical(false)
+        }
+        return
+      }
+
+      try {
+        const hasSubmitted = await hasSubmittedTask1ForVertical(authenticatedEmail, taskVertical)
+        if (isMounted) {
+          setHasSubmittedForVertical(hasSubmitted)
+        }
+      } catch {
+        if (isMounted) {
+          setHasSubmittedForVertical(false)
+        }
+      }
+    }
+
+    void checkExistingSubmission()
+
+    return () => {
+      isMounted = false
+    }
+  }, [authenticatedEmail, isAuthenticated, taskVertical])
 
   const handleGoogleSignIn = async () => {
     if (!isSupabaseConfigured) {
@@ -132,6 +167,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',
+          hd: 'pilani.bits-pilani.ac.in',
         },
       },
     })
@@ -200,6 +236,26 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
           <p>
             Your Task 1 submission has been recorded.
           </p>
+        </div>
+      </section>
+    )
+  }
+
+  if (hasSubmittedForVertical) {
+    return (
+      <section className="submission-panel submission-panel-done">
+        <div className="submission-icon submission-icon-success">
+          <CheckCircle2 size={22} aria-hidden="true" />
+        </div>
+        <div className="submission-copy">
+          <span
+            className="section-tag-badge"
+            style={{ color: '#a1a1aa', borderColor: 'rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)' }}
+          >
+            VERTICAL LIMIT
+          </span>
+          <h2>Already submitted for this vertical</h2>
+          <p>You have already submitted Task 1 for this vertical.</p>
         </div>
       </section>
     )
