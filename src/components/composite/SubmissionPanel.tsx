@@ -301,7 +301,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
         {!isAuthenticated ? (
           <div className="submission-auth-box">
             <button type="button" className="primary-button" onClick={handleGoogleSignIn}>
-              Continue with BITS Google
+              Continue with BITS Email ID
             </button>
             {errorMessage && (
               <p className="submission-error" role="alert">
