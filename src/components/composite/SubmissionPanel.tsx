@@ -123,7 +123,8 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
     setErrorMessage('')
     setState('idle')
 
-    const redirectTo = `${window.location.origin}${window.location.pathname}`
+    // const redirectTo = `${window.location.origin}${window.location.pathname}`
+    const redirectTo = `${window.location.origin}`
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
