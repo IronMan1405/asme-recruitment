@@ -2,7 +2,8 @@ import { AlertCircle, ArrowUpRight, CheckCircle2, Loader2, Lock, Send } from 'lu
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Task } from '../../data/types'
-import { getTask1SubmissionStatus, normalizeVertical, submitTask1 } from '../../services/submissions'
+import { supabase, isSupabaseConfigured } from '../../lib/supabase'
+import { getTask1SubmissionStatus, isBitsGoogleEmail, normalizeVertical, submitTask1 } from '../../services/submissions'
 
 interface SubmissionPanelProps {
   task: Task
@@ -14,12 +15,13 @@ type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
 export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
   const [name, setName] = useState('')
   const [bitsId, setBitsId] = useState('')
-  const [email, setEmail] = useState('')
   const [link, setLink] = useState('')
   const [notes, setNotes] = useState('')
   const [state, setState] = useState<SubmitState>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmissionOpen, setIsSubmissionOpen] = useState<boolean | null>(null)
+  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const taskVertical = normalizeVertical(task.verticalId || verticalName) ?? normalizeVertical(verticalName) ?? 'software'
 
@@ -46,6 +48,100 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
     }
   }, [])
 
+  useEffect(() => {
+    let isMounted = true
+
+    const syncAuthState = async () => {
+      if (!isSupabaseConfigured) {
+        if (isMounted) {
+          setIsAuthenticated(false)
+          setAuthenticatedEmail(null)
+        }
+        return
+      }
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+
+      const currentEmail = session?.user?.email?.trim().toLowerCase() ?? null
+      const validBitsEmail = currentEmail && isBitsGoogleEmail(currentEmail) ? currentEmail : null
+
+      if (isMounted) {
+        setAuthenticatedEmail(validBitsEmail)
+        setIsAuthenticated(Boolean(validBitsEmail))
+      }
+
+      if (session?.user && currentEmail && !validBitsEmail) {
+        await supabase.auth.signOut()
+        if (isMounted) {
+          setIsAuthenticated(false)
+          setAuthenticatedEmail(null)
+          setErrorMessage('Only @pilani.bits-pilani.ac.in Google accounts can submit.')
+        }
+      }
+    }
+
+    void syncAuthState()
+
+    const { data: authSubscription } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const currentEmail = session?.user?.email?.trim().toLowerCase() ?? null
+      const validBitsEmail = currentEmail && isBitsGoogleEmail(currentEmail) ? currentEmail : null
+
+      if (!isMounted) {
+        return
+      }
+
+      setAuthenticatedEmail(validBitsEmail)
+      setIsAuthenticated(Boolean(validBitsEmail))
+
+      if (session?.user && currentEmail && !validBitsEmail) {
+        await supabase.auth.signOut()
+        setIsAuthenticated(false)
+        setAuthenticatedEmail(null)
+        setErrorMessage('Only @pilani.bits-pilani.ac.in Google accounts can submit.')
+      }
+
+      if (!session?.user) {
+        setErrorMessage('')
+      }
+    })
+
+    return () => {
+      isMounted = false
+      authSubscription.subscription.unsubscribe()
+    }
+  }, [])
+
+  const handleGoogleSignIn = async () => {
+    if (!isSupabaseConfigured) {
+      setErrorMessage('Google sign-in is not configured yet.')
+      setState('error')
+      return
+    }
+
+    setErrorMessage('')
+    setState('idle')
+
+    const redirectTo = `${window.location.origin}${window.location.pathname}`
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
+    })
+
+    if (error) {
+      setErrorMessage(error.message)
+      setState('error')
+    }
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -59,6 +155,12 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
       return
     }
 
+    if (!authenticatedEmail) {
+      setState('error')
+      setErrorMessage('Please sign in with your BITS Google account before submitting.')
+      return
+    }
+
     setState('submitting')
     setErrorMessage('')
 
@@ -66,7 +168,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
       await submitTask1({
         name,
         bitsId,
-        email,
+        email: authenticatedEmail,
         vertical: taskVertical,
         submissionLink: link,
         notes,
@@ -140,90 +242,97 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
           Submit your demo solution and a short note explaining what you tried and what you would improve next.
         </p>
 
-        <form className="submission-form" onSubmit={handleSubmit}>
-          <div className="submission-form-row">
-            <label className="submission-field">
-              <span>Name</span>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="Your name"
-                disabled={state === 'submitting'}
-              />
-            </label>
-            <label className="submission-field">
-              <span>BITS ID</span>
-              <input
-                type="text"
-                required
-                value={bitsId}
-                onChange={(event) => setBitsId(event.target.value)}
-                placeholder="2024A7PS1234H"
-                disabled={state === 'submitting'}
-              />
-            </label>
-          </div>
-
-          <div className="submission-form-row">
-            <label className="submission-field">
-              <span>Email</span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@example.com"
-                disabled={state === 'submitting'}
-              />
-            </label>
-          </div>
-
-          <label className="submission-field">
-            <span>Submission link</span>
-            <input
-              type="url"
-              required
-              value={link}
-              onChange={(event) => setLink(event.target.value)}
-              placeholder="https://example.com"
-              disabled={state === 'submitting'}
-            />
-          </label>
-
-          <label className="submission-field">
-            <span>Notes (optional)</span>
-            <textarea
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-              placeholder="What you tried, what you'd improve next..."
-              rows={2}
-              disabled={state === 'submitting'}
-            />
-          </label>
-
-          {state === 'error' && (
-            <p className="submission-error" role="alert">
-              <AlertCircle size={15} aria-hidden="true" />
-              <span>{errorMessage}</span>
-            </p>
-          )}
-
-          <button type="submit" className="primary-button" disabled={state === 'submitting' || isSubmissionOpen === null}>
-            {state === 'submitting' ? (
-              <>
-                <Loader2 size={16} className="submission-spinner" aria-hidden="true" />
-                <span>Submitting…</span>
-              </>
-            ) : (
-              <>
-                <span>Submit Your Work</span>
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </>
+        {!isAuthenticated ? (
+          <div className="submission-auth-box">
+            <button type="button" className="primary-button" onClick={handleGoogleSignIn}>
+              Continue with BITS Google
+            </button>
+            {errorMessage && (
+              <p className="submission-error" role="alert">
+                <AlertCircle size={15} aria-hidden="true" />
+                <span>{errorMessage}</span>
+              </p>
             )}
-          </button>
-        </form>
+          </div>
+        ) : (
+          <form className="submission-form" onSubmit={handleSubmit}>
+            <div className="submission-form-row">
+              <label className="submission-field">
+                <span>Name</span>
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="Your name"
+                  disabled={state === 'submitting'}
+                />
+              </label>
+              <label className="submission-field">
+                <span>BITS ID</span>
+                <input
+                  type="text"
+                  required
+                  value={bitsId}
+                  onChange={(event) => setBitsId(event.target.value)}
+                  placeholder="2024A7PS1234H"
+                  disabled={state === 'submitting'}
+                />
+              </label>
+            </div>
+
+            <div className="submission-form-row">
+              <div className="submission-field">
+                <span>Signed in as</span>
+                <input type="text" value={authenticatedEmail ?? ''} readOnly aria-readonly="true" />
+              </div>
+            </div>
+
+            <label className="submission-field">
+              <span>Submission link</span>
+              <input
+                type="url"
+                required
+                value={link}
+                onChange={(event) => setLink(event.target.value)}
+                placeholder="https://example.com"
+                disabled={state === 'submitting'}
+              />
+            </label>
+
+            <label className="submission-field">
+              <span>Notes (optional)</span>
+              <textarea
+                value={notes}
+                onChange={(event) => setNotes(event.target.value)}
+                placeholder="What you tried, what you'd improve next..."
+                rows={2}
+                disabled={state === 'submitting'}
+              />
+            </label>
+
+            {state === 'error' && (
+              <p className="submission-error" role="alert">
+                <AlertCircle size={15} aria-hidden="true" />
+                <span>{errorMessage}</span>
+              </p>
+            )}
+
+            <button type="submit" className="primary-button" disabled={state === 'submitting' || isSubmissionOpen === null}>
+              {state === 'submitting' ? (
+                <>
+                  <Loader2 size={16} className="submission-spinner" aria-hidden="true" />
+                  <span>Submitting…</span>
+                </>
+              ) : (
+                <>
+                  <span>Submit Your Work</span>
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </>
+              )}
+            </button>
+          </form>
+        )}
       </div>
     </section>
   )

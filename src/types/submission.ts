@@ -7,6 +7,7 @@ export interface Task1Submission {
   name: string
   bits_id: string
   email: string
+  user_id?: string | null
   vertical: Vertical
   submission_link: string
   notes?: string | null

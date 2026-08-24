@@ -2,13 +2,15 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.task1_submissions (
   id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
   name text not null,
   bits_id text not null,
-  email text not null,
+  email text not null check (email ~* '@pilani\.bits-pilani\.ac\.in$'),
   vertical text not null check (vertical in ('software', 'electrical', 'mechanical')),
   submission_link text not null,
   notes text,
-  submitted_at timestamptz not null default now()
+  submitted_at timestamptz not null default now(),
+  unique (user_id)
 );
 
 create table if not exists public.recruitment_settings (
@@ -48,6 +50,37 @@ create trigger task1_submissions_open_check
 before insert on public.task1_submissions
 for each row execute function public.enforce_task1_open();
 
+create or replace function public.enforce_task1_submission_identity()
+returns trigger
+language plpgsql
+security definer
+as $$
+begin
+  if new.user_id is null then
+    raise exception 'Authenticated user is required.';
+  end if;
+
+  if new.user_id <> auth.uid() then
+    raise exception 'Submission user does not match the authenticated account.';
+  end if;
+
+  if lower(new.email) <> lower(coalesce((auth.jwt() ->> 'email'), '')) then
+    raise exception 'Submission email must match the authenticated Google account.';
+  end if;
+
+  if new.email !~* '@pilani\.bits-pilani\.ac\.in$' then
+    raise exception 'Only BITS Google accounts are allowed.';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists task1_submission_identity_check on public.task1_submissions;
+create trigger task1_submission_identity_check
+before insert or update on public.task1_submissions
+for each row execute function public.enforce_task1_submission_identity();
+
 insert into public.recruitment_settings (task1_open)
 select true
 where not exists (select 1 from public.recruitment_settings);
@@ -55,16 +88,19 @@ where not exists (select 1 from public.recruitment_settings);
 alter table public.task1_submissions enable row level security;
 alter table public.recruitment_settings enable row level security;
 
-create policy "Public can insert task1 submissions"
+create policy "Authenticated users can insert task1 submissions"
 on public.task1_submissions
 for insert
 with check (
-  name is not null
+  auth.uid() is not null
+  and user_id = auth.uid()
+  and name is not null
   and btrim(name) <> ''
   and bits_id is not null
   and btrim(bits_id) <> ''
   and email is not null
-  and email ~* '^[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}$'
+  and lower(email) = lower(coalesce((auth.jwt() ->> 'email'), ''))
+  and email ~* '@pilani\.bits-pilani\.ac\.in$'
   and vertical in ('software', 'electrical', 'mechanical')
   and submission_link is not null
   and submission_link ~* '^https?://'

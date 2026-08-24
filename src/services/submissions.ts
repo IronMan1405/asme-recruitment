@@ -30,6 +30,29 @@ export const validateEmail = (email: string) => {
   return trimmed
 }
 
+export const isBitsGoogleEmail = (email?: string | null): boolean => {
+  const normalized = email?.trim().toLowerCase() ?? ''
+  return normalized.endsWith('@pilani.bits-pilani.ac.in')
+}
+
+export const getAuthenticatedTask1User = async () => {
+  const { data, error } = await supabase.auth.getUser()
+
+  if (error || !data.user) {
+    throw new Error('Please sign in with your BITS Google account to continue.')
+  }
+
+  const userEmail = data.user.email?.trim().toLowerCase() ?? ''
+  if (!isBitsGoogleEmail(userEmail)) {
+    throw new Error('Only @pilani.bits-pilani.ac.in Google accounts can submit.')
+  }
+
+  return {
+    user: data.user,
+    email: userEmail,
+  }
+}
+
 export const validateSubmissionLink = (url: string) => {
   try {
     const parsed = new URL(url)
@@ -68,14 +91,13 @@ export const getTask1SubmissionStatus = async (): Promise<Task1SubmissionStatus>
 export const submitTask1 = async (payload: {
   name: string
   bitsId: string
-  email: string
+  email?: string
   vertical: string
   submissionLink: string
   notes?: string
 }) => {
   const name = payload.name.trim()
   const bitsId = payload.bitsId.trim()
-  const email = validateEmail(payload.email)
   const vertical = normalizeVertical(payload.vertical)
   const submissionLink = validateSubmissionLink(payload.submissionLink)
 
@@ -95,10 +117,31 @@ export const submitTask1 = async (payload: {
     throw new Error('Task 1 submissions are currently closed.')
   }
 
+  const authenticatedUser = await getAuthenticatedTask1User()
+
+  const { data: existingSubmission, error: duplicateCheckError } = await supabase
+    .from('task1_submissions')
+    .select('id')
+    .eq('user_id', authenticatedUser.user.id)
+    .limit(1)
+
+  if (duplicateCheckError) {
+    console.error('Task 1 duplicate check failed:', duplicateCheckError)
+    throw new Error('Unable to submit your work right now. Please try again later.')
+  }
+
+  if ((existingSubmission?.length ?? 0) > 0) {
+    throw new Error('This submission was already received.')
+  }
+
+  const email = authenticatedUser.email
+  const trimmedEmail = validateEmail(email)
+
   const submission: Task1Submission = {
     name,
     bits_id: bitsId,
-    email,
+    email: trimmedEmail,
+    user_id: authenticatedUser.user.id,
     vertical,
     submission_link: submissionLink,
     notes: payload.notes?.trim() || null,
