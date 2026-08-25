@@ -1,7 +1,7 @@
 const steps = [
   { number: '01', title: 'Task 1', description: 'Beginner level task.' },
   { number: '02', title: 'Task 2', description: 'Medium level task.' },
-  { number: '03', title: 'Personnel Interview', description: 'A small 1 on 1 interaction.' },
+  { number: '03', title: 'Personal Interview', description: 'A small 1 on 1 interaction.' },
   { number: '04', title: 'Probation', description: 'A learning phase before your recruitment is finalized.' },
 ]
 
