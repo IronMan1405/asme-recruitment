@@ -26,7 +26,7 @@ You need to use at least **3 LEDs**.
 
 ### BONUS TASK
 
-Instead of using a potentiometer, use Serial monitor to take input from user and switch modes accrodingly.
+Instead of using a potentiometer, use Serial monitor to take input from user and switch modes accordingly.
 
 ---
 
