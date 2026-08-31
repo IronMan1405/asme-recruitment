@@ -56,7 +56,7 @@ const faqs: FaqItem[] = [
     category: 'submission',
     question: 'When is the deadline and when will results be announced?',
     answer:
-      'All submissions are due by 31 August 2026 at 23:59 IST. Results and interview invitations will be communicated via email and announced on our WhatsApp group shortly after the deadline.',
+      'All submissions are due by 2 September 2026 at 23:59 IST. Results and interview invitations will be communicated via email and announced on our WhatsApp group shortly after the deadline.',
   },
 ]
 
