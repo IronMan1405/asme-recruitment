@@ -1,5 +1,5 @@
 export const electricalTaskTwoInstructions = `
-# Q1: Joker's Chaos Dial — Multi-Mode LED Traps
+# Design Peter Parker’s Custom Wrist-Mounted Web-Shooter PCB
 
 ### Story
 
