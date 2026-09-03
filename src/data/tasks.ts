@@ -4,6 +4,7 @@ import { electricalTaskOneInstructions } from './electricalTaskOneInstructions'
 import { mechanicalTaskOneInstructions } from './mechanicalTaskOneInstruction'
 import { taskTwoInstructions } from './taskTwoInstructions'
 import { electricalTaskTwoInstructions } from './electricalTaskTwoInstructions'
+import { softwareTaskTwoInstructions } from './softwareTaskTwoInstructions'
 
 export const tasks: Task[] = [
   { id: 'mech-01', verticalId: 'mechanical', 
@@ -63,30 +64,62 @@ export const tasks: Task[] = [
     submissionUrl: 'https://example.com/asme-demo/submit/soft-01', 
     tags: ['Python', 'computer vision', 'MediaPipe', 'OpenCV', 'robotics'] },
 
-  { id: 'mech-02', taskNumber: 2, verticalId: 'mechanical',
-    title: 'Mechanical Task 2', shortDescription: 'Task 2 details will be published here.',
-    difficulty: 'moderate', estimatedTime: '2-3 hrs', deadline: 'To be announced',
-    prerequisites: [], instructions: taskTwoInstructions.mechanical,
-    resources: { required: [], optional: [] }, evaluationCriteria: [], contactdetails: [],
-    submissionUrl: 'https://example.com/asme-demo/submit/mech-02', tags: [] },
-  { id: 'elec-02', taskNumber: 2, verticalId: 'electrical',
-    title: 'Electrical Task 2', shortDescription: 'Build an Arduino and Tinkercad countermeasure console with selectable LED patterns, sensor input, and adaptive DC motor control.',
-    difficulty: 'intermediate', estimatedTime: '5-6 hrs', deadline: '14 September 2026, Monday EOD',
+  { id: 'mech-02', 
+    taskNumber: 2, 
+    verticalId: 'mechanical',
+    title: 'Mechanical Task 2', 
+    shortDescription: 'Task 2 details will be published here.',
+    difficulty: 'moderate', 
+    estimatedTime: '5-6 hrs', 
+    deadline: '14 September 2026, Monday EOD',
+    prerequisites: [], 
+    instructions: taskTwoInstructions.mechanical,
+    resources: { 
+      required: [], 
+      optional: [] 
+    }, 
+    evaluationCriteria: [], 
+    contactdetails: ['For any queries regarding the task, please reach out to ', 'Shreyas (+91 9004795249)',' Samanyu (+91 9897328395)'],
+    submissionUrl: 'https://example.com/asme-demo/submit/mech-02', 
+    tags: [] },
+  { id: 'elec-02', 
+    taskNumber: 2, 
+    verticalId: 'electrical',
+    title: 'Electrical Task 2', 
+    shortDescription: 'Build an Arduino and Tinkercad countermeasure console with selectable LED patterns, sensor input, and adaptive DC motor control.',
+    difficulty: 'intermediate', 
+    estimatedTime: '5-6 hrs', 
+    deadline: '14 September 2026, Monday EOD',
     prerequisites: ['PCB Design', 'KiCad'], 
     instructions: electricalTaskTwoInstructions,
-    resources: { required: [
-        { type: 'video', title: 'Arduino Basics 101: Hardware Overview, Fundamental Code Commands', url: 'https://www.youtube.com/watch?v=BtLwoNJ6klE', note: 'Revision of workshop theory, although its much less detailed, great explanation nonetheless' },
-        { type: 'video', title: 'How to use Potentiometer with Arduino | analogRead | Arduino Tutorial 5', url: 'https://www.youtube.com/watch?v=lg-QUBLm9eU', note: 'Use of potentiometer with arduino' },
-        { type: 'video', title: 'How To Control a DC Motor with an Arduino(Simulation using tinkercad)', url: 'https://www.youtube.com/watch?v=4qpFQPPJ21U', note: 'Use this video to learn how to control a DC motor with an Arduino' },
-        { type: 'video', title: 'LDR Sensor & Arduino Using Tinkercad', url: 'https://youtu.be/L-BWfZEaeps?si=ggugLzamOPKP2S9x', note: 'Use this video to learn how to use an LDR with an Arduino' },
-        { type: 'video', title: 'How to use tmp36 with arduino | temperature based speed control', url: 'https://youtu.be/xo4oLCyfUtY?si=UDhyAWTIbXxJCivi', note: 'Use this video to learn how to use a TMP36 with an Arduino' },
-    ], optional: [] }, evaluationCriteria: ['Implementation Quality', 'Practicality of the design', 'Creativity and Innovation'],
+    resources: { 
+      required: [
+        { type: 'video', title: 'How to Install KiCad on Windows | Open-Source PCB Design Tool', url: 'https://www.youtube.com/watch?v=lp101PM0emA', note: 'Use this video to install KiCad on Windows' },
+        { type: 'video', title: 'KiCad', url: 'https://www.youtube.com/playlist?list=PLn6004q9oeqGl91KifK6xHGuqvXGb374G', note: 'Introductory playlist to learning KiCad' },
+        { type: 'video', title: 'KiCad Tutorial - How to Import Footprints and Symbols from SnapEDA', url: 'https://www.youtube.com/watch?v=W9cLnIjvybo', note: 'Learn to Import Footprints and Symbols into KiCad' },
+      ], 
+      optional: [
+        {type: 'video', title: 'Arduino UNO with KiCAD', url: 'https://www.youtube.com/playlist?list=PLTtLfASmybTHFta4OucFdbeCHaEbMNRCc', note: 'This playlist explores the designing of a microcontroller in KiCad' },
+      ] }, 
+    evaluationCriteria: ['Implementation Quality', 'Practicality of the design', 'Creativity and Innovation'],
     contactdetails: ['For any queries regarding the task, please reach out to ','Viinaayak (+91 8178547016) ',' Pranay (+91 7428630687)'],
     submissionUrl: 'https://example.com/asme-demo/submit/elec-02', tags: [] },
-  { id: 'soft-02', taskNumber: 2, verticalId: 'software',
-    title: 'Software Task 2', shortDescription: 'Task 2 details will be published here.',
-    difficulty: 'moderate', estimatedTime: '2-3 hrs', deadline: 'To be announced',
-    prerequisites: [], instructions: taskTwoInstructions.software,
-    resources: { required: [], optional: [] }, evaluationCriteria: [], contactdetails: [],
-    submissionUrl: 'https://example.com/asme-demo/submit/soft-02', tags: [] },
+  { id: 'soft-02', 
+    taskNumber: 2, 
+    verticalId: 'software',
+    title: 'Stark\'s Assembly Bay', 
+    shortDescription: 'Build a ROS 2-based system that communicates, monitors, and visualizes a simulated robotic arm.',
+    difficulty: 'moderate', 
+    estimatedTime: '4-6 hrs', 
+    deadline: '14 September 2026, Monday EOD',
+    prerequisites: ['Python', 'ROS 2 Humble or Jazzy'], 
+    instructions: softwareTaskTwoInstructions,
+    resources: { 
+      required: [], 
+      optional: [] 
+    }, 
+    evaluationCriteria: ['Implementation Quality', 'Functionality', 'ROS 2 Understanding', 'Creativity and Innovation'], 
+    contactdetails: ['For any queries regarding the task, please reach out to ','Dakshesh (+91 9703537152)',' Vatsal (+91 7011367535)'],
+    submissionUrl: 'https://example.com/asme-demo/submit/soft-02', 
+    tags: ['Python', 'ROS 2', 'Simulation'] },
 ]

@@ -2606,6 +2606,10 @@
     filter: brightness(0.42) saturate(0.7) contrast(1.15);
   }
 
+  .theme-software-task2 .task-detail-header::before {
+    background-image: url('./assets/iron-man-t2.jpeg');
+  }
+
   .theme-spiderman .task-detail-header::before {
     background-position: right center;
     -webkit-mask-position: right center;

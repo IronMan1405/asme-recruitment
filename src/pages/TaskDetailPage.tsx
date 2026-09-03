@@ -116,7 +116,7 @@ export function TaskDetailPage() {
   return (
     <article
       ref={pageRef}
-      className={theme ? `task-detail-page ${theme.className}` : 'task-detail-page'}
+      className={theme ? `task-detail-page ${theme.className}${taskId === 'soft-02' ? ' theme-software-task2' : ''}` : 'task-detail-page'}
       style={{ '--vertical-accent': accentColors[vertical.accentColor] } as CSSProperties}
     >
       {isElectricalTaskTwo ? (
