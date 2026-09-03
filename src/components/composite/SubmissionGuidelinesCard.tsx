@@ -1,5 +1,6 @@
 interface SubmissionGuidelinesCardProps {
   verticalId: string
+  taskNumber?: 1 | 2
 }
 
 const submissionGuidelines: Record<string, string[]> = {
@@ -23,8 +24,12 @@ const submissionGuidelines: Record<string, string[]> = {
   ],
 }
 
-export function SubmissionGuidelinesCard({ verticalId }: SubmissionGuidelinesCardProps) {
-  const guidelines = submissionGuidelines[verticalId] ?? submissionGuidelines.software
+const taskTwoPlaceholderGuidelines = ['Task 2 submission guidelines will be published here.']
+
+export function SubmissionGuidelinesCard({ verticalId, taskNumber = 1 }: SubmissionGuidelinesCardProps) {
+  const guidelines = taskNumber === 2
+    ? taskTwoPlaceholderGuidelines
+    : submissionGuidelines[verticalId] ?? submissionGuidelines.software
 
   return (
     <section className="task-section submission-guidelines-card" aria-label="Submission guidelines">

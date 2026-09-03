@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Task } from '../../data/types'
 import { supabase, isSupabaseConfigured } from '../../lib/supabase'
-import { getTask1SubmissionStatus, hasSubmittedTask1ForVertical, isBitsGoogleEmail, normalizeVertical, submitTask1 } from '../../services/submissions'
+import { getTask1SubmissionStatus, getTask2SubmissionStatus, hasSubmittedTask1ForVertical, hasSubmittedTask2ForVertical, isBitsGoogleEmail, normalizeVertical, submitTask1, submitTask2 } from '../../services/submissions'
 
 interface SubmissionPanelProps {
   task: Task
@@ -25,15 +25,19 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
   const [hasSubmittedForVertical, setHasSubmittedForVertical] = useState(false)
 
   const taskVertical = normalizeVertical(task.verticalId || verticalName) ?? normalizeVertical(verticalName) ?? 'software'
+  const taskNumber = task.taskNumber ?? 1
+  const taskLabel = `Task ${taskNumber}`
 
   useEffect(() => {
     let isMounted = true
 
     const loadStatus = async () => {
       try {
-        const status = await getTask1SubmissionStatus()
+        const isOpen = taskNumber === 2
+          ? (await getTask2SubmissionStatus()).task2_open
+          : (await getTask1SubmissionStatus()).task1_open
         if (isMounted) {
-          setIsSubmissionOpen(status.task1_open)
+          setIsSubmissionOpen(isOpen)
         }
       } catch {
         if (isMounted) {
@@ -47,7 +51,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [taskNumber])
 
   useEffect(() => {
     let isMounted = true
@@ -130,7 +134,9 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
       }
 
       try {
-        const hasSubmitted = await hasSubmittedTask1ForVertical(authenticatedEmail, taskVertical)
+        const hasSubmitted = taskNumber === 2
+          ? await hasSubmittedTask2ForVertical(authenticatedEmail, taskVertical)
+          : await hasSubmittedTask1ForVertical(authenticatedEmail, taskVertical)
         if (isMounted) {
           setHasSubmittedForVertical(hasSubmitted)
         }
@@ -146,7 +152,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
     return () => {
       isMounted = false
     }
-  }, [authenticatedEmail, isAuthenticated, taskVertical])
+  }, [authenticatedEmail, isAuthenticated, taskNumber, taskVertical])
 
   const handleGoogleSignIn = async () => {
     if (!isSupabaseConfigured) {
@@ -187,7 +193,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
 
     if (isSubmissionOpen === false) {
       setState('error')
-      setErrorMessage('Task 1 submissions are currently closed.')
+      setErrorMessage(`${taskLabel} submissions are currently closed.`)
       return
     }
 
@@ -201,14 +207,11 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
     setErrorMessage('')
 
     try {
-      await submitTask1({
-        name,
-        bitsId,
-        email: authenticatedEmail,
-        vertical: taskVertical,
-        submissionLink: link,
-        notes,
-      })
+      if (taskNumber === 2) {
+        await submitTask2({ name, bitsId, vertical: taskVertical, submissionLink: link, notes })
+      } else {
+        await submitTask1({ name, bitsId, email: authenticatedEmail, vertical: taskVertical, submissionLink: link, notes })
+      }
 
       setState('success')
       setErrorMessage('')
@@ -234,7 +237,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
           </span>
           <h2>Submission successful!</h2>
           <p>
-            Your Task 1 submission has been recorded.
+            Your {taskLabel} submission has been recorded.
           </p>
         </div>
       </section>
@@ -255,7 +258,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
             VERTICAL LIMIT
           </span>
           <h2>Already submitted for this vertical</h2>
-          <p>You have already submitted Task 1 for this vertical.</p>
+          <p>You have already submitted {taskLabel} for this vertical.</p>
         </div>
       </section>
     )
@@ -275,7 +278,7 @@ export function SubmissionPanel({ task, verticalName }: SubmissionPanelProps) {
             SUBMISSIONS CLOSED
           </span>
           <h2>Submissions Closed</h2>
-          <p>Task 1 submissions are currently closed.</p>
+          <p>{taskLabel} submissions are currently closed.</p>
         </div>
       </section>
     )

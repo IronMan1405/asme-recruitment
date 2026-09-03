@@ -11,6 +11,7 @@ export interface Resource {
 
 export interface Task {
   id: string
+  taskNumber?: 1 | 2
   verticalId: string
   title: string
   shortDescription: string

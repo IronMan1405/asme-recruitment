@@ -17,11 +17,17 @@ npm run dev
 2. Open the SQL editor and run the migration in `supabase/task1_schema.sql`.
 3. Ensure the public/anon key is used in the browser. Do not expose a service-role key.
 4. Set `recruitment_settings.task1_open` to `true` or `false` to open or close Task 1.
+5. Run `supabase/task2_schema.sql` to add the separate Task 2 submissions table and `recruitment_settings.task2_open` control.
 
 ## Task 1 testing
 
 - Open state: set `task1_open = true` and submit a valid form.
 - Closed state: set `task1_open = false` and refresh the page; the form should show a closed state and database insertion should be rejected.
+
+## Task 2 testing
+
+- Open state: set `task2_open = true` and submit a valid form for each vertical.
+- Closed state: set `task2_open = false` and refresh the page; the Task 2 form should show a closed state and database insertion should be rejected.
 
 ## Vercel
 

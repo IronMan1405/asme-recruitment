@@ -1,5 +1,5 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
-import type { RecruitmentSettings, Task1Submission, Task1SubmissionStatus, Vertical } from '../types/submission'
+import type { RecruitmentSettings, Task1Submission, Task1SubmissionStatus, Task2Submission, Task2SubmissionStatus, Vertical } from '../types/submission'
 
 export const VALID_VERTICALS = ['software', 'electrical', 'mechanical'] as const
 export type Task1Vertical = (typeof VALID_VERTICALS)[number]
@@ -204,3 +204,93 @@ export const isTask1SubmissionOpen = async (): Promise<boolean> => {
 export const makeTask1OpenState = (task1Open: boolean): RecruitmentSettings => ({
   task1_open: task1Open,
 })
+
+export const hasSubmittedTask2ForVertical = async (email: string, vertical: string): Promise<boolean> => {
+  const normalizedEmail = email.trim().toLowerCase()
+  const normalizedVertical = normalizeVertical(vertical)
+  if (!normalizedVertical || !normalizedEmail) return false
+
+  const { data, error } = await supabase
+    .from('task2_submissions')
+    .select('id')
+    .eq('email', normalizedEmail)
+    .eq('vertical', normalizedVertical)
+    .limit(1)
+
+  if (error) {
+    console.error('Task 2 vertical duplicate check failed:', error)
+    return false
+  }
+  return (data?.length ?? 0) > 0
+}
+
+export const getTask2SubmissionStatus = async (): Promise<Task2SubmissionStatus> => {
+  if (!isSupabaseConfigured) return { task2_open: false, source: 'fallback' }
+
+  const { data, error } = await supabase
+    .from('recruitment_settings')
+    .select('task2_open')
+    .order('id', { ascending: true })
+    .limit(1)
+    .maybeSingle()
+
+  if (error) {
+    console.error('Failed to load Task 2 recruitment setting:', error.message)
+    return { task2_open: false, source: 'fallback' }
+  }
+  return { task2_open: Boolean(data?.task2_open ?? false), source: 'database' }
+}
+
+export const submitTask2 = async (payload: {
+  name: string
+  bitsId: string
+  vertical: string
+  submissionLink: string
+  notes?: string
+}) => {
+  const name = payload.name.trim()
+  const bitsId = payload.bitsId.trim()
+  const vertical = normalizeVertical(payload.vertical)
+  const submissionLink = validateSubmissionLink(payload.submissionLink)
+  validateRequiredString(name, 'Name')
+  validateRequiredString(bitsId, 'BITS ID')
+  if (!vertical) throw new Error('Selected vertical is invalid.')
+  if (!isSupabaseConfigured) throw new Error('Task 2 submissions are currently unavailable.')
+
+  const response = await getTask2SubmissionStatus()
+  if (!response.task2_open) throw new Error('Task 2 submissions are currently closed.')
+  const authenticatedUser = await getAuthenticatedTask1User()
+  const { data: existingSubmission, error: duplicateCheckError } = await supabase
+    .from('task2_submissions')
+    .select('id')
+    .eq('email', authenticatedUser.email)
+    .eq('vertical', vertical)
+    .limit(1)
+
+  if (duplicateCheckError) {
+    console.error('Task 2 duplicate check failed:', duplicateCheckError)
+    throw new Error('Unable to submit your work right now. Please try again later.')
+  }
+  if ((existingSubmission?.length ?? 0) > 0) throw new Error('You have already submitted Task 2 for this vertical.')
+
+  const submission: Task2Submission = {
+    name,
+    bits_id: bitsId,
+    email: validateEmail(authenticatedUser.email),
+    user_id: authenticatedUser.user.id,
+    vertical,
+    submission_link: submissionLink,
+    notes: payload.notes?.trim() || null,
+  }
+  const { error } = await supabase.from('task2_submissions').insert(submission)
+  if (error) {
+    const lowerMessage = error.message.toLowerCase()
+    if (lowerMessage.includes('closed')) throw new Error('Task 2 submissions are currently closed.')
+    if (lowerMessage.includes('duplicate') || lowerMessage.includes('already') || lowerMessage.includes('unique constraint')) {
+      throw new Error('You have already submitted Task 2 for this vertical.')
+    }
+    console.error('Task 2 submission insert failed:', error)
+    throw new Error('Unable to submit your work right now. Please try again later.')
+  }
+  return true
+}

@@ -1,0 +1,97 @@
+create table if not exists public.task2_submissions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  name text not null,
+  bits_id text not null,
+  email text not null check (email ~* '@pilani\.bits-pilani\.ac\.in$'),
+  vertical text not null check (vertical in ('software', 'electrical', 'mechanical')),
+  submission_link text not null,
+  notes text,
+  submitted_at timestamptz not null default now(),
+  constraint task2_submissions_email_vertical_key unique (email, vertical)
+);
+
+alter table public.recruitment_settings
+  add column if not exists task2_open boolean not null default true;
+
+create index if not exists idx_task2_submissions_vertical
+  on public.task2_submissions (vertical);
+
+create index if not exists idx_task2_submissions_submitted_at
+  on public.task2_submissions (submitted_at desc);
+
+create or replace function public.enforce_task2_open()
+returns trigger
+language plpgsql
+security definer
+as $$
+declare
+  current_status boolean;
+begin
+  select task2_open into current_status
+  from public.recruitment_settings
+  order by id asc
+  limit 1;
+
+  if current_status is false then
+    raise exception 'Task 2 submissions are currently closed.';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists task2_submissions_open_check on public.task2_submissions;
+create trigger task2_submissions_open_check
+before insert on public.task2_submissions
+for each row execute function public.enforce_task2_open();
+
+create or replace function public.enforce_task2_submission_identity()
+returns trigger
+language plpgsql
+security definer
+as $$
+begin
+  if new.user_id is null or new.user_id <> auth.uid() then
+    raise exception 'Submission user does not match the authenticated account.';
+  end if;
+  if lower(new.email) <> lower(coalesce((auth.jwt() ->> 'email'), '')) then
+    raise exception 'Submission email must match the authenticated Google account.';
+  end if;
+  if new.email !~* '@pilani\.bits-pilani\.ac\.in$' then
+    raise exception 'Only BITS Google accounts are allowed.';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists task2_submission_identity_check on public.task2_submissions;
+create trigger task2_submission_identity_check
+before insert or update on public.task2_submissions
+for each row execute function public.enforce_task2_submission_identity();
+
+alter table public.task2_submissions enable row level security;
+
+create policy "Authenticated users can insert task2 submissions"
+on public.task2_submissions
+for insert
+with check (
+  auth.uid() is not null
+  and user_id = auth.uid()
+  and name is not null and btrim(name) <> ''
+  and bits_id is not null and btrim(bits_id) <> ''
+  and email is not null
+  and lower(email) = lower(coalesce((auth.jwt() ->> 'email'), ''))
+  and email ~* '@pilani\.bits-pilani\.ac\.in$'
+  and vertical in ('software', 'electrical', 'mechanical')
+  and submission_link is not null
+  and submission_link ~* '^https?://'
+);
+
+create policy "Public cannot read task2 submissions"
+on public.task2_submissions for select using (false);
+
+create policy "Public cannot update task2 submissions"
+on public.task2_submissions for update using (false) with check (false);
+
+create policy "Public cannot delete task2 submissions"
+on public.task2_submissions for delete using (false);

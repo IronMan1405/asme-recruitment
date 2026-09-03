@@ -14,12 +14,20 @@ export interface Task1Submission {
   submitted_at?: string
 }
 
+export interface Task2Submission extends Task1Submission {}
+
 export interface RecruitmentSettings {
   id?: string
   task1_open: boolean
+  task2_open?: boolean
 }
 
 export interface Task1SubmissionStatus {
   task1_open: boolean
+  source: 'database' | 'fallback'
+}
+
+export interface Task2SubmissionStatus {
+  task2_open: boolean
   source: 'database' | 'fallback'
 }

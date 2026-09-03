@@ -2,6 +2,7 @@ import type { Task } from './types'
 import { softwareTaskOneInstructions } from './softwareTaskOneInstructions'
 import { electricalTaskOneInstructions } from './electricalTaskOneInstructions'
 import { mechanicalTaskOneInstructions } from './mechanicalTaskOneInstruction'
+import { taskTwoInstructions } from './taskTwoInstructions'
 
 export const tasks: Task[] = [
   { id: 'mech-01', verticalId: 'mechanical', 
@@ -60,4 +61,23 @@ export const tasks: Task[] = [
     contactdetails: ['For any queries regarding the task, please reach out to ','Dakshesh (+91 9703537152)',' Vatsal (+91 7011367535)'],
     submissionUrl: 'https://example.com/asme-demo/submit/soft-01', 
     tags: ['Python', 'computer vision', 'MediaPipe', 'OpenCV', 'robotics'] },
+
+  { id: 'mech-02', taskNumber: 2, verticalId: 'mechanical',
+    title: 'Mechanical Task 2', shortDescription: 'Task 2 details will be published here.',
+    difficulty: 'moderate', estimatedTime: '2-3 hrs', deadline: 'To be announced',
+    prerequisites: [], instructions: taskTwoInstructions.mechanical,
+    resources: { required: [], optional: [] }, evaluationCriteria: [], contactdetails: [],
+    submissionUrl: 'https://example.com/asme-demo/submit/mech-02', tags: [] },
+  { id: 'elec-02', taskNumber: 2, verticalId: 'electrical',
+    title: 'Electrical Task 2', shortDescription: 'Task 2 details will be published here.',
+    difficulty: 'moderate', estimatedTime: '2-3 hrs', deadline: 'To be announced',
+    prerequisites: [], instructions: taskTwoInstructions.electrical,
+    resources: { required: [], optional: [] }, evaluationCriteria: [], contactdetails: [],
+    submissionUrl: 'https://example.com/asme-demo/submit/elec-02', tags: [] },
+  { id: 'soft-02', taskNumber: 2, verticalId: 'software',
+    title: 'Software Task 2', shortDescription: 'Task 2 details will be published here.',
+    difficulty: 'moderate', estimatedTime: '2-3 hrs', deadline: 'To be announced',
+    prerequisites: [], instructions: taskTwoInstructions.software,
+    resources: { required: [], optional: [] }, evaluationCriteria: [], contactdetails: [],
+    submissionUrl: 'https://example.com/asme-demo/submit/soft-02', tags: [] },
 ]

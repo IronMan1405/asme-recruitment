@@ -137,7 +137,7 @@ export function TaskDetailPage() {
           </TaskSection>
         )}
 
-        <SubmissionGuidelinesCard verticalId={vertical.id} />
+        <SubmissionGuidelinesCard verticalId={vertical.id} taskNumber={task.taskNumber} />
         <SubmissionPanel task={task} verticalName={vertical.name} />
       </div>
 
