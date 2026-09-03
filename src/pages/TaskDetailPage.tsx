@@ -75,7 +75,7 @@ export function TaskDetailPage() {
 
       if (storyStatus) {
         typedStatus = new Typed(storyStatus, {
-          strings: ['SYSTEM ONLINE // TRACE THE SIGNAL', 'CURRENT ROUTE LOCKED // BUILD THE COUNTERMEASURE', 'BATMOBILE COOLING ARRAY // AWAITING YOUR CIRCUIT'],
+          strings: ['With great power comes great responsibility', 'This is my gift, my curse. Who am I? I am Spider-Man', 'I am something of a scientist myself'],
           typeSpeed: 26,
           backSpeed: 12,
           backDelay: 1700,
@@ -145,7 +145,7 @@ export function TaskDetailPage() {
       )}
 
       <header className="task-detail-header" aria-label={theme?.imageAlt}>
-        {isElectricalTaskTwo && <span className="task2-hero-kicker">WEB-SLINGER CIRCUIT DIVISION</span>}
+        {isElectricalTaskTwo && <span className="task2-hero-kicker"></span>}
         {isElectricalTaskTwo && (
           <img
             className="task2-adjacent-hero-image"
