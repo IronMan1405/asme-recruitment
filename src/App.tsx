@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { Footer } from './components/layout/Footer'
 import { Navbar } from './components/layout/Navbar'
 import { FaqPage } from './pages/FaqPage'
@@ -9,9 +10,20 @@ import { VerticalOverviewPage } from './pages/VerticalOverviewPage'
 import { VerticalSelectionPage } from './pages/VerticalSelectionPage'
 import './App.css'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [pathname])
+
+  return null
+}
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="app-shell">
         <Navbar />
         <main className="page-content">

@@ -7,6 +7,8 @@ export interface TaskTheme {
   tagline: string
   /** Decorative glyphs for the tagline pill (kept small, so emoji render cleanly) */
   icon: string
+  /** Accessible label for themed header artwork */
+  imageAlt: string
 }
 
 /**
@@ -19,17 +21,27 @@ export const taskThemes: Record<string, TaskTheme> = {
     variant: 'gotham',
     tagline: 'Gotham Night Division',
     icon: '🦇 🃏',
+    imageAlt: 'Gotham electrical task artwork',
+  },
+  electricalTaskTwo: {
+    className: 'theme-spiderman theme-electrical-task2',
+    variant: 'spiderman',
+    tagline: 'Web-Slinger Circuit Division',
+    icon: '🕸️',
+    imageAlt: 'Spiderman - Electrical Task 2',
   },
   software: {
     className: 'theme-stark',
     variant: 'stark',
     tagline: 'Stark R&D — Mark Protocol',
     icon: '⚡',
+    imageAlt: 'Stark software task artwork',
   },
   mechanical: {
     className: 'theme-spiderman',
     variant: 'spiderman',
     tagline: 'Web-Slinger Ops Division',
     icon: '🕸️',
+    imageAlt: 'Spider-Man mechanical task artwork',
   },
 }
