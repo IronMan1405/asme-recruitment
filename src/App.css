@@ -2621,6 +2621,10 @@
     filter: brightness(0.62) saturate(0.9) contrast(1.1);
   }
 
+  .theme-mechanical-task2 .task-detail-header::before {
+    background-image: url('./assets/Mech_task2_theme.jpeg');
+  }
+
   .theme-electrical-task2 .task-detail-header::before {
     display: none;
   }

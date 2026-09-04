@@ -50,6 +50,8 @@ High-speed acrobatics, sudden movements, and extreme conditions require a reliab
 
 ### Note
 
+**You can use as much AI you want.**
+
 Keep in mind the **size constraints** of the PCB, as it needs to fit under your suit sleeve. The design should be compact, efficient, and reliable.
 
 ### Deliverables (KiCad)
