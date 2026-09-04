@@ -1,7 +1,7 @@
 const stats = [
   { index: '01', label: 'DURATION OF SECOND TASK', value: '11 Days', sub: 'Dedicated runway' },
   { index: '02', label: 'VERTICALS', value: '03', sub: 'Mechanical · Electronics · Software' },
-  { index: '03', label: 'EXPERIENCE', value: 'None required', sub: 'Beginner friendly' },
+  { index: '03', label: 'EXPERIENCE', value: 'Beginner Experience Required', sub: 'Beginner friendly' },
   { index: '04', label: 'DEADLINE', value: '14 SEP 2026', sub: '23:59 IST' },
 ]
 
@@ -10,7 +10,7 @@ export function RecruitmentStats() {
     <section className="stats-section" aria-labelledby="stats-heading">
       <div className="section-heading">
         <span className="section-tag-badge">AT A GLANCE</span>
-        <h2 id="stats-heading">A short runway to your first Task.</h2>
+        <h2 id="stats-heading">A short runway to your Second Task.</h2>
       </div>
       
       <div className="stats-grid">
