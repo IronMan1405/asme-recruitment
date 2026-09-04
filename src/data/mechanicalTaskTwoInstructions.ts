@@ -1,4 +1,5 @@
 import MountBracket from '../assets/MountBracket.jpeg'
+import PRATHAM from '../assets/Pratham_mech.png'
 
 export const mechanicalTaskTwoInstructions = `
 # Q1 - JAEGER ARM: CAN IT SURVIVE?
@@ -73,6 +74,11 @@ Also calculate the Power provided by the motor (in Watts).
 ---
 
 # BROWNIE TASK — RoboWars Weapon Design Task
+
+THIS TASK HAS BEEN MADE BY **Pratham Talaulikar** 
+IN CASE OF ANY DOUBTS RELATED TO THIS QUESTION CONTACT HIM ON : **+91 80103 36476** 
+
+![Pratham meme](${PRATHAM})
 
 Design a **primary weapon** for a **15 kg combat robot specifically intended to fight a wedge-style opponent**. 
 The weapon will be powered by a **BBOX Pluto H700 530 KV BLDC motor** with a **6S LiPo battery**.

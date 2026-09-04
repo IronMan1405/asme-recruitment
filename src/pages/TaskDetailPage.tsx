@@ -17,6 +17,8 @@ import electricalTaskTwoTopPanel from '../assets/elec_task_2_top_panel.png'
 import electricalTaskTwoMiddlePanel from '../assets/elec_task_2_middle_panel.jpg'
 import electricalTaskTwoBottomPanel from '../assets/elec_task_2_buttom_panel.jpg'
 import electricalTaskTwoHeroImage from '../assets/spiderman_task_2_elec.jpg'
+import softwareTaskTwoTopPanel from '../assets/Soft_top_panel.jpeg'
+import softwareTaskTwoMiddlePanel from '../assets/Soft_middle_panel.jpeg'
 import { getTaskById, getVerticalById, getTasksForVertical } from '../lib/data'
 import { accentColors } from '../theme/tokens'
 import { taskThemes } from '../theme/taskThemes'
@@ -27,6 +29,7 @@ gsap.registerPlugin(ScrollTrigger)
 export function TaskDetailPage() {
   const { id = '', taskId = '' } = useParams()
   const isElectricalTaskTwo = taskId === 'elec-02'
+  const isSoftwareTaskTwo = taskId === 'soft-02'
   const pageRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const heroImageRef = useRef<HTMLImageElement>(null)
@@ -144,6 +147,9 @@ export function TaskDetailPage() {
         </nav>
       )}
 
+      {isSoftwareTaskTwo && (
+        <img className="software-task2-top-panel" src={softwareTaskTwoTopPanel} alt="Iron Man Software Task 2 artwork" />
+      )}
       <header className="task-detail-header" aria-label={theme?.imageAlt}>
         {isElectricalTaskTwo && <span className="task2-hero-kicker"></span>}
         {isElectricalTaskTwo && (
@@ -247,6 +253,9 @@ export function TaskDetailPage() {
       </div>
       {isElectricalTaskTwo && (
         <img className="task2-bottom-panel" src={electricalTaskTwoBottomPanel} alt="Gwen hanging at the end of the web" />
+      )}
+      {isSoftwareTaskTwo && (
+        <img className="software-task2-middle-panel" src={softwareTaskTwoMiddlePanel} alt="Iron Man Software Task 2 artwork" />
       )}
 
       <TaskNav

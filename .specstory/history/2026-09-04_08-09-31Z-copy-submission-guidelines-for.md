@@ -5685,3 +5685,4067 @@ Updated:
 - `src/App.css#L2622`
 
 Mechanical Task 1 still uses `spiderman.png`. Build validation passes with `npm run build`.
+
+---
+
+_**User (2026-09-04 09:23:45Z)**_
+
+add the soft_top_panel at the top of software task 2 page 32 pixels above the heading and add th esoft_middle_panel at the bottom of the page 32 pixelsmafter the submit panel 
+
+---
+
+_**Agent (copilot/auto)**_
+
+I’ll inspect the Software Task 2 assets and the existing Electrical Task 2 top/middle panel layout, then mirror that structure with a Software Task 2-specific class so the panels sit 32px from the heading and submit panel.
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="search" data-tool-name="file_search"><details>
+<summary>Tool use: **file_search**</summary>
+
+Searched for files matching `**/src/assets/*soft*`, 5 matches
+
+**Input:**
+
+- query: `src/assets/*soft*`
+
+**Result:**
+
+```
+5 total results
+c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\assets\tonystark_soft_2.jpeg
+c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\assets\Soft_top_panel.jpeg
+c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\assets\Soft_middle_panel.jpeg
+c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\assets\Soft_bottom_panel.jpeg
+c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\assets\software-card.jpg
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="search" data-tool-name="grep_search"><details>
+<summary>Tool use: **grep_search**</summary>
+
+Searched for regex `soft-02|task2-top-panel|task2-middle|task2-flow-stage|task2-bottom-panel` (`**/src/**/*.{ts,tsx,css}`), 21 results
+
+**Input:**
+
+- includePattern: `src/**/*.{ts,tsx,css}`
+- isRegexp: `true`
+- maxResults: `100`
+- query: `soft-02|task2-top-panel|task2-middle|task2-flow-stage|task2-bottom-panel`
+
+**Result:**
+
+```
+Found 21 matches in 4 files for "soft-02|task2-top-panel|task2-middle|task2-flow-stage|task2-bottom-panel"
+
+src/App.css
+2380:.task2-top-panel,
+2381:.task2-bottom-panel {
+2393:.task2-top-panel-stage {
+2419:.task2-top-panel {
+2448:.task2-flow-stage {
+2464:.task2-flow-stage::before {
+2473:.task2-flow-stage .task-detail-content {
+2478:.task-detail-page.theme-electrical-task2 .task2-flow-stage .task-section,
+2479:.task-detail-page.theme-electrical-task2 .task2-flow-stage .expandable-section,
+2480:.task-detail-page.theme-electrical-task2 .task2-flow-stage .resource-card,
+2481:.task-detail-page.theme-electrical-task2 .task2-flow-stage .submission-panel,
+2486:.task-detail-page.theme-electrical-task2 .task2-flow-stage .task-section-header {
+2490:.task2-bottom-panel {
+
+src/data/tasks.ts
+116:  { id: 'soft-02',
+139:    submissionUrl: 'https://example.com/asme-demo/submit/soft-02',
+
+src/data/verticals.ts
+6:  { id: 'software', name: 'Software', shortDescription: 'Write the systems that turn engineering into useful tools.', backgroundNeeded: 'beginner-friendly', accentColor: 'software', icon: 'terminal', exampleDeliverables: ['Build a telemetry dashboard', 'Write a robot control script'], taskIds: ['soft-01', 'soft-02'], contact: 'Dakshesh: +91 97035 37152' },
+
+src/pages/TaskDetailPage.tsx
+119:      className={theme ? `task-detail-page ${theme.className}${taskId === 'soft-02' ? ' theme-software-task2' : ''}${taskId === 'mech-02' ? ' theme-mechanical-task2' : ''}` : 'task-detail-page'}
+123:        <div className="task2-top-panel-stage">
+124:          <img className="task2-top-panel" ref={heroImageRef} src={electricalTaskTwoTopPanel} alt="Spider-Man gripping a web above Electrical Task 2" />
+190:        className="task2-flow-stage"
+249:        <img className="task2-bottom-panel" src={electricalTaskTwoBottomPanel} alt="Gwen hanging at the end of the web" />
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file"><details>
+<summary>Tool use: **read_file**</summary>
+
+Read `TaskDetailPage.tsx`
+
+**Input:**
+
+- endLine: `270`
+- filePath: `c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\pages\TaskDetailPage.tsx`
+- startLine: `1`
+
+**Result:**
+
+```
+import { ArrowLeft, Clock3 } from 'lucide-react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Typed from 'typed.js'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { Link, useParams } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { ExpandableSection } from '../components/primitives/ExpandableSection'
+import { DifficultyBadge } from '../components/primitives/DifficultyBadge'
+import { TaskNav } from '../components/composite/TaskNav'
+import { TaskSection } from '../components/composite/TaskSection'
+import { ResourceList } from '../components/composite/ResourceList'
+import { SubmissionGuidelinesCard } from '../components/composite/SubmissionGuidelinesCard'
+import { SubmissionPanel } from '../components/composite/SubmissionPanel'
+import electricalTaskTwoTopPanel from '../assets/elec_task_2_top_panel.png'
+import electricalTaskTwoMiddlePanel from '../assets/elec_task_2_middle_panel.jpg'
+import electricalTaskTwoBottomPanel from '../assets/elec_task_2_buttom_panel.jpg'
+import electricalTaskTwoHeroImage from '../assets/spiderman_task_2_elec.jpg'
+import { getTaskById, getVerticalById, getTasksForVertical } from '../lib/data'
+import { accentColors } from '../theme/tokens'
+import { taskThemes } from '../theme/taskThemes'
+import type { CSSProperties } from 'react'
+
+gsap.registerPlugin(ScrollTrigger)
+
+export function TaskDetailPage() {
+  const { id = '', taskId = '' } = useParams()
+  const isElectricalTaskTwo = taskId === 'elec-02'
+  const pageRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const heroImageRef = useRef<HTMLImageElement>(null)
+  const storyStatusRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!isElectricalTaskTwo) {
+      return
+    }
+
+    const page = pageRef.current
+    const content = contentRef.current
+    const image = heroImageRef.current
+    if (!page || !content || 
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file"><details>
+<summary>Tool use: **read_file**</summary>
+
+Read `App.css`, lines 2100 to 2350
+
+**Input:**
+
+- endLine: `2350`
+- filePath: `c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\App.css`
+- startLine: `2100`
+
+**Result:**
+
+```
+.task-detail-page.theme-gotham .resource-type,
+.task-detail-page.theme-stark .resource-type,
+.task-detail-page.theme-spiderman .resource-type {
+  color: var(--tt-text-muted);
+}
+
+.task-detail-page.theme-gotham .resource-card h3,
+.task-detail-page.theme-stark .resource-card h3,
+.task-detail-page.theme-spiderman .resource-card h3 {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .resource-card p,
+.task-detail-page.theme-stark .resource-card p,
+.task-detail-page.theme-spiderman .resource-card p {
+  color: var(--tt-text-secondary);
+}
+
+/* Submission panel + primary CTA */
+.task-detail-page.theme-gotham .submission-panel,
+.task-detail-page.theme-stark .submission-panel,
+.task-detail-page.theme-spiderman .submission-panel {
+  box-shadow: 0 0 0 1px var(--tt-border-strong), var(--shadow-floating), 0 0 70px -20px var(--tt-accent);
+}
+
+.task-detail-page.theme-gotham .submission-panel .primary-button,
+.task-detail-page.theme-stark .submission-panel .primary-button,
+.task-detail-page.theme-spiderman .submission-panel .primary-button {
+  background-color: var(--tt-accent);
+  border-color: var(--tt-accent);
+  color: var(--tt-bg-1);
+}
+
+.task-detail-page.theme-gotham .submission-panel .primary-button:hover,
+.task-detail-page.theme-stark .submission-panel .primary-button:hover,
+.task-detail-page.theme-spiderman .submission-panel .primary-button:hover {
+  filter: brightness(1.12);
+  color: var(--tt-bg-1);
+}
+
+/* Prev/next nav */
+.task-detail-page.theme-gotham .task-nav,
+.task-detail-page.theme-stark .task-nav,
+.task-detail-page.theme-spiderman .task-nav {
+  border-top-color: var(--tt-border);
+}
+
+.task-detail-page.theme-gotham .task-nav a,
+.task-detail-page.theme-stark .task-nav a,
+.task-detail-page.theme-spiderman .task-nav a {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .task-nav a:hover,
+.task-detail-page.theme-stark .task-nav a:hover,
+.task-detail-page.theme-spiderman .task-nav a:hover {
+  border-color: 
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file"><details>
+<summary>Tool use: **read_file**</summary>
+
+Read `App.css`, lines 2370 to 2510
+
+**Input:**
+
+- endLine: `2510`
+- filePath: `c:\Users\Viinaayak Gupta\Downloads\asme-recruitment\src\App.css`
+- startLine: `2370`
+
+**Result:**
+
+```
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.theme-electrical-task2 .task-detail-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.task2-top-panel,
+.task2-bottom-panel {
+  display: block;
+  width: calc(100% + 1rem);
+  height: auto;
+  margin-inline: -0.5rem;
+  object-fit: contain;
+  box-sizing: border-box;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0a0a0c;
+}
+
+.task2-top-panel-stage {
+  position: relative;
+  z-index: 1;
+  width: calc(100% + 1rem);
+  margin-inline: -0.5rem;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.task2-breadcrumb-overlay {
+  position: absolute;
+  right: 0;
+  bottom: 1rem;
+  left: 0;
+  z-index: 2;
+  margin: 0;
+  padding-inline: 1.25rem;
+  color: rgba(245, 245, 245, 0.92);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.task2-breadcrumb-overlay a,
+.task2-breadcrumb-overlay .breadcrumb-current {
+  color: rgba(245, 245, 245, 0.94);
+}
+
+.task2-top-panel {
+  width: 100%;
+  margin-inline: 0;
+  object-position: center top;
+  filter: saturate(1.03) contrast(1.05) drop-shadow(0 18px 26px rgba(0, 0, 0, 0.65));
+}
+
+.task2-adjacent-hero-image {
+  position: absolute;
+  z-index: 0;
+  top: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(34%, 20rem);
+  height: calc(100% - 2rem);
+  object-fit: cover;
+  object-position: center top;
+  opacity: 1;
+  filter: saturate(1.04) contrast(1.08) drop-shadow(-16px 0 26px rgba(230, 36, 41, 0.32)) drop-shadow(0 20px 26px rgba(0, 0, 0, 0.72));
+  -webkit-mask-image: linear-gradient(to left, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 78%, transparent 100%);
+  pointer-events: none;
+}
+
+.theme-electrical-task2 .task-detail-header > .task2-adjacent-hero-image {
+  position: absolute;
+  z-index: 0;
+}
+
+.task2-flow-stage {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  width: calc(100% + 1rem);
+  margin: -4px -0.5rem 0;
+  padding: 0.5rem 0.25rem 37px;
+  backgr
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+The assets are present as `Soft_top_panel.jpeg` and `Soft_middle_panel.jpeg`. I’ll add them only when `taskId === 'soft-02'`: the top panel will render immediately before the heading with a 32px gap, and the middle panel will render immediately after the content/submission stage with a 32px gap.
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="write" data-tool-name="textEditGroup"><details>
+<summary>Edit: **TaskDetailPage.tsx**</summary>
+
+@@ lines 1-269 @@
+
+```
+import { ArrowLeft, Clock3 } from 'lucide-react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Typed from 'typed.js'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { Link, useParams } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { ExpandableSection } from '../components/primitives/ExpandableSection'
+import { DifficultyBadge } from '../components/primitives/DifficultyBadge'
+import { TaskNav } from '../components/composite/TaskNav'
+import { TaskSection } from '../components/composite/TaskSection'
+import { ResourceList } from '../components/composite/ResourceList'
+import { SubmissionGuidelinesCard } from '../components/composite/SubmissionGuidelinesCard'
+import { SubmissionPanel } from '../components/composite/SubmissionPanel'
+import electricalTaskTwoTopPanel from '../assets/elec_task_2_top_panel.png'
+import electricalTaskTwoMiddlePanel from '../assets/elec_task_2_middle_panel.jpg'
+import electricalTaskTwoBottomPanel from '../assets/elec_task_2_buttom_panel.jpg'
+import electricalTaskTwoHeroImage from '../assets/spiderman_task_2_elec.jpg'
+import softwareTaskTwoTopPanel from '../assets/Soft_top_panel.jpeg'
+import softwareTaskTwoMiddlePanel from '../assets/Soft_middle_panel.jpeg'
+import { getTaskById, getVerticalById, getTasksForVertical } from '../lib/data'
+import { accentColors } from '../theme/tokens'
+import { taskThemes } from '../theme/taskThemes'
+import type { CSSProperties } from 'react'
+
+gsap.registerPlugin(ScrollTrigger)
+
+export function TaskDetailPage() {
+  const { id = '', taskId = '' } = useParams()
+  const isElectricalTaskTwo = taskId === 'elec-02'
+  const isSoftwareTaskTwo = taskId === 'soft-02'
+  const pageRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const heroImageRef = useRef<HTMLImageElement>(null)
+  const storyStatusRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!isElectricalTaskTwo) {
+      return
+    }
+
+    const page = pageRef.current
+    const content = contentRef.current
+    const image = heroImageRef.current
+    if (!page || !content || !image) return
+
+    let typedStatus: Typed | undefined
+    const ctx = gsap.context(() => {
+      const hero = page.querySelector('.task-detail-header')
+      const sections = gsap.utils.toArray<HTMLElement>('.task-section')
+      const storyStatus = storyStatusRef.current
+
+      const heroTimeline = gsap.timeline({
+        scrollTrigger: { trigger: hero, start: 'top top', end: '+=620', scrub: 1, invalidateOnRefresh: true },
+      })
+      heroTimeline
+        .fromTo(image, { xPercent: 0, yPercent: 0, rotation: 0 }, { xPercent: 0, yPercent: -7, rotation: -1, ease: 'none' }, 0)
+        .fromTo('.task2-hero-kicker', { x: -24, opacity: 0 }, { x: 0, opacity: 1, ease: 'power2.out' }, 0.18)
+
+      const storyTimeline = gsap.timeline({
+        scrollTrigger: { trigger: content, start: 'top 82%', toggleActions: 'play none none none', once: true },
+      })
+      storyTimeline.fromTo(sections, { y: 42, opacity: 0 }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.16,
+        ease: 'power3.out',
+      })
+      storyTimeline.fromTo(sections.map((section) => section.querySelector('.section-tag-badge')).filter(Boolean), { x: -10, opacity: 0 }, {
+        x: 0,
+        opacity: 1,
+        duration: 0.45,
+        stagger: 0.16,
+        ease: 'power2.out',
+      }, '<0.12')
+
+      if (storyStatus) {
+        typedStatus = new Typed(storyStatus, {
+          strings: ['With great power comes great responsibility', 'This is my gift, my curse. Who am I? I am Spider-Man', 'I am something of a scientist myself'],
+          typeSpeed: 26,
+          backSpeed: 12,
+          backDelay: 1700,
+          loop: true,
+          showCursor: true,
+          cursorChar: '_',
+        })
+      }
+
+    }, page)
+
+    return () => {
+      typedStatus?.destroy()
+      ctx.revert()
+    }
+  }, [isElectricalTaskTwo])
+
+  const task = getTaskById(taskId)
+  const vertical = getVerticalById(id)
+
+  if (!task || !vertical || task.verticalId !== vertical.id) {
+    return (
+      <section className="empty-state">
+        <span className="section-tag-badge">TASK NOT FOUND</span>
+        <h1>Task not found.</h1>
+        <p>That task does not belong to the selected vertical.</p>
+        <Link className="primary-button" to="/verticals">
+          <ArrowLeft size={16} aria-hidden="true" /> Back to verticals
+        </Link>
+      </section>
+    )
+  }
+
+  const verticalTasks = getTasksForVertical(vertical.id)
+  const taskIndex = verticalTasks.findIndex((verticalTask) => verticalTask.id === task.id)
+  const theme = isElectricalTaskTwo ? taskThemes.electricalTaskTwo : taskThemes[vertical.id]
+
+  return (
+    <article
+      ref={pageRef}
+      className={theme ? `task-detail-page ${theme.className}${taskId === 'soft-02' ? ' theme-software-task2' : ''}${taskId === 'mech-02' ? ' theme-mechanical-task2' : ''}` : 'task-detail-page'}
+      style={{ '--vertical-accent': accentColors[vertical.accentColor] } as CSSProperties}
+    >
+      {isElectricalTaskTwo ? (
+        <div className="task2-top-panel-stage">
+          <img className="task2-top-panel" ref={heroImageRef} src={electricalTaskTwoTopPanel} alt="Spider-Man gripping a web above Electrical Task 2" />
+          <nav className="breadcrumb task2-breadcrumb-overlay" aria-label="Breadcrumb">
+            <Link to="/verticals">Verticals</Link>
+            <span className="breadcrumb-separator">/</span>
+            <Link to={`/verticals/${vertical.id}`}>{vertical.name}</Link>
+            <span className="breadcrumb-separator">/</span>
+            <span className="breadcrumb-current" aria-current="page">
+              {task.title}
+            </span>
+          </nav>
+        </div>
+      ) : (
+        <nav className="breadcrumb" aria-label="Breadcrumb">
+          <Link to="/verticals">Verticals</Link>
+          <span className="breadcrumb-separator">/</span>
+          <Link to={`/verticals/${vertical.id}`}>{vertical.name}</Link>
+          <span className="breadcrumb-separator">/</span>
+          <span className="breadcrumb-current" aria-current="page">
+            {task.title}
+          </span>
+        </nav>
+      )}
+
+      {isSoftwareTaskTwo && (
+        <img className="software-task2-top-panel" src={softwareTaskTwoTopPanel} alt="Iron Man Software Task 2 artwork" />
+      )}
+      <header className="task-detail-header" aria-label={theme?.imageAlt}>
+        {isElectricalTaskTwo && <span className="task2-hero-kicker"></span>}
+        {isElectricalTaskTwo && (
+          <img
+            className="task2-adjacent-hero-image"
+            src={electricalTaskTwoHeroImage}
+            alt="Spider-Man - Electrical Task 2"
+          />
+        )}
+        <div className="task-detail-badges" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.65rem', flexWrap: 'wrap' }}>
+          <span className="track-pill">{vertical.name}</span>
+          <span className="section-tag-badge">{task.id.toUpperCase()}</span>
+          {theme && (
+            <span className="theme-tagline-pill">
+              <span aria-hidden="true">{theme.icon}</span>
+              {theme.tagline}
+            </span>
+          )}
+        </div>
+        <span className="task-deadline">Due: {task.deadline}</span>
+        <h1>{task.title}</h1>
+        <p>{task.shortDescription}</p>
+
+        <div className="task-detail-meta">
+          <DifficultyBadge difficulty={task.difficulty} />
+          <span className="time-estimate">
+            <Clock3 size={15} aria-hidden="true" />
+            Estimated: ~{task.estimatedTime}
+          </span>
+          {task.prerequisites.map((prerequisite) => (
+            <span className="tag-chip" key={prerequisite}>
+              {prerequisite}
+            </span>
+          ))}
+          {task.tags.map((tag) => (
+            <span className="tag-chip" key={tag}>
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </header>
+
+      <div
+        className="task2-flow-stage"
+        style={isElectricalTaskTwo ? { backgroundImage: `url(${electricalTaskTwoMiddlePanel})` } : undefined}
+      >
+        <div className="task-detail-content" ref={contentRef}>
+        <TaskSection label="PROBLEM STATEMENT">
+          {isElectricalTaskTwo && <p className="task2-story-status"><span ref={storyStatusRef} /></p>}
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: (props) => <a href={props.href} title={props.title} target="_blank" rel="noreferrer">{props.children}</a> }}>{task.instructions}</ReactMarkdown>
+        </TaskSection>
+
+        {task.prerequisites.length > 0 && (
+          <TaskSection label="PREREQUISITES">
+            <ul>
+              {task.prerequisites.map((prerequisite) => (
+                <li key={prerequisite}>{prerequisite}</li>
+              ))}
+            </ul>
+          </TaskSection>
+        )}
+
+        {task.evaluationCriteria.length > 0 && (
+          <TaskSection label="EVALUATION CRITERIA">
+            <ul className="criteria-list">
+              {task.evaluationCriteria.map((criterion) => (
+                <li key={criterion}>
+                  <span className="criteria-checkbox" aria-hidden="true">✓</span>
+                  <span>{criterion}</span>
+                </li>
+              ))}
+            </ul>
+          </TaskSection>
+        )}
+
+        {task.resources.required.length > 0 && (
+          <TaskSection label="REQUIRED RESOURCES">
+            <ResourceList resources={task.resources.required} />
+          </TaskSection>
+        )}
+
+        {task.resources.optional.length > 0 && (
+          <ExpandableSection label="Want to go further? (Optional Resources)">
+            <ResourceList resources={task.resources.optional} />
+          </ExpandableSection>
+        )}
+
+        {task.contactdetails.length > 0 && (
+          <TaskSection label="CONTACT DETAILS">
+            <ul>
+              {task.contactdetails.map((contactDetail) => (
+                <li key={contactDetail}>{contactDetail}</li>
+              ))}
+            </ul>
+          </TaskSection>
+        )}
+
+        <SubmissionGuidelinesCard verticalId={vertical.id} taskNumber={task.taskNumber} />
+        <SubmissionPanel task={task} verticalName={vertical.name} />
+        </div>
+      </div>
+      {isElectricalTaskTwo && (
+        <img className="task2-bottom-panel" src={electricalTaskTwoBottomPanel} alt="Gwen hanging at the end of the web" />
+      )}
+      {isSoftwareTaskTwo && (
+        <img className="software-task2-middle-panel" src={softwareTaskTwoMiddlePanel} alt="Iron Man Software Task 2 artwork" />
+      )}
+
+      <TaskNav
+        verticalId={vertical.id}
+        previous={taskIndex > 0 ? verticalTasks[taskIndex - 1] : undefined}
+        next={taskIndex < verticalTasks.length - 1 ? verticalTasks[taskIndex + 1] : undefined}
+      />
+    </article>
+  )
+}
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+
+```
+
+```
+
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="write" data-tool-name="textEditGroup"><details>
+<summary>Edit: **App.css**</summary>
+
+@@ lines 1-3364 @@
+
+```
+/* ==========================================================================
+   ASME RECRUITMENT PORTAL — UNITREE / ROBOX INDUSTRIAL PRODUCT THEME
+   Fancy Animated Navbar, Smooth Parallax Stage, Clean Typography & Spacing
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   App Shell & Page Container
+   -------------------------------------------------------------------------- */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: url('./assets/image.png');
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: repeat-y;
+  filter: brightness(1.45) saturate(0.8) contrast(0.85);
+}
+
+:root[data-theme='dark'] .app-shell::before {
+  opacity: 0.72;
+  filter: brightness(0.72) saturate(1.1) contrast(1.05);
+}
+
+.page-content {
+  flex: 1;
+  width: min(100% - 3rem, 78rem);
+  margin: 0 auto;
+  padding: 2rem 0 6rem;
+  position: relative;
+}
+
+:root[data-theme='dark'] .page-content > :not(.task-detail-page) {
+  --color-surface: #111111;
+  --color-surface-hover: #1c1c1c;
+  --color-surface-subtle: #181818;
+  --color-surface-card: #111111;
+  --color-text: #ffffff;
+  --color-text-secondary: #e4e4e7;
+  --color-text-muted: #a1a1aa;
+  --color-text-subtle: #71717a;
+  --color-border: rgba(255, 255, 255, 0.14);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.28);
+  --color-border-strong: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Typography Badges & Micro Labels (Clean, No '//' Slashes)
+   -------------------------------------------------------------------------- */
+.section-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.85rem;
+  width: fit-content;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.hero-eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.95rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons & Micro-interactions
+   -------------------------------------------------------------------------- */
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 50px;
+  padding: 0.8rem 1.75rem;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.primary-button:hover {
+  background-color: #262626;
+  border-color: #262626;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 50px;
+  padding: 0.8rem 1.65rem;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary-button:hover {
+  background-color: #f8f9fa;
+  border-color: #cbd5e1;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.text-link:hover {
+  color: var(--color-text-muted);
+}
+
+.text-link svg {
+  transition: transform var(--transition-fast);
+}
+
+.text-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* --------------------------------------------------------------------------
+   Fancy Animated Floating Capsule Navigation
+   -------------------------------------------------------------------------- */
+.site-header-wrapper {
+  position: sticky;
+  top: 1.25rem;
+  z-index: 1000;
+  width: 100%;
+  padding: 0 1.5rem;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header-wrapper.is-scrolled {
+  top: 0.75rem;
+}
+
+.site-header-capsule {
+  pointer-events: auto;
+  max-width: 50rem;
+  margin: 0 auto;
+  height: 56px;
+  background-color: rgba(17, 17, 17, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-pill);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header-wrapper.is-scrolled .site-header-capsule {
+  height: 50px;
+  max-width: 48rem;
+  background-color: rgba(10, 10, 10, 0.98);
+  box-shadow: 0 20px 45px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.capsule-glow-border {
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.25), rgba(255,255,255,0.08));
+  pointer-events: none;
+  opacity: 0.6;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.nav-group-left,
+.nav-group-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.nav-group-right {
+  justify-content: flex-end;
+}
+
+.capsule-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0 1.25rem;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.capsule-brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.capsule-brand:hover {
+  transform: scale(1.03);
+  opacity: 0.95;
+}
+
+.brand-badge-year {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #a1a1aa;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-pill);
+}
+
+.capsule-link {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  min-height: 2.15rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  text-decoration: none;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.capsule-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.capsule-link.is-active {
+  color: #ffffff;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.capsule-cta-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.15rem;
+  gap: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.capsule-cta-pill:hover {
+  background-color: #e4e4e7;
+  transform: scale(1.04);
+}
+
+.theme-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+.mobile-menu-drawer .theme-toggle-button {
+  width: 100%;
+  height: auto;
+  min-height: 44px;
+  justify-content: flex-start;
+  gap: 0.65rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  padding: 0.65rem 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: #a1a1aa;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-menu-drawer .theme-toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: none;
+}
+
+.menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Mobile Nav Drawer */
+@media (max-width: 52rem) {
+  .menu-button {
+    display: inline-flex;
+  }
+
+  .nav-group-left,
+  .nav-group-right {
+    display: none;
+  }
+
+  .site-header-capsule {
+    padding: 0 1.25rem;
+    max-width: 100%;
+  }
+
+  .mobile-menu-drawer {
+    position: absolute;
+    top: 64px;
+    left: 1.5rem;
+    right: 1.5rem;
+    background-color: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+    animation: drawer-fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes drawer-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .mobile-menu-drawer .capsule-link {
+    min-height: 44px;
+    font-size: 1.05rem;
+    padding: 0.65rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-menu-drawer .capsule-link:last-child {
+    border-bottom: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hero Hardware Stage with Scroll Parallax Motion
+   -------------------------------------------------------------------------- */
+.hero-hardware-section {
+  margin-top: 1.5rem;
+  margin-bottom: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hero-top-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-title-main {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7.5vw, 6.4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: var(--color-text);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hero-subtitle-box {
+  max-width: 25rem;
+  padding-bottom: 0.3rem;
+}
+
+.hero-subtitle-box p {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0 0 1.25rem;
+  font-weight: 500;
+}
+
+.hero-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+/* Main Studio Stage */
+.hardware-stage {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  background: var(--color-stage-bg);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+.stage-light-ambient {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 40%;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stage-image {
+  width: 100%;
+  height: auto;
+  max-height: 640px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.15s ease-out;
+}
+
+/* Floating Spec Card (Continuous Levitation Motion) */
+.floating-spec-card {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  max-width: 330px;
+  box-shadow: var(--shadow-floating);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  animation: floatCard 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+.spec-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  display: grid;
+  place-items: center;
+  margin-bottom: 1rem;
+}
+
+.floating-spec-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin: 0 0 0.4rem;
+}
+
+.floating-spec-card p {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 52rem) {
+  .hero-top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .floating-spec-card {
+    position: static;
+    margin: 1.25rem;
+    max-width: none;
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Recruitment Stats Strip
+   -------------------------------------------------------------------------- */
+.stats-section {
+  margin-bottom: 5.5rem;
+}
+
+.section-heading {
+  margin-bottom: 2.25rem;
+}
+
+.section-heading h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.8vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0.45rem 0 0;
+  color: var(--color-text);
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-block {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.stat-block:hover {
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.stat-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.stat-index-badge {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.stat-label-text {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.stat-block strong {
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.03em;
+}
+
+.stat-sub {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Vertical Cards (Physical Hardware Cards)
+   -------------------------------------------------------------------------- */
+.vertical-preview-section {
+  margin-bottom: 5.5rem;
+}
+
+.vertical-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.vertical-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.vertical-card {
+  --vertical-accent: var(--color-steel);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.vertical-card:hover {
+  border-color: var(--color-text);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-floating);
+}
+
+.vertical-card-media {
+  width: 100%;
+  height: 220px;
+  background-color: var(--color-surface-subtle);
+  overflow: hidden;
+  position: relative;
+}
+
+.vertical-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vertical-card:hover .vertical-card-media img {
+  transform: scale(1.05);
+}
+
+.vertical-card-body {
+  padding: 1.85rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.95rem;
+}
+
+.track-pill {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-text);
+  color: var(--color-background);
+}
+
+.vertical-card h2,
+.vertical-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.5rem;
+  color: var(--color-text);
+}
+
+.vertical-card p {
+  color: var(--color-text-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+}
+
+.card-deliverables {
+  margin: 0.5rem 0 1.5rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.25rem;
+}
+
+.card-deliverables .section-tag-badge {
+  margin-bottom: 0.65rem;
+}
+
+.card-deliverables ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.card-deliverables li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.card-deliverables li::before {
+  content: '✓';
+  color: #10b981;
+  font-weight: 700;
+}
+
+.vertical-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.background-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+  border-radius: var(--radius-pill);
+  padding: 0.45rem 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.vertical-card:hover .card-action-btn {
+  background-color: var(--color-text);
+  color: var(--color-background);
+}
+
+/* Compact mode for Landing Page */
+.vertical-card-compact .vertical-card-media {
+  height: 190px;
+}
+
+.vertical-card-compact h3 {
+  font-size: 1.3rem;
+}
+
+.vertical-card-compact .card-action-btn {
+  margin-top: 1.25rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   Process Stepper (How it Works)
+   -------------------------------------------------------------------------- */
+.process-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 4rem 3.5rem;
+  margin-bottom: 5.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+  margin-top: 1.75rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-base);
+}
+
+.step:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-text);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-3px);
+}
+
+.step-number {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-text);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.step h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.step p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Important Info Memo Callout
+   -------------------------------------------------------------------------- */
+.info-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 3rem;
+  margin-bottom: 5.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.info-callout-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+}
+
+.info-icon-badge {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-text);
+  color: var(--color-background);
+}
+
+.info-callout h2 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0.45rem;
+  color: var(--color-text);
+}
+
+.info-callout p {
+  color: var(--color-text-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 46rem;
+}
+
+/* --------------------------------------------------------------------------
+   Vertical Overview Page
+   -------------------------------------------------------------------------- */
+.vertical-overview-page {
+  padding-top: 1rem;
+}
+
+.vertical-overview-banner {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 3rem;
+  align-items: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 3.5rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.vertical-banner-content h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0.5rem 0 0.85rem;
+  color: var(--color-text);
+}
+
+.vertical-banner-content p {
+  font-size: 1.15rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0 0 1.75rem;
+  max-width: 40rem;
+}
+
+.vertical-banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.vertical-banner-image-box {
+  width: 100%;
+  height: 250px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-surface-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+.vertical-banner-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.deliverables-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.25rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.deliverables-section ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 2rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.deliverables-section li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.deliverables-section li::before {
+  content: '✓';
+  color: #10b981;
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   Task Filter Bar & Task Cards
+   -------------------------------------------------------------------------- */
+.task-list-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-list-heading h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.35rem 0 0;
+}
+
+.task-result-count {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.task-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.task-filter-bar label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.task-filter-bar select {
+  min-height: 44px;
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 2rem 0.45rem 0.95rem;
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.task-filter-bar select:hover,
+.task-filter-bar select:focus {
+  border-color: var(--color-text);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.task-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.25rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.task-card:hover {
+  border-color: var(--color-text);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+}
+
+.task-card-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.task-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.task-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.task-card h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.task-card p {
+  color: var(--color-text-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.task-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.task-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.45rem;
+}
+
+.task-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-chip {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.task-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.task-card:hover .task-card-action {
+  background-color: var(--color-text);
+  color: var(--color-background);
+}
+
+/* --------------------------------------------------------------------------
+   Difficulty Badge & Meta Chips
+   -------------------------------------------------------------------------- */
+.difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 30px;
+  border: 1px solid var(--color-difficulty-color, var(--color-border));
+  background-color: color-mix(in srgb, var(--difficulty-color) 12%, #ffffff);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.8rem;
+  color: var(--difficulty-color);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.difficulty-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.time-estimate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Task Detail Page
+   -------------------------------------------------------------------------- */
+.task-detail-page {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding-top: 0.5rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.75rem;
+}
+
+.breadcrumb a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb a:hover {
+  color: var(--color-text);
+}
+
+.breadcrumb-separator {
+  color: #cbd5e1;
+}
+
+.breadcrumb-current {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.task-detail-header {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  margin-bottom: 2.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.task-detail-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0.35rem 0 1.25rem;
+  color: var(--color-text);
+}
+
+.task-detail-header > p {
+  font-size: 1.18rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0 0 2rem;
+  max-width: 46rem;
+}
+
+.task-detail-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.task-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+/* Task Section */
+.task-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.task-section-header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-section-content {
+  color: #1e293b;
+  line-height: 1.75;
+}
+
+.task-section-content h2,
+.task-section-content h3,
+.task-section-content h1 {
+  font-weight: 800;
+  margin: 1.75rem 0 0.85rem;
+  color: var(--color-text);
+}
+
+.task-section-content h1 { font-size: 1.7rem; }
+.task-section-content h2 { font-size: 1.45rem; }
+.task-section-content h3 { font-size: 1.22rem; }
+
+.task-section-content p {
+  color: #334155;
+  margin: 0.95rem 0;
+  font-size: 1.02rem;
+}
+
+.task-section-content ul,
+.task-section-content ol {
+  color: #334155;
+  padding-left: 1.6rem;
+  margin: 0.95rem 0;
+}
+
+.task-section-content li {
+  padding: 0.3rem 0;
+}
+
+.task-section-content strong {
+  color: var(--color-text);
+}
+
+.task-section-content a {
+  color: #0284c7;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.task-section-content code {
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.task-section-content pre {
+  margin: 1.75rem 0;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-lg);
+  background-color: #0f172a;
+  color: var(--color-surface-hover);
+  overflow-x: auto;
+}
+
+.task-section-content pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--color-surface-hover);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.criteria-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.criteria-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.criteria-checkbox {
+  color: #10b981;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+/* --------------------------------------------------------------------------
+   Expandable Section & Resources
+   -------------------------------------------------------------------------- */
+.expandable-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.expandable-section summary {
+  min-height: 56px;
+  cursor: pointer;
+  padding: 1.4rem 2rem;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.expandable-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.expandable-section summary:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.expandable-content {
+  border-top: 1px solid var(--color-border);
+  padding: 2rem;
+  background-color: var(--color-surface-hover);
+}
+
+.resource-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.resource-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.resource-card:hover {
+  border-color: var(--color-text);
+  box-shadow: var(--shadow-card);
+}
+
+.resource-type {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.resource-card h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  color: var(--color-text);
+}
+
+.resource-card p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0 0 1.5rem;
+  flex: 1;
+}
+
+.resource-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.resource-card a:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Submission Panel
+   -------------------------------------------------------------------------- */
+.submission-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.25rem;
+  background-color: #0a0a0a;
+  color: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 3rem;
+  box-shadow: var(--shadow-floating);
+}
+
+.submission-panel-done {
+  align-items: center;
+}
+
+.submission-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  color: #ffffff;
+  background-color: #262626;
+  border-radius: 50%;
+}
+
+.submission-icon-success {
+  color: #34d399;
+}
+
+.submission-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.submission-copy h2 {
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin: 0.5rem 0 0.5rem;
+  color: #ffffff;
+}
+
+.submission-copy p {
+  color: #d4d4d8;
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+}
+
+.submission-panel .primary-button {
+  background-color: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
+}
+
+.submission-panel .primary-button:hover {
+  background-color: #f4f4f5;
+}
+
+.submission-panel .primary-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submission-guidelines-card {
+  padding: 2.5rem;
+}
+
+.submission-guidelines-card .task-section-header {
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.submission-guidelines-card .task-section-content ul,
+.submission-guidelines-card .task-section-content ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #334155;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.submission-guidelines-card .task-section-content li + li {
+  margin-top: 0.35rem;
+}
+
+.submission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  margin-top: 1.25rem;
+}
+
+.submission-form-row {
+  display: flex;
+  gap: 0.95rem;
+}
+
+.submission-form-row .submission-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.submission-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.submission-field span {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #a1a1aa;
+}
+
+.submission-field input,
+.submission-field textarea {
+  min-height: 44px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.submission-field textarea {
+  min-height: auto;
+  resize: vertical;
+  font-family: var(--font-body);
+}
+
+.submission-field input::placeholder,
+.submission-field textarea::placeholder {
+  color: #6b6b76;
+}
+
+.submission-field input:focus-visible,
+.submission-field textarea:focus-visible {
+  outline: none;
+  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.submission-field input:disabled,
+.submission-field textarea:disabled {
+  opacity: 0.6;
+}
+
+.submission-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  color: #fca5a5;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.submission-error svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.submission-error a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.submission-spinner {
+  animation: submission-spin 0.8s linear infinite;
+}
+
+@keyframes submission-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Task Navigation (Prev/Next)
+   -------------------------------------------------------------------------- */
+.task-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  padding: 3rem 0 1rem;
+  margin-top: 3rem;
+}
+
+.task-nav > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-nav > div:last-child {
+  text-align: right;
+}
+
+.task-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 54px;
+  max-width: 100%;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface);
+  padding: 0.85rem 1.65rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.task-nav a:hover {
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.task-nav a span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.task-nav > div:last-child a span {
+  align-items: flex-end;
+}
+
+.task-nav small {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Task Detail Signature Themes
+   Gotham (Electronics · Batman & Joker) · Stark HUD (Software · Iron Man)
+   Cybernetic Core (Mechanical · DC / Cyborg)
+
+   Each theme is a self-contained palette of --tt-* variables applied to
+   .task-detail-page. The structural rules below (spacing, radii, shadows,
+   type ramp) are shared with the rest of the site — only color, glow and a
+   small decorative emblem change per vertical.
+   -------------------------------------------------------------------------- */
+.theme-tagline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.85rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.task-detail-page.theme-gotham,
+.task-detail-page.theme-stark,
+.task-detail-page.theme-spiderman {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-xl);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: linear-gradient(165deg, var(--tt-bg-1) 0%, var(--tt-bg-2) 100%);
+  box-shadow: 0 40px 90px -30px var(--tt-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.task-detail-page.theme-gotham::before,
+.task-detail-page.theme-stark::before,
+.task-detail-page.theme-spiderman::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-image: var(--tt-pattern);
+}
+
+/* Breadcrumb */
+.task-detail-page.theme-gotham .breadcrumb,
+.task-detail-page.theme-stark .breadcrumb,
+.task-detail-page.theme-spiderman .breadcrumb {
+  color: var(--tt-text-muted);
+}
+
+.task-detail-page.theme-gotham .breadcrumb a,
+.task-detail-page.theme-stark .breadcrumb a,
+.task-detail-page.theme-spiderman .breadcrumb a {
+  color: var(--tt-text-muted);
+}
+
+.task-detail-page.theme-gotham .breadcrumb a:hover,
+.task-detail-page.theme-stark .breadcrumb a:hover,
+.task-detail-page.theme-spiderman .breadcrumb a:hover {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .breadcrumb-separator,
+.task-detail-page.theme-stark .breadcrumb-separator,
+.task-detail-page.theme-spiderman .breadcrumb-separator {
+  color: var(--tt-border-strong);
+}
+
+.task-detail-page.theme-gotham .breadcrumb-current,
+.task-detail-page.theme-stark .breadcrumb-current,
+.task-detail-page.theme-spiderman .breadcrumb-current {
+  color: var(--tt-text);
+}
+
+/* Pills & chips */
+.task-detail-page.theme-gotham .track-pill,
+.task-detail-page.theme-stark .track-pill,
+.task-detail-page.theme-spiderman .track-pill {
+  background: var(--tt-accent);
+  color: var(--tt-bg-1);
+}
+
+.task-detail-page.theme-gotham .section-tag-badge,
+.task-detail-page.theme-stark .section-tag-badge,
+.task-detail-page.theme-spiderman .section-tag-badge {
+  background: var(--tt-surface-strong);
+  border-color: var(--tt-border);
+  color: var(--tt-text);
+  box-shadow: none;
+}
+
+.task-detail-page.theme-gotham .theme-tagline-pill,
+.task-detail-page.theme-stark .theme-tagline-pill,
+.task-detail-page.theme-spiderman .theme-tagline-pill {
+  background: var(--tt-surface-strong);
+  border-color: var(--tt-border-strong);
+  color: var(--tt-accent);
+}
+
+.task-detail-page.theme-gotham .tag-chip,
+.task-detail-page.theme-stark .tag-chip,
+.task-detail-page.theme-spiderman .tag-chip {
+  background: var(--tt-surface);
+  border-color: var(--tt-border);
+  color: var(--tt-text-secondary);
+}
+
+.task-detail-page.theme-gotham .time-estimate,
+.task-detail-page.theme-stark .time-estimate,
+.task-detail-page.theme-spiderman .time-estimate {
+  color: var(--tt-text-muted);
+}
+
+.task-detail-page.theme-gotham .difficulty-badge,
+.task-detail-page.theme-stark .difficulty-badge,
+.task-detail-page.theme-spiderman .difficulty-badge {
+  background-color: color-mix(in srgb, var(--difficulty-color) 20%, transparent);
+  border-color: color-mix(in srgb, var(--difficulty-color) 45%, transparent);
+}
+
+/* Header card + emblem */
+.task-detail-page.theme-gotham .task-detail-header,
+.task-detail-page.theme-stark .task-detail-header,
+.task-detail-page.theme-spiderman .task-detail-header {
+  position: relative;
+  overflow: hidden;
+  background: var(--tt-surface);
+  border-color: var(--tt-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.task-detail-page.theme-gotham .task-detail-header h1,
+.task-detail-page.theme-stark .task-detail-header h1,
+.task-detail-page.theme-spiderman .task-detail-header h1 {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .task-detail-header > p,
+.task-detail-page.theme-stark .task-detail-header > p,
+.task-detail-page.theme-spiderman .task-detail-header > p {
+  color: var(--tt-text-secondary);
+}
+
+.task-detail-page.theme-gotham .task-detail-meta,
+.task-detail-page.theme-stark .task-detail-meta,
+.task-detail-page.theme-spiderman .task-detail-meta {
+  border-top-color: var(--tt-border);
+}
+
+/* Section cards, expandables, resources */
+.task-detail-page.theme-gotham .task-section,
+.task-detail-page.theme-stark .task-section,
+.task-detail-page.theme-spiderman .task-section,
+.task-detail-page.theme-gotham .expandable-section,
+.task-detail-page.theme-stark .expandable-section,
+.task-detail-page.theme-spiderman .expandable-section,
+.task-detail-page.theme-gotham .resource-card,
+.task-detail-page.theme-stark .resource-card,
+.task-detail-page.theme-spiderman .resource-card,
+.task-detail-page.theme-gotham .task-nav a,
+.task-detail-page.theme-stark .task-nav a,
+.task-detail-page.theme-spiderman .task-nav a {
+  background: var(--tt-surface);
+  border-color: var(--tt-border);
+}
+
+.task-detail-page.theme-gotham .task-section-header,
+.task-detail-page.theme-stark .task-section-header,
+.task-detail-page.theme-spiderman .task-section-header {
+  border-bottom-color: var(--tt-border);
+}
+
+.task-detail-page.theme-gotham .task-section-content,
+.task-detail-page.theme-stark .task-section-content,
+.task-detail-page.theme-spiderman .task-section-content,
+.task-detail-page.theme-gotham .task-section-content p,
+.task-detail-page.theme-stark .task-section-content p,
+.task-detail-page.theme-spiderman .task-section-content p,
+.task-detail-page.theme-gotham .task-section-content ul,
+.task-detail-page.theme-stark .task-section-content ul,
+.task-detail-page.theme-spiderman .task-section-content ul,
+.task-detail-page.theme-gotham .task-section-content ol,
+.task-detail-page.theme-stark .task-section-content ol,
+.task-detail-page.theme-spiderman .task-section-content ol {
+  color: var(--tt-text-secondary);
+}
+
+.task-detail-page.theme-gotham .task-section-content h2,
+.task-detail-page.theme-stark .task-section-content h2,
+.task-detail-page.theme-spiderman .task-section-content h2,
+.task-detail-page.theme-gotham .task-section-content h1,
+.task-detail-page.theme-stark .task-section-content h1,
+.task-detail-page.theme-spiderman .task-section-content h1,
+.task-detail-page.theme-gotham .task-section-content h3,
+.task-detail-page.theme-stark .task-section-content h3,
+.task-detail-page.theme-spiderman .task-section-content h3,
+.task-detail-page.theme-gotham .task-section-content strong,
+.task-detail-page.theme-stark .task-section-content strong,
+.task-detail-page.theme-spiderman .task-section-content strong,
+.task-detail-page.theme-gotham .criteria-list li,
+.task-detail-page.theme-stark .criteria-list li,
+.task-detail-page.theme-spiderman .criteria-list li {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .task-section-content a,
+.task-detail-page.theme-stark .task-section-content a,
+.task-detail-page.theme-spiderman .task-section-content a,
+.task-detail-page.theme-gotham .criteria-checkbox,
+.task-detail-page.theme-stark .criteria-checkbox,
+.task-detail-page.theme-spiderman .criteria-checkbox,
+.task-detail-page.theme-gotham .resource-card a,
+.task-detail-page.theme-stark .resource-card a,
+.task-detail-page.theme-spiderman .resource-card a {
+  color: var(--tt-accent);
+}
+
+.task-detail-page.theme-gotham .task-section-content code,
+.task-detail-page.theme-stark .task-section-content code,
+.task-detail-page.theme-spiderman .task-section-content code {
+  background-color: var(--tt-code-bg);
+  border-color: var(--tt-border);
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .task-section-content pre,
+.task-detail-page.theme-stark .task-section-content pre,
+.task-detail-page.theme-spiderman .task-section-content pre {
+  border-color: var(--tt-border);
+}
+
+.task-detail-page.theme-gotham .expandable-section summary,
+.task-detail-page.theme-stark .expandable-section summary,
+.task-detail-page.theme-spiderman .expandable-section summary {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .expandable-section summary:hover,
+.task-detail-page.theme-stark .expandable-section summary:hover,
+.task-detail-page.theme-spiderman .expandable-section summary:hover {
+  background: var(--tt-surface-strong);
+}
+
+.task-detail-page.theme-gotham .expandable-content,
+.task-detail-page.theme-stark .expandable-content,
+.task-detail-page.theme-spiderman .expandable-content {
+  background: rgba(0, 0, 0, 0.18);
+  border-top-color: var(--tt-border);
+}
+
+.task-detail-page.theme-gotham .resource-card:hover,
+.task-detail-page.theme-stark .resource-card:hover,
+.task-detail-page.theme-spiderman .resource-card:hover {
+  border-color: var(--tt-accent);
+  box-shadow: 0 0 0 1px var(--tt-accent) inset, 0 20px 40px -16px var(--tt-shadow);
+}
+
+.task-detail-page.theme-gotham .resource-type,
+.task-detail-page.theme-stark .resource-type,
+.task-detail-page.theme-spiderman .resource-type {
+  color: var(--tt-text-muted);
+}
+
+.task-detail-page.theme-gotham .resource-card h3,
+.task-detail-page.theme-stark .resource-card h3,
+.task-detail-page.theme-spiderman .resource-card h3 {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .resource-card p,
+.task-detail-page.theme-stark .resource-card p,
+.task-detail-page.theme-spiderman .resource-card p {
+  color: var(--tt-text-secondary);
+}
+
+/* Submission panel + primary CTA */
+.task-detail-page.theme-gotham .submission-panel,
+.task-detail-page.theme-stark .submission-panel,
+.task-detail-page.theme-spiderman .submission-panel {
+  box-shadow: 0 0 0 1px var(--tt-border-strong), var(--shadow-floating), 0 0 70px -20px var(--tt-accent);
+}
+
+.task-detail-page.theme-gotham .submission-panel .primary-button,
+.task-detail-page.theme-stark .submission-panel .primary-button,
+.task-detail-page.theme-spiderman .submission-panel .primary-button {
+  background-color: var(--tt-accent);
+  border-color: var(--tt-accent);
+  color: var(--tt-bg-1);
+}
+
+.task-detail-page.theme-gotham .submission-panel .primary-button:hover,
+.task-detail-page.theme-stark .submission-panel .primary-button:hover,
+.task-detail-page.theme-spiderman .submission-panel .primary-button:hover {
+  filter: brightness(1.12);
+  color: var(--tt-bg-1);
+}
+
+/* Prev/next nav */
+.task-detail-page.theme-gotham .task-nav,
+.task-detail-page.theme-stark .task-nav,
+.task-detail-page.theme-spiderman .task-nav {
+  border-top-color: var(--tt-border);
+}
+
+.task-detail-page.theme-gotham .task-nav a,
+.task-detail-page.theme-stark .task-nav a,
+.task-detail-page.theme-spiderman .task-nav a {
+  color: var(--tt-text);
+}
+
+.task-detail-page.theme-gotham .task-nav a:hover,
+.task-detail-page.theme-stark .task-nav a:hover,
+.task-detail-page.theme-spiderman .task-nav a:hover {
+  border-color: var(--tt-accent);
+  box-shadow: 0 16px 36px -14px var(--tt-shadow), 0 0 24px -8px var(--tt-accent);
+}
+
+.task-detail-page.theme-gotham .task-nav small,
+.task-detail-page.theme-stark .task-nav small,
+.task-detail-page.theme-spiderman .task-nav small {
+  color: var(--tt-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Gotham — Electronics (Batman & Joker)
+   Moody near-black stage, bat-signal yellow + joker purple duotone.
+   -------------------------------------------------------------------------- */
+.theme-gotham {
+  --tt-bg-1: #0a0a10;
+  --tt-bg-2: #1a1024;
+  --tt-surface: rgba(255, 255, 255, 0.035);
+  --tt-surface-strong: rgba(255, 255, 255, 0.075);
+  --tt-border: rgba(234, 179, 8, 0.22);
+  --tt-border-strong: rgba(168, 85, 247, 0.45);
+  --tt-text: #f7f5fb;
+  --tt-text-secondary: #d3cee0;
+  --tt-text-muted: #948db0;
+  --tt-accent: #eab308;
+  --tt-code-bg: #050508;
+  --tt-shadow: rgba(20, 8, 35, 0.7);
+  --tt-pattern:
+    radial-gradient(ellipse 55% 45% at 88% -8%, rgba(234, 179, 8, 0.18), transparent 60%),
+    radial-gradient(ellipse 50% 40% at -8% 108%, rgba(168, 85, 247, 0.16), transparent 62%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 26px);
+}
+
+.theme-gotham .theme-tagline-pill {
+  animation: gotham-flicker 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes gotham-flicker {
+    0%, 92%, 100% { opacity: 1; }
+    93% { opacity: 0.55; }
+    95% { opacity: 1; }
+    96% { opacity: 0.7; }
+    97% { opacity: 1; }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Stark HUD — Software (Iron Man)
+   Dark repulsor-tech stage, red/gold plating with an arc-reactor glow.
+   -------------------------------------------------------------------------- */
+.theme-stark {
+  --tt-bg-1: #0b0d11;
+  --tt-bg-2: #170b0a;
+  --tt-surface: rgba(255, 255, 255, 0.035);
+  --tt-surface-strong: rgba(255, 255, 255, 0.075);
+  --tt-border: rgba(245, 180, 0, 0.24);
+  --tt-border-strong: rgba(56, 189, 248, 0.5);
+  --tt-text: #f8f6ef;
+  --tt-text-secondary: #d9d1bf;
+  --tt-text-muted: #a2957d;
+  --tt-accent: #f5b400;
+  --tt-code-bg: #0a0604;
+  --tt-shadow: rgba(20, 4, 4, 0.7);
+  --tt-pattern:
+    radial-gradient(circle at 88% 6%, rgba(56, 189, 248, 0.18), transparent 42%),
+    radial-gradient(ellipse 60% 40% at 8% 102%, rgba(226, 35, 26, 0.14), transparent 62%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 30px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 30px);
+}
+
+/* --------------------------------------------------------------------------
+   Web-Slinger Ops — Mechanical (Spider-Man)
+   Night-city stage in Spidey red/blue, with a faint web radiating from
+   the top-left corner instead of the other themes' grid/stripe textures.
+   -------------------------------------------------------------------------- */
+.theme-spiderman {
+  --tt-bg-1: #0a0a12;
+  --tt-bg-2: #1a0a10;
+  --tt-surface: rgba(255, 255, 255, 0.035);
+  --tt-surface-strong: rgba(255, 255, 255, 0.075);
+  --tt-border: rgba(220, 38, 38, 0.26);
+  --tt-border-strong: rgba(37, 99, 235, 0.5);
+  --tt-text: #f6f3f0;
+  --tt-text-secondary: #dcd3ce;
+  --tt-text-muted: #a89a95;
+  --tt-accent: #e6303c;
+  --tt-code-bg: #08050a;
+  --tt-shadow: rgba(15, 5, 10, 0.7);
+  --tt-pattern:
+    radial-gradient(ellipse 55% 45% at 88% -8%, rgba(220, 38, 38, 0.16), transparent 60%),
+    radial-gradient(ellipse 50% 40% at -8% 108%, rgba(37, 99, 235, 0.18), transparent 62%),
+    repeating-radial-gradient(circle at 12% -12%, transparent 0 34px, rgba(255, 255, 255, 0.035) 35px, transparent 36px),
+    repeating-conic-gradient(from 200deg at 12% -12%, transparent 0deg 14deg, rgba(255, 255, 255, 0.035) 14.6deg 15deg);
+}
+
+.theme-spiderman .theme-tagline-pill::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e6303c;
+  box-shadow: 0 0 8px 2px rgba(230, 48, 60, 0.7);
+  margin-right: 0.15rem;
+}
+
+/* Electrical Task 2 — premium Spider-Man treatment */
+.theme-electrical-task2 {
+  --tt-bg-1: #0a0a0c;
+  --tt-bg-2: #121215;
+  --tt-surface: rgba(18, 18, 21, 0.96);
+  --tt-surface-strong: rgba(27, 42, 74, 0.96);
+  --tt-border: rgba(230, 36, 41, 0.34);
+  --tt-border-strong: rgba(245, 245, 245, 0.3);
+  --tt-text: #f5f5f5;
+  --tt-text-secondary: #d6d9e3;
+  --tt-text-muted: #9ba6c0;
+  --tt-accent: #e62429;
+  --tt-blue-accent: #12356b;
+  --tt-code-bg: #070b1c;
+  --tt-shadow: rgba(0, 0, 0, 0.86);
+  --tt-pattern:
+    radial-gradient(circle at 91% 4%, rgba(230, 36, 41, 0.13), transparent 32%),
+    repeating-radial-gradient(circle at 8% -8%, transparent 0 38px, rgba(110, 124, 151, 0.07) 39px 40px, transparent 41px),
+    repeating-conic-gradient(from 195deg at 8% -8%, transparent 0deg 14deg, rgba(110, 124, 151, 0.06) 14.5deg 15deg);
+}
+
+.task-detail-page.theme-electrical-task2 {
+  position: relative;
+  isolation: isolate;
+  background: #0a0a0c;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.task-detail-page.theme-electrical-task2::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(230, 36, 41, 0.28) 0%,
+      rgba(178, 35, 57, 0.2) 24%,
+      rgba(65, 43, 76, 0.2) 48%,
+      rgba(24, 55, 107, 0.44) 74%,
+      rgba(10, 31, 73, 0.72) 100%
+    ),
+    radial-gradient(ellipse 72% 30% at 50% 100%, rgba(18, 53, 107, 0.52), transparent 78%);
+  pointer-events: none;
+}
+
+.theme-electrical-task2 > * {
+  position: relative;
+  z-index: 0;
+}
+
+.theme-electrical-task2 .task-detail-header,
+.theme-electrical-task2 .task-section,
+.theme-electrical-task2 .resource-card,
+.theme-electrical-task2 .submission-panel,
+.theme-electrical-task2 .task-nav a {
+  background-color: rgba(18, 18, 21, 0.78);
+}
+
+.theme-electrical-task2 .task-detail-header {
+  min-height: 31rem;
+  margin-top: 20px;
+  isolation: isolate;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.task-detail-page.theme-electrical-task2 .task-section,
+.task-detail-page.theme-electrical-task2 .expandable-section,
+.task-detail-page.theme-electrical-task2 .resource-card,
+.task-detail-page.theme-electrical-task2 .submission-panel,
+.task-detail-page.theme-electrical-task2 .task-nav a {
+  background: rgba(18, 18, 21, 0.78);
+}
+
+.task-detail-page.theme-electrical-task2 .task-detail-header {
+  background: transparent;
+}
+
+.task-detail-page.theme-electrical-task2 .submission-panel {
+  box-shadow: 0 0 0 1px rgba(63, 105, 173, 0.72), 0 24px 50px -20px rgba(0, 0, 0, 0.92), 0 0 74px -18px rgba(18, 53, 107, 0.98);
+}
+
+.task-detail-page.theme-electrical-task2 .submission-panel .primary-button {
+  background: var(--tt-blue-accent);
+  border-color: var(--tt-blue-accent);
+  box-shadow: 0 8px 24px -10px rgba(18, 53, 107, 0.98), 0 0 18px -7px rgba(63, 105, 173, 0.96);
+  color: #f5f5f5;
+}
+
+.task-detail-page.theme-electrical-task2 .submission-panel .primary-button:hover {
+  background: #1b4b91;
+  border-color: #1b4b91;
+  box-shadow: 0 12px 30px -10px rgba(18, 53, 107, 1), 0 0 30px -6px rgba(63, 105, 173, 0.98);
+  color: #ffffff;
+}
+
+.task2-hero-kicker {
+  position: absolute;
+  top: 1.45rem;
+  left: 3rem;
+  z-index: 2;
+  color: var(--tt-accent);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.theme-electrical-task2 .task-detail-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.task2-top-panel,
+.task2-bottom-panel {
+  display: block;
+  width: calc(100% + 1rem);
+  height: auto;
+  margin-inline: -0.5rem;
+  object-fit: contain;
+  box-sizing: border-box;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0a0a0c;
+}
+
+.task2-top-panel-stage {
+  position: relative;
+  z-index: 1;
+  width: calc(100% + 1rem);
+  margin-inline: -0.5rem;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.task2-breadcrumb-overlay {
+  position: absolute;
+  right: 0;
+  bottom: 1rem;
+  left: 0;
+  z-index: 2;
+  margin: 0;
+  padding-inline: 1.25rem;
+  color: rgba(245, 245, 245, 0.92);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.task2-breadcrumb-overlay a,
+.task2-breadcrumb-overlay .breadcrumb-current {
+  color: rgba(245, 245, 245, 0.94);
+}
+
+.task2-top-panel {
+  width: 100%;
+  margin-inline: 0;
+  object-position: center top;
+  filter: saturate(1.03) contrast(1.05) drop-shadow(0 18px 26px rgba(0, 0, 0, 0.65));
+}
+
+.task2-adjacent-hero-image {
+  position: absolute;
+  z-index: 0;
+  top: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(34%, 20rem);
+  height: calc(100% - 2rem);
+  object-fit: cover;
+  object-position: center top;
+  opacity: 1;
+  filter: saturate(1.04) contrast(1.08) drop-shadow(-16px 0 26px rgba(230, 36, 41, 0.32)) drop-shadow(0 20px 26px rgba(0, 0, 0, 0.72));
+  -webkit-mask-image: linear-gradient(to left, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 78%, transparent 100%);
+  pointer-events: none;
+}
+
+.theme-electrical-task2 .task-detail-header > .task2-adjacent-hero-image {
+  position: absolute;
+  z-index: 0;
+}
+
+.task2-flow-stage {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  width: calc(100% + 1rem);
+  margin: -4px -0.5rem 0;
+  padding: 0.5rem 0.25rem 37px;
+  background-color: #0a0a0c;
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: 100% auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: inset 0 18px 32px -28px rgba(230, 36, 41, 0.5), inset 0 -18px 32px -28px rgba(230, 36, 41, 0.5);
+}
+
+.task2-flow-stage::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, #0a0a0c 0%, rgba(10, 10, 12, 0.32) 22%, rgba(10, 10, 12, 0.32) 78%, #0a0a0c 100%);
+  pointer-events: none;
+}
+
+.task2-flow-stage .task-detail-content {
+  position: relative;
+  z-index: 2;
+}
+
+.task-detail-page.theme-electrical-task2 .task2-flow-stage .task-section,
+.task-detail-page.theme-electrical-task2 .task2-flow-stage .expandable-section,
+.task-detail-page.theme-electrical-task2 .task2-flow-stage .resource-card,
+.task-detail-page.theme-electrical-task2 .task2-flow-stage .submission-panel,
+.task-detail-page.theme-electrical-task2 .task-nav a {
+  border-color: rgba(63, 105, 173, 0.72);
+}
+
+.task-detail-page.theme-electrical-task2 .task2-flow-stage .task-section-header {
+  border-bottom-color: rgba(63, 105, 173, 0.58);
+}
+
+.task2-bottom-panel {
+  position: relative;
+  z-index: 3;
+  margin-top: -5px;
+  object-position: center bottom;
+  filter: saturate(1.03) contrast(1.05) drop-shadow(0 -18px 26px rgba(0, 0, 0, 0.65));
+  will-change: transform;
+  pointer-events: none;
+}
+
+.software-task2-top-panel,
+.software-task2-middle-panel {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  object-fit: contain;
+  filter: saturate(1.03) contrast(1.05) drop-shadow(0 18px 26px rgba(0, 0, 0, 0.65));
+  pointer-events: none;
+}
+
+.software-task2-top-panel {
+  margin-bottom: 32px;
+}
+
+.software-task2-middle-panel {
+  margin-top: 32px;
+}
+
+.theme-electrical-task2 .task-detail-header::before {
+  display: none;
+}
+
+.theme-electrical-task2 .task-section {
+  position: relative;
+  overflow: hidden;
+  background: rgba(18, 18, 21, 0.78);
+  box-shadow: 0 22px 42px -28px rgba(0, 0, 0, 0.95), 0 0 20px -18px rgba(230, 36, 41, 0.8);
+}
+
+.theme-electrical-task2 .task2-story-status {
+  min-height: 1.5rem;
+  margin: 0 0 1.35rem;
+  color: var(--tt-accent);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.theme-electrical-task2 .typed-cursor {
+  color: var(--tt-accent);
+  text-shadow: 0 0 10px rgba(230, 36, 41, 0.8);
+}
+
+.theme-electrical-task2 .task-section-header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-top: 0.85rem;
+  background: linear-gradient(90deg, var(--tt-accent), rgba(230, 36, 41, 0.15), transparent 78%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-electrical-task2 .task-section.is-visible .task-section-header::after {
+  transform: scaleX(1);
+}
+
+.theme-electrical-task2 .task-section.is-visible .task-section-header .section-tag-badge {
+  animation: task2-heading-activate 500ms ease-out both;
+}
+
+@keyframes task2-heading-activate {
+  from { opacity: 0.45; transform: translateX(-5px); text-shadow: none; }
+  to { opacity: 1; transform: translateX(0); text-shadow: 0 0 16px rgba(230, 36, 41, 0.45); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .theme-spiderman .theme-tagline-pill::before {
+    animation: spidey-sense-pulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes spidey-sense-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Header Character Art
+   A large, faded character portrait bleeds in from the right edge of each
+   themed header — Joker for Gotham, Iron Man for Stark, Spider-Man for
+   Web-Slinger Ops — masked to fade into the card so the title stays
+   readable. Desktop only; collapses to the plain themed surface on small
+   screens.
+   -------------------------------------------------------------------------- */
+@media (min-width: 60rem) {
+  .theme-gotham .task-detail-header::before,
+  .theme-stark .task-detail-header::before,
+  .theme-spiderman .task-detail-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position: right top;
+    filter: brightness(0.6) saturate(0.85) contrast(1.08);
+    pointer-events: none;
+    /* The fade is sized to the image's own box (mask-size below) so it
+       always completes exactly at the image's edge — never past it into
+       empty space, which is what causes a visible hard seam. */
+    -webkit-mask-image: linear-gradient(to left, black 0%, black 25%, transparent 100%);
+    mask-image: linear-gradient(to left, black 0%, black 25%, transparent 100%);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: right top;
+    mask-position: right top;
+  }
+
+  .theme-gotham .task-detail-header::before {
+    background-image: url('./assets/joker.jpg');
+    background-size: 320px auto;
+    -webkit-mask-size: 320px 100%;
+    mask-size: 320px 100%;
+  }
+
+  .theme-stark .task-detail-header::before {
+    background-image: url('./assets/iron-man.jpg');
+    background-size: 320px auto;
+    -webkit-mask-size: 320px 100%;
+    mask-size: 320px 100%;
+    filter: brightness(0.42) saturate(0.7) contrast(1.15);
+  }
+
+  .theme-software-task2 .task-detail-header::before {
+    background-image: url('./assets/iron-man-t2.jpeg');
+  }
+
+  .theme-spiderman .task-detail-header::before {
+    background-position: right center;
+    -webkit-mask-position: right center;
+    mask-position: right center;
+    background-image: url('./assets/spiderman.png');
+    background-size: 400px auto;
+    -webkit-mask-size: 400px 100%;
+    mask-size: 400px 100%;
+    filter: brightness(0.62) saturate(0.9) contrast(1.1);
+  }
+
+  .theme-mechanical-task2 .task-detail-header::before {
+    background-image: url('./assets/Mech_task2_theme.jpeg');
+  }
+
+  .theme-electrical-task2 .task-detail-header::before {
+    display: none;
+  }
+
+  /* A soft color wash between the header surface and the photo so the two
+     read as one designed panel rather than a photo pasted on top. */
+  .theme-gotham .task-detail-header::after,
+  .theme-stark .task-detail-header::after,
+  .theme-spiderman .task-detail-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .theme-gotham .task-detail-header::after {
+    background: linear-gradient(100deg, rgba(10, 8, 14, 0.35) 0%, rgba(88, 40, 140, 0.16) 38%, transparent 62%);
+  }
+
+  .theme-stark .task-detail-header::after {
+    background: linear-gradient(100deg, rgba(10, 6, 4, 0.55) 0%, rgba(180, 60, 20, 0.2) 42%, transparent 72%);
+  }
+
+  .theme-spiderman .task-detail-header::after {
+    background: linear-gradient(100deg, rgba(15, 5, 10, 0.4) 0%, rgba(37, 99, 235, 0.16) 38%, transparent 62%);
+  }
+
+  /* Keep header copy clear of the portrait's right-hand side */
+  .theme-gotham .task-detail-header h1,
+  .theme-gotham .task-detail-header > p,
+  .theme-gotham .task-detail-badges,
+  .theme-gotham .task-detail-meta,
+  .theme-stark .task-detail-header h1,
+  .theme-stark .task-detail-header > p,
+  .theme-stark .task-detail-badges,
+  .theme-stark .task-detail-meta {
+    max-width: 28rem;
+  }
+
+  .theme-spiderman .task-detail-header h1,
+  .theme-spiderman .task-detail-header > p,
+  .theme-spiderman .task-detail-badges,
+  .theme-spiderman .task-detail-meta {
+    max-width: 23rem;
+  }
+
+  .theme-electrical-task2 .task-detail-header h1,
+  .theme-electrical-task2 .task-detail-header > p,
+  .theme-electrical-task2 .task-detail-badges,
+  .theme-electrical-task2 .task-detail-meta {
+    max-width: 23rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .theme-electrical-task2 .task-detail-header {
+    min-height: 31rem;
+  }
+
+  .task2-hero-kicker {
+    left: 1.5rem;
+    font-size: 0.58rem;
+  }
+
+  .task2-adjacent-hero-image {
+    right: 0.4rem;
+    width: 44%;
+    opacity: 0.92;
+  }
+
+  .theme-electrical-task2 .task-detail-header h1,
+  .theme-electrical-task2 .task-detail-header > p,
+  .theme-electrical-task2 .task-detail-badges,
+  .theme-electrical-task2 .task-detail-meta {
+    max-width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3D Header Emblems
+   Original, CSS-only 3D objects (not character likenesses) that sit in the
+   top-right corner of each themed task header: a spinning medallion, a
+   layered arc-reactor, and a rotating hexagonal core prism.
+   -------------------------------------------------------------------------- */
+.emblem-3d {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.75rem;
+  width: 84px;
+  height: 84px;
+  perspective: 600px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gotham — spinning bat medallion */
+.emblem-gotham .emblem-3d-spin {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .emblem-gotham .emblem-3d-spin {
+    animation: emblem-spin-y 7s linear infinite;
+  }
+}
+
+@keyframes emblem-spin-y {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+.emblem-gotham .emblem-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 2.3rem;
+  backface-visibility: hidden;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.14), transparent 55%),
+    radial-gradient(circle, #1a1720 0%, #0d0b12 70%);
+  border: 2px solid rgba(234, 179, 8, 0.55);
+  box-shadow:
+    0 0 0 6px rgba(234, 179, 8, 0.08),
+    0 0 22px rgba(168, 85, 247, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.08),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.emblem-gotham .emblem-face-back {
+  transform: rotateY(180deg);
+}
+
+/* Stark — layered, tilted arc reactor */
+.emblem-stark .reactor-3d {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(52deg) rotateZ(0deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .emblem-stark .reactor-3d {
+    animation: reactor-spin 6s linear infinite;
+  }
+}
+
+@keyframes reactor-spin {
+  from { transform: rotateX(52deg) rotateZ(0deg); }
+  to { transform: rotateX(52deg) rotateZ(360deg); }
+}
+
+.emblem-stark .reactor-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+}
+
+.emblem-stark .reactor-ring-1 {
+  inset: 0;
+  transform: translateZ(16px);
+  border-color: rgba(56, 189, 248, 0.8);
+}
+
+.emblem-stark .reactor-ring-2 {
+  inset: 9px;
+  transform: translateZ(9px);
+  border-color: rgba(245, 180, 0, 0.6);
+}
+
+.emblem-stark .reactor-ring-3 {
+  inset: 18px;
+  transform: translateZ(2px);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.emblem-stark .reactor-core {
+  position: absolute;
+  inset: 27px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #8fe8ff 35%, #17c1e8 65%, transparent 75%);
+  transform: translateZ(22px);
+  box-shadow: 0 0 28px 9px rgba(56, 189, 248, 0.65);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .emblem-stark .reactor-core {
+    animation: reactor-core-pulse 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes reactor-core-pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+/* Spider-Man — spinning web-shooter medallion */
+.emblem-spiderman .emblem-3d-spin {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .emblem-spiderman .emblem-3d-spin {
+    animation: emblem-spin-y 7s linear infinite;
+  }
+}
+
+.emblem-spiderman .emblem-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 2.3rem;
+  backface-visibility: hidden;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.14), transparent 55%),
+    radial-gradient(circle, #2a0a0e 0%, #12070a 70%);
+  border: 2px solid rgba(220, 38, 38, 0.6);
+  box-shadow:
+    0 0 0 6px rgba(220, 38, 38, 0.08),
+    0 0 22px rgba(37, 99, 235, 0.5),
+    inset 0 2px 6px rgba(255, 255, 255, 0.08),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.emblem-spiderman .emblem-face-back {
+  transform: rotateY(180deg);
+}
+
+@media (max-width: 48rem) {
+  .emblem-3d {
+    width: 62px;
+    height: 62px;
+    top: 1.1rem;
+    right: 1.1rem;
+  }
+
+  .emblem-gotham .emblem-face,
+  .emblem-spiderman .emblem-face {
+    font-size: 1.7rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Editorial How It Works & FAQ Pages
+   -------------------------------------------------------------------------- */
+.editorial-page {
+  padding-top: 1.5rem;
+}
+
+.editorial-header {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 4rem 3.5rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.editorial-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0 0 1.25rem;
+  color: var(--color-text);
+}
+
+.editorial-header p {
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  line-height: 1.65;
+  max-width: 48rem;
+  margin: 0;
+}
+
+.how-it-works-cta {
+  margin-top: 3.5rem;
+}
+
+.faq-categories {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2.25rem;
+  flex-wrap: wrap;
+}
+
+.faq-tab {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.faq-tab:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.faq-tab.is-active {
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-background);
+}
+
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.faq-item {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.faq-item:hover {
+  border-color: #cbd5e1;
+}
+
+.faq-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  list-style: none;
+  user-select: none;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-summary:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.faq-content {
+  border-top: 1px solid var(--color-border);
+  padding: 1.5rem 2rem 2rem;
+  background-color: var(--color-surface-hover);
+  color: #334155;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.faq-content p {
+  margin: 0 0 0.85rem;
+}
+
+.faq-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Site Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  width: 100%;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  padding: 4rem 0 3rem;
+  margin-top: auto;
+}
+
+:root[data-theme='dark'] .site-footer {
+  border-top-color: rgba(255, 255, 255, 0.14);
+  background-color: #111111;
+  color: #a1a1aa;
+}
+
+.site-footer-inner {
+  width: min(100% - 3rem, 78rem);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  max-width: 25rem;
+}
+
+.footer-logo-mark {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.footer-brand p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 4.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-col a {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.footer-col a:hover {
+  color: var(--color-text);
+}
+
+.footer-bottom {
+  width: min(100% - 3rem, 78rem);
+  margin: 3.5rem auto 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Media Queries
+   -------------------------------------------------------------------------- */
+@media (max-width: 64rem) {
+  .vertical-preview-grid,
+  .vertical-selection-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stepper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vertical-overview-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  .page-content {
+    width: min(100% - 1.5rem, 78rem);
+    padding: 1.25rem 0 4rem;
+  }
+
+  .vertical-preview-grid,
+  .vertical-selection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stepper {
+    grid-template-columns: 1fr;
+  }
+
+  .info-callout {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.75rem;
+  }
+
+  .task-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.75rem;
+    gap: 1.5rem;
+  }
+
+  .task-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .task-card-footer {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .task-card-action {
+    align-self: flex-end;
+  }
+
+  .resource-list {
+    grid-template-columns: 1fr;
+  }
+
+  .submission-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+
+  .submission-panel .primary-button {
+    width: 100%;
+  }
+
+  .submission-form-row {
+    flex-direction: column;
+  }
+
+  .task-nav {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .task-nav > div,
+  .task-nav > div:last-child {
+    width: 100%;
+    text-align: left;
+  }
+
+  .task-nav a {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .editorial-header {
+    padding: 2.5rem 1.75rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Dark Mode — remaining spot-fixes
+
+   Most of the site already reads its colors from the CSS custom properties
+   defined in index.css, which flip automatically under [data-theme="dark"].
+   The handful of rules below are the ones that used a literal hex value
+   with no exact variable equivalent (hover-darken states, a couple of
+   muted grays), so they get an explicit dark-mode value here instead.
+   The floating navbar, footer status line, and the Batman/Iron Man/Cyborg
+   task themes are intentionally left untouched — they're fixed-dark by
+   design regardless of the site-wide toggle.
+   -------------------------------------------------------------------------- */
+:root[data-theme='dark'] .primary-button:hover {
+  background-color: var(--color-text-secondary);
+  border-color: var(--color-text-secondary);
+  color: var(--color-background);
+}
+
+:root[data-theme='dark'] .secondary-button:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+:root[data-theme='dark'] .difficulty-badge {
+  background-color: color-mix(in srgb, var(--difficulty-color) 18%, var(--color-surface));
+}
+
+:root[data-theme='dark'] .hardware-stage,
+:root[data-theme='dark'] .floating-spec-card {
+  border-color: var(--color-border-subtle);
+}
+
+:root[data-theme='dark'] .card-deliverables li,
+:root[data-theme='dark'] .task-section-content p,
+:root[data-theme='dark'] .task-section-content ul,
+:root[data-theme='dark'] .task-section-content ol,
+:root[data-theme='dark'] .faq-content {
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme='dark'] .task-filter-bar select,
+:root[data-theme='dark'] .faq-item:hover {
+  border-color: var(--color-border-hover);
+}
+
+:root[data-theme='dark'] .breadcrumb-separator {
+  color: var(--color-border-hover);
+}
+
+:root[data-theme='dark'] .footer-bottom {
+  color: var(--color-text-subtle);
+}
+
+.task-deadline {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
+
+.vertical-contact-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 0.85rem 1rem;
+  border-left: 2px solid var(--vertical-accent);
+  border-block: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 48rem) {
+  .task-deadline {
+    flex-basis: 100%;
+  }
+}
+
+.task-section-content blockquote {
+  margin: 1.5rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--vertical-accent);
+  background: color-mix(in srgb, var(--vertical-accent) 5%, var(--color-surface));
+  color: var(--color-text-secondary);
+}
+
+.task-section-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9rem;
+}
+
+.task-section-content th,
+.task-section-content td {
+  border: 1px solid var(--color-border);
+  padding: 0.65rem 0.8rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.task-section-content th {
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.task-section-content td {
+  color: var(--color-text-secondary);
+}
+
+.task-section-content img {
+  display: block;
+  width: min(100%, 38rem);
+  height: auto;
+  max-height: 28rem;
+  margin: 1.25rem auto;
+  object-fit: contain;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 48rem) {
+  .task-section-content img {
+    width: 100%;
+    max-height: 22rem;
+    margin: 1rem auto;
+  }
+}
+
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+<tool-use data-tool-type="generic" data-tool-name="run_in_terminal"><details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+Running `npm run build`
+
+Build the app to verify the Software Task 2 panel imports, conditional rendering, and spacing styles.
+
+```bash
+npm run build
+```
+
+**Result:**
+
+```
+
+> asme-recruitment@0.0.0 build
+> tsc -b && vite build
+
+vite v8.2.2 building client environment for production...
+✓ 2180 modules transformed.
+computing gzip size...
+dist/index.html                                      1.18 kB │ gzip:   0.61 kB
+dist/assets/elec_task_2_middle_panel-DO4h3Fza.jpg   26.30 kB
+dist/assets/elec_task_2_buttom_panel-B3BM7ikm.jpg   27.24 kB
+dist/assets/mech-screwdriver-ts-CWctXEpr.jpeg       38.88 kB
+dist/assets/Gimbal-2-D1D8EhW5.PNG                   39.02 kB
+dist/assets/mech-screwdriver-DpYwkL7B.jpeg          41.18 kB
+dist/assets/mech-screwdriver-side-JkKiCZ0d.jpeg     42.44 kB
+dist/assets/iron-man-DbdpBpbt.jpg                   49.95 kB
+dist/assets/MountBracket-DZNl2ek7.jpeg              52.22 kB
+dist/assets/mech-screwdriver-cs-DzDIoy2p.jpeg       56.18 kB
+dist/assets/Soft_middle_panel-CP0jCOxH.jpeg         62.02 kB
+dist/assets/asme-logo-B8yFhLLr.png                  64.25 kB
+dist/assets/joker-CHCWGbd6.jpg                      64.64 kB
+dist/assets/Soft_top_panel-BKpvC8CS.jpeg            94.07 kB
+dist/assets/iron-man-t2-B-WzgJed.jpeg              147.60 kB
+dist/assets/Gimbal-1-XkwmfGsz.PNG                  175.33 kB
+dist/assets/Pratham_mech-CorE11La.png              184.14 kB
+dist/assets/elec_task_2_top_panel-Gt4-Ki5n.png     221.04 kB
+dist/assets/spiderman_task_2_elec-CWzH8_6y.jpg     259.41 kB
+dist/assets/Mech_task2_theme-BvZMq081.jpeg         309.30 kB
+dist/assets/image-DWhcuWJd.png                     611.52 kB
+dist/assets/spiderman-JOSpu1fE.png                 716.30 kB
+dist/assets/index-BDzm6DXT.css                      65.96 kB │ gzip:  11.82 kB
+dist/assets/index-CuR7qOLg.js                      792.43 kB │ gzip: 244.83 kB
+
+✓ built in 840ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk 
+… (output truncated)
+```
+</details></tool-use>
+
+_**Agent (copilot/auto)**_
+
+Added the Software Task 2 panels:
+
+- `Soft_top_panel.jpeg` appears 32px above the heading.
+- `Soft_middle_panel.jpeg` appears 32px after the submit panel.
+- Both render only on Software Task 2.
+
+Updated `src/pages/TaskDetailPage.tsx` and `src/App.css`. Build passes with `npm run build`.
