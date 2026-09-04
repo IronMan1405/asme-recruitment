@@ -28,10 +28,14 @@ const submissionGuidelines: Record<string, TaskGuidelines> = {
       'Also add a demo video showing the implementation of your task.',
     ],
     2: [
-      'Create a public repository on GitHub for your submission. If you do not have a GitHub account yet, this is a great time to make one!',
+      'Create a public repository on GitHub for your submission, containing your complete solution for both Q1 and Q2.',
+      'Your Repository should contain: All ROS 2 packages and source code, URDF/Xacro files, Launch files, Rviz configuration files, README.md containing setup instructions, packages structure and brief explanation of your implementation',
+      'It should also contain a .gitignore excluding generated ROS 2 files such as build/, install/, and log/ directories.',
+      'Do not Upload generated workspace directories (build/, install/, log/) to the repository.',
+      'If you are uncertain about your .gitignore file, you can use the one present in the Resources section.',
       'Make sure your code contains comments explaining what each part does.',
       'Submit the link to your task repository.',
-      'Also add a demo video showing the implementation of your task.',
+      'Also add screenshots showing the implementation of your task.',
     ],
   },
   electrical: {

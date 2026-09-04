@@ -127,11 +127,14 @@ export const tasks: Task[] = [
       required: [
         {type: 'other', title: 'ROS 2 Humble Installation Guide', url: 'https://docs.google.com/document/d/1FeojTdEQ4H6Vw6RlK9X6XzIVTJVW7FDNf_uJi1hTJPI/edit?usp=sharing', note: 'This document contains all the resources required to install ROS 2 Humble on your system.'},
         {type: 'video', title: 'ROS 2 Tutorials - ROS 2 Humble For Beginners', url: 'https://www.youtube.com/playlist?list=PLLSegLrePWgJudpPUof4-nVFHGkB62Izy', note: 'This playlist covers basic beginner concepts for ROS 2 Humble.'},
-        {type: 'video', title: 'Free Robotics Crash Courses', url: 'https://www.youtube.com/playlist?list=PLLSegLrePWgJk6dfV-UXSh2TZ74wNntWt', note: 'This playlist contains ROS2 crash courses for beginners to intermediate concepts. Refers to videos 1-3 for beginner concepts and videos 4-6 for intermediate concepts.'},
         {type: 'video', title: 'Getting Ready to Build With ROS 2', url: 'https://www.youtube.com/playlist?list=PLunhqkrRNRhYYCaSTVP-qJnyUPkTxJnBt', note: 'This playlist contains tutorials on getting started with ROS 2 development.'},
+        {type: 'other', title: 'GitHub .gitignore Template', url: 'https://gist.github.com/IronMan1405/51c55e75ebec402a29c2e1defb2fe93c', note: 'Use this template if you\'re unsure about what to include in your .gitignore'},
+        {type: 'documentation', title: 'ROS 2 Documentation', url: 'https://docs.ros.org/en/humble/index.html', note: 'This is the official documentation for ROS 2 Humble. It is your bestfriend. It contains all tutorials and guides to understanding ROS 2.'},
       ], 
       optional: [
+        {type: 'video', title: 'Free Robotics Crash Courses', url: 'https://www.youtube.com/playlist?list=PLLSegLrePWgJk6dfV-UXSh2TZ74wNntWt', note: 'This playlist contains ROS2 crash courses for beginners to intermediate concepts. Refers to videos 1-3 for beginner concepts and videos 4-6 for intermediate concepts.'},
         {type: 'video', title: 'Building a Mobile Robot', url: 'https://www.youtube.com/playlist?list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT', note: 'This playlist explores building of a mobile robot using ROS 2'},
+        {type: 'tutorial', title: 'ROS 2 Learning Roadmap', url: 'https://drive.google.com/file/d/1tqKpIpqaCQMgejB4jPTKv_o3jNgdhGF1/view?usp=sharing', note: 'Download this html and open it in a browser to access the ROS 2 learning roadmap'},
       ]
     }, 
     evaluationCriteria: ['Implementation Quality', 'Functionality', 'ROS 2 Understanding', 'Creativity and Innovation'], 
