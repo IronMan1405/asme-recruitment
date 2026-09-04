@@ -37,11 +37,25 @@ export const taskThemes: Record<string, TaskTheme> = {
     icon: '⚡',
     imageAlt: 'Stark software task artwork',
   },
+  softwareTaskTwo: {
+    className: 'theme-stark theme-software-task2',
+    variant: 'stark',
+    tagline: 'Stark Assembly Protocol',
+    icon: '⚡ 🛠️',
+    imageAlt: 'Stark software Task 2 artwork',
+  },
   mechanical: {
     className: 'theme-spiderman',
     variant: 'spiderman',
     tagline: 'Web-Slinger Ops Division',
     icon: '🕸️',
     imageAlt: 'Spider-Man mechanical task artwork',
+  },
+  mechanicalTaskTwo: {
+    className: 'theme-spiderman theme-mechanical-task2',
+    variant: 'spiderman',
+    tagline: 'Jaeger Combat Division',
+    icon: '🤖',
+    imageAlt: 'Pacific Rim mechanical Task 2 artwork',
   },
 }

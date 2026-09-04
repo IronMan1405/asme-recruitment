@@ -30,6 +30,7 @@ export function TaskDetailPage() {
   const { id = '', taskId = '' } = useParams()
   const isElectricalTaskTwo = taskId === 'elec-02'
   const isSoftwareTaskTwo = taskId === 'soft-02'
+  const hasTaskTwoTopPanel = isElectricalTaskTwo || isSoftwareTaskTwo
   const pageRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const heroImageRef = useRef<HTMLImageElement>(null)
@@ -114,17 +115,28 @@ export function TaskDetailPage() {
 
   const verticalTasks = getTasksForVertical(vertical.id)
   const taskIndex = verticalTasks.findIndex((verticalTask) => verticalTask.id === task.id)
-  const theme = isElectricalTaskTwo ? taskThemes.electricalTaskTwo : taskThemes[vertical.id]
+  const theme = isElectricalTaskTwo
+    ? taskThemes.electricalTaskTwo
+    : taskId === 'soft-02'
+      ? taskThemes.softwareTaskTwo
+      : taskId === 'mech-02'
+        ? taskThemes.mechanicalTaskTwo
+        : taskThemes[vertical.id]
 
   return (
     <article
       ref={pageRef}
-      className={theme ? `task-detail-page ${theme.className}${taskId === 'soft-02' ? ' theme-software-task2' : ''}${taskId === 'mech-02' ? ' theme-mechanical-task2' : ''}` : 'task-detail-page'}
+      className={theme ? `task-detail-page ${theme.className}` : 'task-detail-page'}
       style={{ '--vertical-accent': accentColors[vertical.accentColor] } as CSSProperties}
     >
-      {isElectricalTaskTwo ? (
+      {hasTaskTwoTopPanel ? (
         <div className="task2-top-panel-stage">
-          <img className="task2-top-panel" ref={heroImageRef} src={electricalTaskTwoTopPanel} alt="Spider-Man gripping a web above Electrical Task 2" />
+          <img
+            className="task2-top-panel"
+            ref={isElectricalTaskTwo ? heroImageRef : undefined}
+            src={isElectricalTaskTwo ? electricalTaskTwoTopPanel : softwareTaskTwoTopPanel}
+            alt={isElectricalTaskTwo ? 'Spider-Man gripping a web above Electrical Task 2' : 'Iron Man Software Task 2 artwork'}
+          />
           <nav className="breadcrumb task2-breadcrumb-overlay" aria-label="Breadcrumb">
             <Link to="/verticals">Verticals</Link>
             <span className="breadcrumb-separator">/</span>
@@ -147,9 +159,6 @@ export function TaskDetailPage() {
         </nav>
       )}
 
-      {isSoftwareTaskTwo && (
-        <img className="software-task2-top-panel" src={softwareTaskTwoTopPanel} alt="Iron Man Software Task 2 artwork" />
-      )}
       <header className="task-detail-header" aria-label={theme?.imageAlt}>
         {isElectricalTaskTwo && <span className="task2-hero-kicker"></span>}
         {isElectricalTaskTwo && (
@@ -255,7 +264,7 @@ export function TaskDetailPage() {
         <img className="task2-bottom-panel" src={electricalTaskTwoBottomPanel} alt="Gwen hanging at the end of the web" />
       )}
       {isSoftwareTaskTwo && (
-        <img className="software-task2-middle-panel" src={softwareTaskTwoMiddlePanel} alt="Iron Man Software Task 2 artwork" />
+        <img className="task2-bottom-panel" src={softwareTaskTwoMiddlePanel} alt="Iron Man Software Task 2 artwork" />
       )}
 
       <TaskNav
