@@ -118,7 +118,7 @@ export const tasks: Task[] = [
     verticalId: 'software',
     title: 'Stark\'s Assembly Bay', 
     shortDescription: 'Build a ROS 2-based system that communicates, monitors, and visualizes a simulated robotic arm.',
-    difficulty: 'moderate', 
+    difficulty: 'intermediate', 
     estimatedTime: '4-6 hrs', 
     deadline: '14 September 2026, Monday EOD',
     prerequisites: ['Python', 'ROS 2 Humble or Jazzy'], 
