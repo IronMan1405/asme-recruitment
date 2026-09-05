@@ -20,7 +20,7 @@ The task is divided into 3 phases :-
 
 ### Phase 1: Simulation of the Existing Bracket.
 
-The bracket is subjected to a force of 1 MPa both axially and radially on the surfaces shown in the images below. The screw holes on the base plate act as fixed supports. Simulate the model under the load and find the relevant values to judge the strength of the bracket.
+The bracket is subjected to a force of 100 kN radially on the cylindrical supports as highlighted and another axial force of 100 kN on the flat surface of the mounts. The screw holes on the base plate act as fixed supports. Simulate the model under the load and find the relevant values to judge the strength of the bracket.
 
 ![Mount Bracket](${MountBracket})
 
