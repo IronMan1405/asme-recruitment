@@ -72,7 +72,7 @@ export const tasks: Task[] = [
     shortDescription: 'Use simulations and your knowledge of manufacturing to help design a Jaeger for the PPDC.',
     difficulty: 'intermediate', 
     estimatedTime: '5-6 hrs', 
-    deadline: '14 September 2026, Monday EOD',
+    deadline: '20 September 2026, Sunday EOD',
     prerequisites: [], 
     instructions: mechanicalTaskTwoInstructions,
     resources: { 
@@ -97,7 +97,7 @@ export const tasks: Task[] = [
     shortDescription: 'Design a custom PCB for a wrist-mounted web-shooter on KiCad.',
     difficulty: 'intermediate', 
     estimatedTime: '5-6 hrs', 
-    deadline: '14 September 2026, Monday EOD',
+    deadline: '19 September 2026, Saturday EOD',
     prerequisites: ['PCB Design', 'KiCad'], 
     instructions: electricalTaskTwoInstructions,
     resources: { 
@@ -120,7 +120,7 @@ export const tasks: Task[] = [
     shortDescription: 'Build a ROS 2-based system that communicates, monitors, and visualizes a simulated robotic arm.',
     difficulty: 'intermediate', 
     estimatedTime: '4-6 hrs', 
-    deadline: '14 September 2026, Monday EOD',
+    deadline: '20 September 2026, Sunday EOD',
     prerequisites: ['Python', 'ROS 2 Humble or Jazzy'], 
     instructions: softwareTaskTwoInstructions,
     resources: { 
